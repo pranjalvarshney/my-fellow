@@ -17,7 +17,7 @@ export const Header = () => {
       <AppBar color="white" elevation={3}>
         <Container>
           <Toolbar className="header">
-            <Button>
+            <Button style={{ textTransform: "none" }}>
               <img src="/logo192.png" alt="logo" height="40px" />
               <Typography variant="h6">My Fellow</Typography>
             </Button>

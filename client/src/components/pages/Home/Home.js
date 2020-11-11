@@ -27,8 +27,8 @@ export const Home = () => {
                   <Grid fullWidth>
                     <Grid item>
                       <Chip label="Poll" variant="outlined" />
-                      <Chip label="Poll" variant="outlined" />
-                      <Chip label="Poll" variant="outlined" />
+                      <Chip label="Photo" variant="outlined" />
+                      <Chip label="Video" variant="outlined" />
                     </Grid>
                   </Grid>
                 </Box>
