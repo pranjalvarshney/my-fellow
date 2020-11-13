@@ -1,11 +1,13 @@
-import { Paper } from "@material-ui/core"
 import React from "react"
+import { Contacts } from "./Contacts"
 import { PollCard } from "./PollCard"
 
 export const HomeRightBar = () => {
   return (
-    <Paper>
+    <div className="home-right-bar">
       <PollCard />
-    </Paper>
+      <br />
+      <Contacts />
+    </div>
   )
 }

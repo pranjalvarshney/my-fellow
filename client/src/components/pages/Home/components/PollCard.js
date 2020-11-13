@@ -4,6 +4,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  Grid,
   Typography,
 } from "@material-ui/core"
 import React from "react"
@@ -11,7 +12,22 @@ import React from "react"
 export const PollCard = () => {
   return (
     <Card>
-      <CardContent style={{ paddingTop: "4px", paddingBottom: "0" }}>
+      <Grid>
+        <Grid item direction="row" container justify="space-between">
+          <Grid item>
+            <Button size="small">Skip</Button>
+          </Grid>
+          <Grid item>
+            <Button disabled size="medium">
+              Poll
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button size="small">Next</Button>
+          </Grid>
+        </Grid>
+      </Grid>
+      <CardContent style={{ paddingTop: "0px", paddingBottom: "0" }}>
         <Typography variant="h6" style={{ padding: "0" }}>
           Lizard
         </Typography>

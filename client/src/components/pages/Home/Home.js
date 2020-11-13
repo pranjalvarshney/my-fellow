@@ -1,4 +1,4 @@
-import { Box, Chip, Container, Grid, Paper, TextField } from "@material-ui/core"
+import { Box, Chip, Grid, Paper, TextField } from "@material-ui/core"
 import React from "react"
 import { Base } from "../../common/Base/Base"
 import { HomeRightBar } from "./components/HomeRightBar"
@@ -8,8 +8,8 @@ import "./Home.css"
 export const Home = () => {
   return (
     <Base>
-      <Container className="home">
-        <Grid container spacing={3} justify="center" direction="row">
+      <div className="home">
+        <Grid container justify="space-evenly" direction="row">
           <Grid item xs={3}>
             <HomeSideBar />
           </Grid>
@@ -39,7 +39,7 @@ export const Home = () => {
             <HomeRightBar />
           </Grid>
         </Grid>
-      </Container>
+      </div>
     </Base>
   )
 }
