@@ -4,12 +4,14 @@ const app = express()
 const mongoose = require("mongoose")
 const morgan = require("morgan")
 const cookieparser = require("cookie-parser")
+const cors = require("cors")
 
 const MONGO_URI = process.env.MONGO_URI
 const PORT = process.env.PORT || 5000
 
 // middlewares
 app.use(morgan("dev"))
+app.use(cors())
 app.use(express.json())
 app.use(cookieparser())
 
