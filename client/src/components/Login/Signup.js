@@ -2,7 +2,7 @@ import { Box, Button, Grid, Paper, TextField } from "@material-ui/core"
 import React from "react"
 import "./Login.css"
 
-export const Login = () => {
+export const Signup = () => {
   return (
     <div className="login">
       <div className="container">
@@ -28,12 +28,55 @@ export const Login = () => {
                   >
                     <Grid item container>
                       <TextField
-                        type="email"
+                        type="text"
+                        fullWidth
+                        variant="outlined"
+                        size="small"
+                        label="Name"
+                      />
+                    </Grid>
+                    <Grid item container>
+                      <TextField
+                        type="text"
                         fullWidth
                         variant="outlined"
                         size="small"
                         label="Email"
                       />
+                    </Grid>
+                    <Grid
+                      item
+                      container
+                      direction="row"
+                      alignItems="center"
+                      justify="space-between"
+                    >
+                      <Grid item xs={6}>
+                        <TextField
+                          variant="outlined"
+                          label="Birthday"
+                          size="small"
+                          type="date"
+                          defaultValue={
+                            new Date().getFullYear() +
+                            "-" +
+                            new Date().getMonth() +
+                            "-" +
+                            new Date().getDate()
+                          }
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={3}>
+                        <TextField
+                          label="Age"
+                          variant="outlined"
+                          size="small"
+                          style={{ width: "auto" }}
+                        />
+                      </Grid>
                     </Grid>
                     <Grid item container>
                       <TextField
