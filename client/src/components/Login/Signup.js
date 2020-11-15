@@ -1,8 +1,11 @@
 import { Box, Button, Grid, Paper, TextField } from "@material-ui/core"
 import React from "react"
+import { useHistory } from "react-router-dom"
 import "./Login.css"
 
 export const Signup = () => {
+  const history = useHistory()
+
   return (
     <div className="login">
       <div className="container">
@@ -84,7 +87,7 @@ export const Signup = () => {
                         type="password"
                         size="small"
                         variant="outlined"
-                        label="Password"
+                        label="Create password"
                       />
                     </Grid>
                     <Grid item container>
@@ -94,7 +97,7 @@ export const Signup = () => {
                         size="large"
                         variant="contained"
                       >
-                        Login
+                        Signup
                       </Button>
                     </Grid>
                   </Grid>
@@ -119,13 +122,16 @@ export const Signup = () => {
                     </Grid>
                     <Grid item>
                       <Button
+                        onClick={() => {
+                          history.push("/signin")
+                        }}
                         variant="contained"
                         style={{
                           color: "white",
                           background: "limegreen",
                         }}
                       >
-                        Create Account
+                        Login
                       </Button>
                     </Grid>
                   </Grid>
