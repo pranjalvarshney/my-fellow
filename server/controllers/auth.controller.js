@@ -10,8 +10,8 @@ exports.signup = (req, res) => {
       errorMsg: errors.array()[0].msg,
     })
   }
-  const { name, email, password, rollno } = req.body
-  const newUser = new User({ name, email, password, rollno })
+  const { name, dob, age, email, password } = req.body
+  const newUser = new User({ name, email, password, dob, age })
   newUser.save((err, user) => {
     if (err) {
       return res.status(400).json({
@@ -52,7 +52,7 @@ exports.signin = (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.SECRET)
     res.cookie("token", token, { expire: new Date() + 9999 })
 
-    const { _id, name, email, role, rollno } = user
+    const { _id, name, email, role } = user
 
     res.status(200).json({
       token,
@@ -61,7 +61,6 @@ exports.signin = (req, res) => {
         name,
         email,
         role,
-        rollno,
       },
     })
   })

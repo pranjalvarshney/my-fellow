@@ -11,8 +11,12 @@ const userSchema = new mongoose.Schema(
     },
     rollno: {
       type: String,
-      required: true,
       unique: true,
+    },
+    dob: {
+      type: String,
+      trim: true,
+      required: true,
     },
     email: {
       type: String,
