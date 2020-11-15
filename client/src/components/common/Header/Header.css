@@ -1,4 +1,18 @@
 .header{
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header > .header-banner{
+    position: relative;
+    display: flex;
     justify-content: center;
+    align-items: center;
+}
+.header > .header-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
