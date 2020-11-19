@@ -1,35 +1,53 @@
-import { Box, Button, Grid, Paper, TextField } from "@material-ui/core"
-import React, { useContext, useState } from "react"
-import { useHistory } from "react-router-dom"
-import {AuthContext} from '../../context/authContext/authContext'
-import "./Login.css"
+import { Box, Button, Grid, Paper, TextField } from "@material-ui/core";
+import React, { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { AuthContext } from "../../context/authContext/authContext";
+import "./Login.css";
 
 export const Login = () => {
-  const history = useHistory()
-  const context = useContext(AuthContext)
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const history = useHistory();
+  const context = useContext(AuthContext);
+  const [inputValues, setInputValues] = useState({
+    email: "",
+    password: "",
+  });
+  console.log(inputValues);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputValues({
+      ...inputValues,
+      [name]: value,
+    });
+  };
   const formData = {
-    email: email,
-    password: password,
-  }
-
-  const handleFormSubmit = async(e) => {
-    e.preventDefault()
-    await context.signinUser(formData)
-
-    try {
-    } catch (error) {
-      
+    email: inputValues.email,
+    password: inputValues.password,
+  };
+  useEffect(() => {
+    if (context.isAuthenticated) {
+      history.push("/");
     }
-    
+    if (context.error) {
+    }
+  }, [context, history]);
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setInputValues({
+      ...inputValues,
+      error: "",
+      loading: true,
+    });
+    await context.signinUser(formData);
+    try {
+    } catch (error) {}
+
     // try {
     //   const response = await Axios.post("http://localhost:4040/api/v1/signin",formData)
     //   console.log(response.data)
     // } catch (error) {
     //   console.log(error.response)
     // }
-  }
+  };
 
   return (
     <div className="login">
@@ -57,9 +75,10 @@ export const Login = () => {
                     <Grid item container>
                       <TextField
                         type="email"
+                        name="email"
                         fullWidth
-                        value={email}
-                        onChange={(e)=>setEmail(e.target.value)}
+                        value={inputValues.email}
+                        onChange={handleChange}
                         variant="outlined"
                         size="small"
                         label="Email"
@@ -68,8 +87,9 @@ export const Login = () => {
                     <Grid item container>
                       <TextField
                         fullWidth
-                        value={password}
-                        onChange={(e)=>{setPassword(e.target.value)}}
+                        name="password"
+                        value={inputValues.password}
+                        onChange={handleChange}
                         type="password"
                         size="small"
                         variant="outlined"
@@ -110,7 +130,7 @@ export const Login = () => {
                     <Grid item>
                       <Button
                         onClick={() => {
-                          history.push("/signup")
+                          history.push("/signup");
                         }}
                         variant="contained"
                         style={{
@@ -129,5 +149,5 @@ export const Login = () => {
         </Grid>
       </div>
     </div>
-  )
-}
+  );
+};

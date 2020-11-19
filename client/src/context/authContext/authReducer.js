@@ -6,7 +6,8 @@ import {
   AUTH_SIGNUP,
   AUTH_SIGNUP_ERROR,
   SIGNOUT_USER,
-} from "../types"
+  USER_LOADED,
+} from "../types";
 
 export default (state, action) => {
   switch (action.type) {
@@ -17,13 +18,13 @@ export default (state, action) => {
         isAuthenticated: true,
         loading: false,
         error: null,
-      }
+      };
     case AUTH_LOADING:
       return {
         ...state,
         loading: action.payload,
         error: null,
-      }
+      };
     case AUTH_SIGNIN_ERROR:
     case AUTH_SIGNUP_ERROR:
       return {
@@ -32,7 +33,7 @@ export default (state, action) => {
         error: action.payload,
         user: null,
         isAuthenticated: false,
-      }
+      };
     case SIGNOUT_USER:
       return {
         ...state,
@@ -40,8 +41,16 @@ export default (state, action) => {
         user: null,
         error: null,
         loading: false,
-      }
+      };
+    case USER_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload.data,
+        loading: false,
+        error: null,
+      };
     default:
-      return state
+      return state;
   }
-}
+};
