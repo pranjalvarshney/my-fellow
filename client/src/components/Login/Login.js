@@ -1,10 +1,36 @@
 import { Box, Button, Grid, Paper, TextField } from "@material-ui/core"
-import React from "react"
+import React, { useContext, useState } from "react"
 import { useHistory } from "react-router-dom"
+import {AuthContext} from '../../context/authContext/authContext'
 import "./Login.css"
 
 export const Login = () => {
   const history = useHistory()
+  const context = useContext(AuthContext)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const formData = {
+    email: email,
+    password: password,
+  }
+
+  const handleFormSubmit = async(e) => {
+    e.preventDefault()
+    await context.signinUser(formData)
+
+    try {
+    } catch (error) {
+      
+    }
+    
+    // try {
+    //   const response = await Axios.post("http://localhost:4040/api/v1/signin",formData)
+    //   console.log(response.data)
+    // } catch (error) {
+    //   console.log(error.response)
+    // }
+  }
+
   return (
     <div className="login">
       <div className="container">
@@ -20,7 +46,7 @@ export const Login = () => {
           <Grid item>
             <Paper>
               <Box py={6} px={3} width="400px">
-                <form>
+                <form onSubmit={handleFormSubmit}>
                   <Grid
                     spacing={1}
                     container
@@ -32,6 +58,8 @@ export const Login = () => {
                       <TextField
                         type="email"
                         fullWidth
+                        value={email}
+                        onChange={(e)=>setEmail(e.target.value)}
                         variant="outlined"
                         size="small"
                         label="Email"
@@ -40,6 +68,8 @@ export const Login = () => {
                     <Grid item container>
                       <TextField
                         fullWidth
+                        value={password}
+                        onChange={(e)=>{setPassword(e.target.value)}}
                         type="password"
                         size="small"
                         variant="outlined"
@@ -52,6 +82,7 @@ export const Login = () => {
                         fullWidth
                         size="large"
                         variant="contained"
+                        type="submit"
                       >
                         Login
                       </Button>

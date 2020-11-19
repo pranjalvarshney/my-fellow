@@ -10,6 +10,7 @@ import {
   AUTH_SIGNUP_ERROR,
   SIGNOUT_USER,
 } from "../types"
+import { API } from "../../utils/proxy"
 
 export const AuthState = ({ children }) => {
   const initialState = {
@@ -28,7 +29,7 @@ export const AuthState = ({ children }) => {
         payload: true,
       })
       const response = await axios.post(
-        "/api/v1/signup",
+        `${API}/signup`,
         JSON.stringify(signupData),
         {
           headers: {
@@ -56,7 +57,7 @@ export const AuthState = ({ children }) => {
         payload: true,
       })
       const response = await axios.post(
-        "/api/v1/signin",
+        `${API}/signin`,
         JSON.stringify(signinData),
         {
           headers: {
@@ -79,7 +80,7 @@ export const AuthState = ({ children }) => {
 
   const signoutUser = async () => {
     try {
-      await axios.get("/api/v1/signout")
+      await axios.get(`${API}/signout`)
     } catch (error) {
       dispatch({
         type: SIGNOUT_USER,
