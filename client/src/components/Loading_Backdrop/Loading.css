@@ -1,0 +1,7 @@
+.loading-backdrop {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.616);
+}

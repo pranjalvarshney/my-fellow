@@ -18,6 +18,7 @@ app.use(cookieparser())
 // routes
 
 app.use("/api/v1", require("./routes/auth.route"))
+app.use("/api/v1", require("./routes/user.route"))
 
 app.get("/", (req, res) => {
   res.send("this is the home")

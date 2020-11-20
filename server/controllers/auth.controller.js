@@ -51,7 +51,11 @@ exports.signin = (req, res) => {
     }
 
     const token = jwt.sign({ id: user._id }, process.env.SECRET)
-    res.cookie("token", token, { expire: new Date() + 9999 })
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: true,
+      expire: new Date() + 9999,
+    })
 
     const { _id, name, email, role } = user
 
@@ -83,8 +87,8 @@ exports.isSignedIn = expressJWT({
 
 // custom middleware
 exports.isAuthenticated = (req, res, next) => {
-  // console.log(req.profile)
-  // console.log(req.auth)
+  console.log(req.profile)
+  console.log(req.auth)
   let check = req.profile && req.auth && req.profile._id == req.auth.id
   if (!check) {
     return res.status(403).json({
