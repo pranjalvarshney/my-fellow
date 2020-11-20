@@ -24,7 +24,7 @@ export const Home = () => {
                   placeholder="Create a post"
                 />
                 <Box my={1}>
-                  <Grid fullWidth>
+                  <Grid>
                     <Grid item>
                       <Chip label="Poll" variant="outlined" />
                       <Chip label="Photo" variant="outlined" />
