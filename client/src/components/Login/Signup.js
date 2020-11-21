@@ -1,10 +1,37 @@
 import { Box, Button, Grid, Paper, TextField } from "@material-ui/core"
-import React from "react"
+import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
 import "./Login.css"
 
 export const Signup = () => {
   const history = useHistory()
+  const defaultdob =
+    new Date().getFullYear() +
+    "-" +
+    new Date().getMonth() +
+    "-" +
+    new Date().getDate()
+
+  const [inputValues, setInputValues] = useState({
+    name: "",
+    email: "",
+    password: "",
+    dob: defaultdob,
+    age: 0,
+  })
+
+  console.log(inputValues)
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setInputValues({
+      ...inputValues,
+      [name]: value,
+      age:
+        parseInt(new Date().getFullYear()) -
+        parseInt(inputValues.dob.slice(0, 4)),
+    })
+  }
 
   return (
     <div className="login">
@@ -32,15 +59,21 @@ export const Signup = () => {
                     <Grid item container>
                       <TextField
                         type="text"
+                        name="name"
                         fullWidth
                         variant="outlined"
                         size="small"
+                        value={inputValues.name}
+                        onChange={handleChange}
                         label="Name"
                       />
                     </Grid>
                     <Grid item container>
                       <TextField
                         type="text"
+                        name="email"
+                        value={inputValues.email}
+                        onChange={handleChange}
                         fullWidth
                         variant="outlined"
                         size="small"
@@ -56,17 +89,13 @@ export const Signup = () => {
                     >
                       <Grid item xs={6}>
                         <TextField
+                          name="dob"
                           variant="outlined"
                           label="Birthday"
                           size="small"
+                          value={inputValues.dob}
+                          onChange={handleChange}
                           type="date"
-                          defaultValue={
-                            new Date().getFullYear() +
-                            "-" +
-                            new Date().getMonth() +
-                            "-" +
-                            new Date().getDate()
-                          }
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -74,9 +103,14 @@ export const Signup = () => {
                       </Grid>
                       <Grid item xs={3}>
                         <TextField
+                          age="age"
                           label="Age"
+                          disabled
+                          type="number"
                           variant="outlined"
                           size="small"
+                          value={inputValues.age}
+                          onChange={handleChange}
                           style={{ width: "auto" }}
                         />
                       </Grid>
@@ -84,9 +118,12 @@ export const Signup = () => {
                     <Grid item container>
                       <TextField
                         fullWidth
+                        name="password"
                         type="password"
                         size="small"
                         variant="outlined"
+                        value={inputValues.password}
+                        onChange={handleChange}
                         label="Create password"
                       />
                     </Grid>
