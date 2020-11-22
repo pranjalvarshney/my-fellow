@@ -10,11 +10,11 @@ const MONGO_URI = process.env.MONGO_URI
 const PORT = process.env.PORT || 5000
 
 // middlewares
+
 app.use(morgan("dev"))
 app.use(cors())
-app.use(express.json())
 app.use(cookieparser())
-
+app.use(express.json())
 // routes
 
 app.use("/api/v1", require("./routes/auth.route"))

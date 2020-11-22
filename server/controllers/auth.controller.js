@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 const { validationResult } = require("express-validator")
-const User = require("../models/user")
+const User = require("../models/User")
 const expressJWT = require("express-jwt")
 
 exports.signup = (req, res) => {
@@ -12,16 +12,31 @@ exports.signup = (req, res) => {
     })
   }
   const { name, dob, age, email, password } = req.body
-  const newUser = new User({ name, email, password, dob, age })
-  newUser.save((err, user) => {
+  User.findOne({ email }).exec((err, user) => {
     if (err) {
       return res.status(400).json({
-        errorMsg: "An error occured while processing the request",
+        errorMsg: "An error occured",
       })
     }
-    return res.status(200).json({
-      data: user,
-    })
+    if (user) {
+      return res.status(200).json({
+        errorMsg: "User already exits",
+      })
+    }
+    if (!user) {
+      const newUser = new User({ name, email, password, dob, age })
+      newUser.save((err, user) => {
+        if (err) {
+          return res.status(400).json({
+            err,
+            errorMsg: "An error occured while processing the request",
+          })
+        }
+        return res.status(200).json({
+          data: user,
+        })
+      })
+    }
   })
 }
 

@@ -1,4 +1,4 @@
-const User = require("../models/user")
+const User = require("../models/User")
 
 exports.getUserById = (req, res, next, Id) => {
   User.findById(Id).exec((err, user) => {
@@ -21,7 +21,6 @@ exports.getUser = (req, res) => {
   //TODO: get back here for password
   req.profile.encryptedpassword = undefined
   req.profile.salt = undefined
-  req.profile.updatedAt = undefined
   return res.json(req.profile)
 }
 

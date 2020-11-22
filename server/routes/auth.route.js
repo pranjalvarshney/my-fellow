@@ -1,13 +1,13 @@
-const express = require("express");
-const router = express.Router();
-const { check } = require("express-validator");
+const express = require("express")
+const router = express.Router()
+const { check } = require("express-validator")
 const {
   signup,
   signin,
   signout,
   isSignedIn,
   isAuthenticated,
-} = require("../controllers/auth.controller");
+} = require("../controllers/auth.controller")
 
 router.post(
   "/signup",
@@ -19,7 +19,7 @@ router.post(
       .withMessage("Password should be greater than 5 characters"),
   ],
   signup
-);
+)
 
 router.post(
   "/signin",
@@ -30,10 +30,12 @@ router.post(
       .withMessage("Password should be greater than 5 characters"),
   ],
   signin
-);
+)
 
-router.get("/signout", signout);
+router.get("/signout", isSignedIn, isAuthenticated, signout)
 
-router.get("/isme", isAuthenticated);
+// router.get("/isme", isSignedIn, (req, res) => {
+//   res.send("hi")
+// })
 
-module.exports = router;
+module.exports = router

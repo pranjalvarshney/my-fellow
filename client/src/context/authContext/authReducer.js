@@ -12,9 +12,19 @@ import {
 export default (state, action) => {
   switch (action.type) {
     case AUTH_SIGNUP:
-    case AUTH_SIGNIN:
+      console.log(action.payload)
       return {
         ...state,
+        user: null,
+        isAuthenticated: true,
+        loading: false,
+        error: null,
+      }
+    case AUTH_SIGNIN:
+      console.log(action.payload)
+      return {
+        ...state,
+        user: action.payload,
         isAuthenticated: true,
         loading: false,
         error: null,

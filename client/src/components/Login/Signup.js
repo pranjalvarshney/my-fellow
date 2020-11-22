@@ -1,10 +1,12 @@
 import { Box, Button, Grid, Paper, TextField } from "@material-ui/core"
-import React, { useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
+import { AuthContext } from "../../context/authContext/authContext"
 import "./Login.css"
 
 export const Signup = () => {
   const history = useHistory()
+  const context = useContext(AuthContext)
   const defaultdob =
     new Date().getFullYear() +
     "-" +
@@ -20,7 +22,7 @@ export const Signup = () => {
     age: 0,
   })
 
-  console.log(inputValues)
+  // console.log(inputValues)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -33,6 +35,25 @@ export const Signup = () => {
     })
   }
 
+  const formData = {
+    name: inputValues.name,
+    email: inputValues.email,
+    dob: inputValues.dob,
+    age: inputValues.age,
+    password: inputValues.password,
+  }
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault()
+    await context.signupUser(formData)
+  }
+  useEffect(() => {
+    if (context.isAuthenticated) {
+      history.push("/signin")
+    }
+    if (context.error) {
+    }
+  }, [context, history])
   return (
     <div className="login">
       <div className="container">
@@ -48,7 +69,7 @@ export const Signup = () => {
           <Grid item>
             <Paper>
               <Box py={6} px={3} width="400px">
-                <form>
+                <form onSubmit={handleOnSubmit}>
                   <Grid
                     spacing={1}
                     container
@@ -129,6 +150,7 @@ export const Signup = () => {
                     </Grid>
                     <Grid item container>
                       <Button
+                        type="submit"
                         color="primary"
                         fullWidth
                         size="large"

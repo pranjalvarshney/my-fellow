@@ -9,6 +9,7 @@ import { Home } from "../pages/Home/Home"
 
 export const Routing = () => {
   const context = useContext(AuthContext)
+  console.log(context)
   return (
     <>
       {context.loading && <Loading />}

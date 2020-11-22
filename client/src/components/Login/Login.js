@@ -11,7 +11,7 @@ export const Login = () => {
     email: "",
     password: "",
   })
-  console.log(inputValues)
+  // console.log(inputValues)
   const handleChange = (e) => {
     const { name, value } = e.target
     setInputValues({
@@ -25,18 +25,14 @@ export const Login = () => {
   }
   useEffect(() => {
     if (context.isAuthenticated) {
-      history.push("/")
+      history.replace("/")
     }
     if (context.error) {
     }
   }, [context, history])
   const handleFormSubmit = async (e) => {
     e.preventDefault()
-    setInputValues({
-      ...inputValues,
-      error: "",
-      loading: true,
-    })
+
     await context.signinUser(formData)
     try {
     } catch (error) {}
