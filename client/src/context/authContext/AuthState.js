@@ -10,30 +10,39 @@ import {
   AUTH_ERROR,
   AUTH_SIGNUP_ERROR,
   SIGNOUT_USER,
-  USER_LOADED,
 } from "../types"
 import { API } from "../../utils/proxy"
 
 export const AuthState = ({ children }) => {
+  const isAuthenticated = () => {
+    if (typeof window == "undefined") {
+      return false
+    }
+    if (localStorage.getItem("_data")) {
+      return true
+    } else {
+      return false
+    }
+  }
+  console.log(isAuthenticated())
   const initialState = {
-    isLoggedIn: false,
+    isLoggedIn: isAuthenticated() ? true : false,
     loading: false,
     error: null,
-    user: null,
+    user: isAuthenticated() ? JSON.parse(localStorage.getItem("_data")) : null,
   }
 
   const [state, dispatch] = useReducer(authReducer, initialState)
-  const loadUser = async () => {
+
+  const authenticate = async (response) => {
     try {
       dispatch({
         type: AUTH_LOADING,
         payload: true,
       })
-      const response = await axios.get(`${API}/isme`)
-      dispatch({
-        type: USER_LOADED,
-        payload: response.data,
-      })
+      if (typeof window !== "undefined") {
+        localStorage.setItem("_data", JSON.stringify(response.user))
+      }
     } catch (error) {
       dispatch({ type: AUTH_ERROR, payload: error.response.data.err })
     }
@@ -53,13 +62,14 @@ export const AuthState = ({ children }) => {
           },
         }
       )
-      console.log(response.data)
+
       dispatch({
         type: AUTH_SIGNUP,
         payload: response.data,
       })
+      return true
     } catch (error) {
-      console.log(error.response)
+      // console.log(error.response)
       dispatch({
         type: AUTH_SIGNUP_ERROR,
         payload: error.response.data,
@@ -82,6 +92,7 @@ export const AuthState = ({ children }) => {
           },
         }
       )
+      authenticate(response.data)
       console.log(response.data)
       dispatch({
         type: AUTH_SIGNIN,
@@ -98,10 +109,12 @@ export const AuthState = ({ children }) => {
   const signoutUser = async () => {
     try {
       await axios.get(`${API}/signout`)
-    } catch (error) {
+      localStorage.removeItem("_data")
       dispatch({
         type: SIGNOUT_USER,
       })
+    } catch (error) {
+      console.log(error.response)
     }
   }
 
@@ -115,7 +128,8 @@ export const AuthState = ({ children }) => {
         signupUser,
         signinUser,
         signoutUser,
-        loadUser,
+        authenticate,
+        isAuthenticated,
       }}
     >
       {children}

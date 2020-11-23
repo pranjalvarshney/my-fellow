@@ -25,7 +25,7 @@ export const HomeSideBar = () => {
               <Avatar />
             </ListItemIcon>
             <ListItemText
-              primary={context.user.user.name}
+              primary={context.user.name}
               secondary="Student | School of Information and communicaton Technology"
             />
           </ListItem>

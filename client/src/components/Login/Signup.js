@@ -1,5 +1,5 @@
 import { Box, Button, Grid, Paper, TextField } from "@material-ui/core"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { AuthContext } from "../../context/authContext/authContext"
 import "./Login.css"
@@ -45,15 +45,11 @@ export const Signup = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault()
-    await context.signupUser(formData)
-  }
-  useEffect(() => {
-    if (context.isAuthenticated) {
+    const response = await context.signupUser(formData)
+    if (response) {
       history.push("/signin")
     }
-    if (context.error) {
-    }
-  }, [context, history])
+  }
   return (
     <div className="login">
       <div className="container">

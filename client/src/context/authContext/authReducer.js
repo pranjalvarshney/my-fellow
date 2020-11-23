@@ -6,7 +6,6 @@ import {
   AUTH_SIGNUP,
   AUTH_SIGNUP_ERROR,
   SIGNOUT_USER,
-  USER_LOADED,
 } from "../types"
 
 export default (state, action) => {
@@ -22,10 +21,10 @@ export default (state, action) => {
       }
     case AUTH_SIGNIN:
       console.log(action.payload)
-      localStorage.setItem("token", action.payload.token)
+      // localStorage.setItem("token", action.payload.token)
       return {
         ...state,
-        user: action.payload,
+        user: action.payload.user,
         isLoggedIn: true,
         loading: false,
         error: null,
@@ -53,14 +52,7 @@ export default (state, action) => {
         error: null,
         loading: false,
       }
-    case USER_LOADED:
-      return {
-        ...state,
-        isLoggedIn: true,
-        user: action.payload.data,
-        loading: false,
-        error: null,
-      }
+
     default:
       return state
   }
