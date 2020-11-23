@@ -2,6 +2,7 @@ import React, { useContext } from "react"
 import { BrowserRouter, Route, Switch } from "react-router-dom"
 import { AuthContext } from "../../context/authContext/authContext"
 import { PrivateRoute } from "../auth/PrivateRoute"
+import { SimpleRoute } from "../auth/SimpleRoute"
 import { Loading } from "../Loading_Backdrop/Loading"
 import { Login } from "../Login/Login"
 import { Signup } from "../Login/Signup"
@@ -16,8 +17,8 @@ export const Routing = () => {
       <BrowserRouter>
         <Switch>
           <PrivateRoute exact path="/" component={Home} />
-          <Route exact path="/signup" component={Signup} />
-          <Route exact path="/signin" component={Login} />
+          <SimpleRoute exact path="/signup" component={Signup} />
+          <SimpleRoute exact path="/signin" component={Login} />
         </Switch>
       </BrowserRouter>
     </>

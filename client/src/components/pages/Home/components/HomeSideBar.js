@@ -7,13 +7,15 @@ import {
   ListItemText,
   Paper,
 } from "@material-ui/core"
-import React from "react"
+import React, { useContext } from "react"
+import { AuthContext } from "../../../../context/authContext/authContext"
 import PeopleAltRoundedIcon from "@material-ui/icons/PeopleAltRounded"
 import SupervisedUserCircleRoundedIcon from "@material-ui/icons/SupervisedUserCircleRounded"
 import BookmarksRoundedIcon from "@material-ui/icons/BookmarksRounded"
 import EventNoteRoundedIcon from "@material-ui/icons/EventNoteRounded"
 
 export const HomeSideBar = () => {
+  const context = useContext(AuthContext)
   return (
     <div>
       <Paper>
@@ -23,7 +25,7 @@ export const HomeSideBar = () => {
               <Avatar />
             </ListItemIcon>
             <ListItemText
-              primary="Username"
+              primary={context.user.user.name}
               secondary="Student | School of Information and communicaton Technology"
             />
           </ListItem>

@@ -16,16 +16,17 @@ export default (state, action) => {
       return {
         ...state,
         user: null,
-        isAuthenticated: true,
+        isLoggedIn: false,
         loading: false,
         error: null,
       }
     case AUTH_SIGNIN:
       console.log(action.payload)
+      localStorage.setItem("token", action.payload.token)
       return {
         ...state,
         user: action.payload,
-        isAuthenticated: true,
+        isLoggedIn: true,
         loading: false,
         error: null,
       }
@@ -42,12 +43,12 @@ export default (state, action) => {
         loading: false,
         error: action.payload,
         user: null,
-        isAuthenticated: false,
+        isLoggedIn: false,
       }
     case SIGNOUT_USER:
       return {
         ...state,
-        isAuthenticated: false,
+        isLoggedIn: false,
         user: null,
         error: null,
         loading: false,
@@ -55,7 +56,7 @@ export default (state, action) => {
     case USER_LOADED:
       return {
         ...state,
-        isAuthenticated: true,
+        isLoggedIn: true,
         user: action.payload.data,
         loading: false,
         error: null,

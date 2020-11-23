@@ -16,7 +16,7 @@ import { API } from "../../utils/proxy"
 
 export const AuthState = ({ children }) => {
   const initialState = {
-    isAuthenticated: false,
+    isLoggedIn: false,
     loading: false,
     error: null,
     user: null,
@@ -109,7 +109,7 @@ export const AuthState = ({ children }) => {
     <AuthContext.Provider
       value={{
         user: state.user,
-        isAuthenticated: state.isAuthenticated,
+        isLoggedIn: state.isLoggedIn,
         loading: state.loading,
         error: state.error,
         signupUser,

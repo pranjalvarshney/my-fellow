@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { AuthContext } from "../../context/authContext/authContext"
 import "./Login.css"
-
+import { Home } from "../../components/pages/Home/Home"
 export const Login = () => {
   const history = useHistory()
   const context = useContext(AuthContext)
@@ -23,13 +23,6 @@ export const Login = () => {
     email: inputValues.email,
     password: inputValues.password,
   }
-  useEffect(() => {
-    if (context.isAuthenticated) {
-      history.replace("/")
-    }
-    if (context.error) {
-    }
-  }, [context, history])
   const handleFormSubmit = async (e) => {
     e.preventDefault()
 
