@@ -1,9 +1,8 @@
 import { Box, Button, Grid, Paper, TextField } from "@material-ui/core"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { AuthContext } from "../../context/authContext/authContext"
 import "./Login.css"
-import { Home } from "../../components/pages/Home/Home"
 export const Login = () => {
   const history = useHistory()
   const context = useContext(AuthContext)
