@@ -19,6 +19,7 @@ app.use(express.json())
 
 app.use("/api/v1", require("./routes/auth.route"))
 app.use("/api/v1", require("./routes/user.route"))
+app.use("/api/v1", require("./routes/post.route"))
 
 app.get("/", (req, res) => {
   res.send("this is the home")
