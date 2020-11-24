@@ -45,7 +45,7 @@ export const AuthState = ({ children }) => {
         localStorage.setItem("_token", JSON.stringify(response.token))
       }
     } catch (error) {
-      dispatch({ type: AUTH_ERROR, payload: error.response.data.err })
+      dispatch({ type: AUTH_ERROR, payload: error.response.data.errorMsg })
     }
   }
   const signupUser = async (signupData) => {
@@ -73,7 +73,7 @@ export const AuthState = ({ children }) => {
       // console.log(error.response)
       dispatch({
         type: AUTH_SIGNUP_ERROR,
-        payload: error.response.data,
+        payload: error.response.data.errorMsg,
       })
     }
   }
@@ -93,6 +93,7 @@ export const AuthState = ({ children }) => {
           },
         }
       )
+
       authenticate(response.data)
       // console.log(response.data)
       dispatch({
@@ -100,9 +101,10 @@ export const AuthState = ({ children }) => {
         payload: response.data,
       })
     } catch (error) {
+      // console.log(error.response.data.errorMsg)
       dispatch({
         type: AUTH_SIGNIN_ERROR,
-        payload: error.response.data,
+        payload: error.response.data.errorMsg,
       })
     }
   }
@@ -115,7 +117,7 @@ export const AuthState = ({ children }) => {
         type: SIGNOUT_USER,
       })
     } catch (error) {
-      console.log(error.response)
+      console.log(error.response.data.errorMsg)
     }
   }
 
