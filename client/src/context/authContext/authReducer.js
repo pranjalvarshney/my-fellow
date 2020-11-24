@@ -20,7 +20,7 @@ export default (state, action) => {
         error: null,
       }
     case AUTH_SIGNIN:
-      console.log(action.payload)
+      // console.log(action.payload)
       // localStorage.setItem("token", action.payload.token)
       return {
         ...state,

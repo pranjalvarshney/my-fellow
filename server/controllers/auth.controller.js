@@ -45,7 +45,7 @@ exports.signin = (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(422).json({
-      errormsg: errors.array()[0].msg,
+      errorMsg: errors.array()[0].msg,
     })
   }
   const { email, password } = req.body
@@ -108,7 +108,7 @@ exports.isAuthenticated = (req, res, next) => {
   let check = req.profile && req.auth && req.profile._id == req.auth.id
   if (!check) {
     return res.status(403).json({
-      errormsg: "Access denied",
+      errorMsg: "Access denied",
     })
   }
   next()
