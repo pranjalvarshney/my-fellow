@@ -41,8 +41,13 @@ export const Login = () => {
             justify="space-around"
             direction="row"
           >
-            <Grid item>
-              <h2>My Fellow</h2>
+            <Grid item justify="space-around" direction="column">
+              <Grid item>
+                <h1>My Fellow</h1>
+              </Grid>
+              <Grid item>
+                <h6>connect, share and poll</h6>
+              </Grid>
             </Grid>
             <Grid item>
               <Paper>
