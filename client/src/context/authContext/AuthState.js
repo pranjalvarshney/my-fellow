@@ -24,7 +24,7 @@ export const AuthState = ({ children }) => {
       return false
     }
   }
-  console.log(isAuthenticated())
+  // console.log(isAuthenticated())
   const initialState = {
     isLoggedIn: isAuthenticated() ? true : false,
     loading: false,
@@ -42,6 +42,7 @@ export const AuthState = ({ children }) => {
       })
       if (typeof window !== "undefined") {
         localStorage.setItem("_data", JSON.stringify(response.user))
+        localStorage.setItem("_token", JSON.stringify(response.token))
       }
     } catch (error) {
       dispatch({ type: AUTH_ERROR, payload: error.response.data.err })
@@ -93,7 +94,7 @@ export const AuthState = ({ children }) => {
         }
       )
       authenticate(response.data)
-      console.log(response.data)
+      // console.log(response.data)
       dispatch({
         type: AUTH_SIGNIN,
         payload: response.data,

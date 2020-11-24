@@ -32,7 +32,7 @@ router.post(
   signin
 )
 
-router.get("/signout", isSignedIn, isAuthenticated, signout)
+router.get("/signout", signout)
 
 // router.get("/isme", isSignedIn, (req, res) => {
 //   res.send("hi")
