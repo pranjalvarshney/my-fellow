@@ -1,12 +1,11 @@
 import { Grid } from "@material-ui/core"
 import React from "react"
 import { Base } from "../../common/Base/Base"
-import HomeCenter from "./components/HomeCenter"
 import { HomeRightBar } from "./components/HomeRightBar"
 import { HomeSideBar } from "./components/HomeSideBar"
 import "./Home.css"
 
-export const Home = () => {
+export const Home = ({ children }) => {
   return (
     <Base>
       <div className="home">
@@ -15,7 +14,7 @@ export const Home = () => {
             <HomeSideBar />
           </Grid>
           <Grid item xs={5}>
-            <HomeCenter />
+            {children}
           </Grid>
           <Grid item xs={3}>
             <HomeRightBar />

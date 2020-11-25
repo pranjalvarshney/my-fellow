@@ -1,18 +1,27 @@
-.header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.header > .header-banner{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.header-part-1 {
+  flex: 3;
 }
-.header > .header-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+.header-part-2 {
+  flex: 6;
+}
+.header-part-3 {
+  flex: 3;
+}
+.header > .header-banner {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.header > .header-part-3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
