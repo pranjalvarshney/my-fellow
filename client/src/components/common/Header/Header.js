@@ -8,6 +8,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  TextField,
   Toolbar,
   Typography,
 } from "@material-ui/core"
@@ -21,7 +22,7 @@ import { Link, withRouter } from "react-router-dom"
 
 const currentTab = (history, path) => {
   if (history.location.pathname === path) {
-    return { color: "red", fontSize: "30px" }
+    return { color: "blue", fontSize: "30px" }
   } else {
     return { color: "grey", fontSize: "28px" }
   }
@@ -83,34 +84,37 @@ const Header = ({ history }) => {
           </div>
 
           <div className="header-part-3">
-            <Typography>
-              <Button>My Friends</Button>
-              <Button>Profile</Button>
-              <IconButton onClick={handleMoreOption}>
-                <MoreVertIcon />
-              </IconButton>
-              <Menu
-                id="fade-menu"
-                anchorEl={moreOption}
-                keepMounted
-                open={open}
-                onClose={handleClose}
-                TransitionComponent={Fade}
+            <TextField
+              id="outlined-password-input"
+              label="Search"
+              type="text"
+              size="small"
+              variant="outlined"
+            />
+            <IconButton onClick={handleMoreOption}>
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              id="fade-menu"
+              anchorEl={moreOption}
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Fade}
+            >
+              <MenuItem onClick={handleClose}>View Profile</MenuItem>
+              <MenuItem onClick={handleClose}>About University</MenuItem>
+              <MenuItem onClick={handleClose}>Help & Support</MenuItem>
+              <MenuItem onClick={handleClose}>Settings & Privacy</MenuItem>
+              <MenuItem onClick={handleClose}>Give Feedback</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  context.signoutUser()
+                }}
               >
-                <MenuItem onClick={handleClose}>View Profile</MenuItem>
-                <MenuItem onClick={handleClose}>About University</MenuItem>
-                <MenuItem onClick={handleClose}>Help & Support</MenuItem>
-                <MenuItem onClick={handleClose}>Settings & Privacy</MenuItem>
-                <MenuItem onClick={handleClose}>Give Feedback</MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    context.signoutUser()
-                  }}
-                >
-                  Signout
-                </MenuItem>
-              </Menu>
-            </Typography>
+                Signout
+              </MenuItem>
+            </Menu>
           </div>
         </Toolbar>
       </AppBar>
