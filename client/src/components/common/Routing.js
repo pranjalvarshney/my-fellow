@@ -7,7 +7,11 @@ import { SimpleRoute } from "../auth/SimpleRoute"
 import { Loading } from "../Loading_Backdrop/Loading"
 import { Login } from "../Login/Login"
 import { Signup } from "../Login/Signup"
-import { Home } from "../pages/Home/Home"
+import { Ads } from "../pages/Home/components/Ads"
+import { Blogs } from "../pages/Home/components/Blogs"
+import { Feeds } from "../pages/Home/components/Feeds"
+import { InternshipsAndPlacements } from "../pages/Home/components/InternshipsAndPlacements"
+import { Profile } from "../pages/Profile/Profile"
 
 export const Routing = () => {
   const context = useContext(AuthContext)
@@ -65,7 +69,15 @@ export const Routing = () => {
       {context.loading && <Loading />}
       <BrowserRouter>
         <Switch>
-          <PrivateRoute exact path="/" component={Home} />
+          <PrivateRoute exact path="/" component={Feeds} />
+          <PrivateRoute
+            exact
+            path="/internships-and-placements"
+            component={InternshipsAndPlacements}
+          />
+          <PrivateRoute exact path="/ads" component={Ads} />
+          <PrivateRoute exact path="/blogs" component={Blogs} />
+          <PrivateRoute exact path="/profile" component={Profile} />
           <SimpleRoute exact path="/signup" component={Signup} />
           <SimpleRoute exact path="/signin" component={Login} />
         </Switch>

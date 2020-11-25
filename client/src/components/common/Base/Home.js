@@ -1,13 +1,14 @@
 import { Grid } from "@material-ui/core"
 import React from "react"
-import { Base } from "../../common/Base/Base"
-import { HomeRightBar } from "./components/HomeRightBar"
-import { HomeSideBar } from "./components/HomeSideBar"
+import { HomeRightBar } from "../../pages/Home/components/HomeRightBar"
+import { HomeSideBar } from "../../pages/Home/components/HomeSideBar"
+import Header from "../Header/Header"
 import "./Home.css"
 
 export const Home = ({ children }) => {
   return (
-    <Base>
+    <div>
+      <Header />
       <div className="home">
         <Grid container justify="space-evenly" direction="row">
           <Grid item xs={3}>
@@ -21,6 +22,6 @@ export const Home = ({ children }) => {
           </Grid>
         </Grid>
       </div>
-    </Base>
+    </div>
   )
 }

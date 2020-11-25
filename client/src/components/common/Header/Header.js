@@ -22,7 +22,7 @@ import { Link, withRouter } from "react-router-dom"
 
 const currentTab = (history, path) => {
   if (history.location.pathname === path) {
-    return { color: "red", fontSize: "30px" }
+    return { color: "blue", fontSize: "30px" }
   } else {
     return { color: "grey", fontSize: "28px" }
   }
