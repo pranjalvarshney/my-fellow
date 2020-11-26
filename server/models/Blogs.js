@@ -5,6 +5,7 @@ const blogSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
+      required: true
     },
     title: {
       type: String,
@@ -15,6 +16,7 @@ const blogSchema = new mongoose.Schema(
     content: {
       type: String,
       max: 3000,
+      required: true
     },
     likes: [
       {
