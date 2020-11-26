@@ -20,6 +20,7 @@ app.use(express.json())
 app.use("/api/v1", require("./routes/auth.route"))
 app.use("/api/v1", require("./routes/user.route"))
 app.use("/api/v1", require("./routes/post.route"))
+app.use("/api/v1", require("./routes/blog.route"))
 
 app.get("/", (req, res) => {
   res.send("this is the home")
