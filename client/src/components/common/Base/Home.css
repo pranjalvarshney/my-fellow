@@ -16,3 +16,6 @@
   height: calc(100vh - 100px);
   overflow-y: auto;
 }
+.home-right-bar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}

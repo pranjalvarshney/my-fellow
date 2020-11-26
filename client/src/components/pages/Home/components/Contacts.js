@@ -15,7 +15,7 @@ import SearchIcon from "@material-ui/icons/Search"
 
 export const Contacts = () => {
   return (
-    <Card>
+    <Card variant="outlined" className="mt-3">
       <CardContent>
         <Grid container direction="row" justify="space-between">
           <Grid item>

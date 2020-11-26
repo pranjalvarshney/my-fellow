@@ -11,7 +11,7 @@ import React from "react"
 
 export const PollCard = () => {
   return (
-    <Card>
+    <Card variant="outlined">
       <Grid>
         <Grid item direction="row" container justify="space-between">
           <Grid item>
