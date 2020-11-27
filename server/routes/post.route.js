@@ -3,7 +3,7 @@ const {
   isSignedIn,
   isAuthenticated,
 } = require("../controllers/auth.controller")
-const { createPost, allposts } = require("../controllers/post.controller")
+const { createPost, allposts, upload } = require("../controllers/post.controller")
 const { getUserById } = require("../controllers/user.controller")
 const router = express.Router()
 
@@ -11,7 +11,7 @@ const router = express.Router()
 router.param("userId", getUserById)
 
 // post route - create
-router.post("/create/post/:userId", createPost)
+router.post("/create/post/:userId", upload.single("picture"), createPost)
 
 // get all posts - read all
 router.get("/posts", isSignedIn, allposts)
