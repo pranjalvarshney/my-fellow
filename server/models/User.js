@@ -9,6 +9,14 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    pic: {
+      data: Buffer,
+      contentType: String,
+    },
+    bio: {
+      type: String,
+      max: 50,
+    },
     rollno: {
       type: String,
     },
