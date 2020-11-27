@@ -9,7 +9,7 @@ import {
 import React, { useContext } from "react"
 import { AuthContext } from "../../../context/authContext/authContext"
 import Header from "../../common/Header/Header"
-import { HomeRightBar } from "../Home/components/HomeRightBar"
+import { HomeRightBar } from "../Home/HomeRightBar"
 import "./Profile.css"
 
 export const Profile = () => {

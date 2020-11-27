@@ -72,10 +72,10 @@ const Header = ({ history }) => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link to="/internships-and-placements">
+                <Link to="/jobs-and-placements">
                   <IconButton>
                     <BusinessCenterIcon
-                      style={currentTab(history, "/internships-and-placements")}
+                      style={currentTab(history, "/jobs-and-placements")}
                     />
                   </IconButton>
                 </Link>

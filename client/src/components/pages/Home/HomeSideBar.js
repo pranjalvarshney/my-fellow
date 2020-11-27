@@ -8,7 +8,7 @@ import {
   Paper,
 } from "@material-ui/core"
 import React, { useContext } from "react"
-import { AuthContext } from "../../../../context/authContext/authContext"
+import { AuthContext } from "../../../context/authContext/authContext"
 import PeopleAltRoundedIcon from "@material-ui/icons/PeopleAltRounded"
 import SupervisedUserCircleRoundedIcon from "@material-ui/icons/SupervisedUserCircleRounded"
 import BookmarksRoundedIcon from "@material-ui/icons/BookmarksRounded"

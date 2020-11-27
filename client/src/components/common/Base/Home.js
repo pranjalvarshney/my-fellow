@@ -1,7 +1,7 @@
 import { Grid } from "@material-ui/core"
 import React from "react"
-import { HomeRightBar } from "../../pages/Home/components/HomeRightBar"
-import { HomeSideBar } from "../../pages/Home/components/HomeSideBar"
+import { HomeRightBar } from "../../pages/Home/HomeRightBar"
+import { HomeSideBar } from "../../pages/Home/HomeSideBar"
 import Header from "../Header/Header"
 import "./Home.css"
 
