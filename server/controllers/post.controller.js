@@ -15,8 +15,7 @@ const storage = multer.diskStorage({
       cb(null, 'uploads/posts');
   },
   filename: (req, file, cb) => {
-      console.log(file);
-      cb(null, Date.now() + "_" + file.originalname);
+      cb(null, file.fieldname + "_" + Date.now() + "_" + path.extname(file.originalname));
   }
 });
 const fileFilter = (req, file, cb) => {
@@ -30,7 +29,12 @@ exports.upload = multer({ storage: storage, fileFilter: fileFilter });
 
 exports.createPost = (req, res) => {
   const { user, content } = req.body
-  const picture = req.file.path
+  const files = req.files
+  const picture = []
+  for (let i = 0; i < files.length; i++)
+  {
+    picture[i] = files[i].path
+  }
   const newPost = Post({ user, content, picture })
   newPost.save((err, post) => {
     if (err) {

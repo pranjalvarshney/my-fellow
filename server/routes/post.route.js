@@ -11,7 +11,7 @@ const router = express.Router()
 router.param("userId", getUserById)
 
 // post route - create
-router.post("/create/post/:userId", upload.single("picture"), createPost)
+router.post("/create/post/:userId", isSignedIn, isAuthenticated, upload.array("picture", 10), createPost)
 
 // get all posts - read all
 router.get("/posts", isSignedIn, allposts)
