@@ -2,6 +2,7 @@ import { Grid } from "@material-ui/core"
 import React from "react"
 import { HomeRightBar } from "../../pages/Home/HomeRightBar"
 import { HomeSideBar } from "../../pages/Home/HomeSideBar"
+import { InputBox } from "../../pages/Home/InputBox"
 import Header from "../Header/Header"
 import "./Home.css"
 
@@ -10,11 +11,12 @@ export const Home = ({ children }) => {
     <div>
       <Header />
       <div className="home">
-        <Grid container justify="center" direction="row">
+        <Grid container spacing={3} justify="center" direction="row">
           <Grid item md={3}>
             <HomeSideBar />
           </Grid>
           <Grid item md={5}>
+            <InputBox />
             {children}
           </Grid>
           <Grid item md={3}>

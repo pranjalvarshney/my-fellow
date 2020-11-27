@@ -19,3 +19,11 @@
 .home-right-bar::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
+#post-wrapper {
+  margin-top: 16px;
+  height: calc(100vh - 35vh);
+  overflow-y: auto;
+}
+#post-wrapper::-webkit-scrollbar {
+  display: none;
+}
