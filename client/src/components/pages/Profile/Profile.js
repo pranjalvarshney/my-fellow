@@ -18,7 +18,7 @@ export const Profile = () => {
     <div className="profile container">
       <Header />
       <Grid justify="center" spacing={3} container>
-        <Grid item xs={10} md={7}>
+        <Grid item xs={10} md={9}>
           <Card className="px-3" variant="outlined">
             <Grid container direction="row" spacing={1} justify="flex-start">
               <Grid

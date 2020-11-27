@@ -10,14 +10,14 @@ export const Home = ({ children }) => {
     <div>
       <Header />
       <div className="home">
-        <Grid container justify="space-evenly" direction="row">
-          <Grid item xs={3}>
+        <Grid container justify="center" direction="row">
+          <Grid item md={3}>
             <HomeSideBar />
           </Grid>
-          <Grid item xs={5}>
+          <Grid item md={5}>
             {children}
           </Grid>
-          <Grid item xs={3}>
+          <Grid item md={3}>
             <HomeRightBar />
           </Grid>
         </Grid>
