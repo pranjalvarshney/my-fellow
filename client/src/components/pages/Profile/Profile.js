@@ -9,7 +9,7 @@ import {
 import React, { useContext } from "react"
 import { AuthContext } from "../../../context/authContext/authContext"
 import Header from "../../common/Header/Header"
-import { HomeRightBar } from "../Home/components/HomeRightBar"
+import { HomeRightBar } from "../Home/HomeRightBar"
 import "./Profile.css"
 
 export const Profile = () => {
@@ -18,7 +18,7 @@ export const Profile = () => {
     <div className="profile container">
       <Header />
       <Grid justify="center" spacing={3} container>
-        <Grid item xs={10} md={7}>
+        <Grid item xs={10} md={9}>
           <Card className="px-3" variant="outlined">
             <Grid container direction="row" spacing={1} justify="flex-start">
               <Grid

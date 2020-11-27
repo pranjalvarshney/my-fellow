@@ -22,9 +22,9 @@ import { Link, withRouter } from "react-router-dom"
 
 const currentTab = (history, path) => {
   if (history.location.pathname === path) {
-    return { color: "blue", fontSize: "30px" }
+    return { color: "blue", fontSize: "36px" }
   } else {
-    return { color: "grey", fontSize: "28px" }
+    return { color: "grey", fontSize: "32px" }
   }
 }
 const Header = ({ history }) => {
@@ -72,10 +72,10 @@ const Header = ({ history }) => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link to="/internships-and-placements">
+                <Link to="/jobs-and-placements">
                   <IconButton>
                     <BusinessCenterIcon
-                      style={currentTab(history, "/internships-and-placements")}
+                      style={currentTab(history, "/jobs-and-placements")}
                     />
                   </IconButton>
                 </Link>
