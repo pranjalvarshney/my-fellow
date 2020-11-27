@@ -18,6 +18,9 @@ const blogSchema = new mongoose.Schema(
       max: 3000,
       required: true
     },
+    picture: {
+      type: String,
+    },
     likes: [
       {
         type: mongoose.Schema.ObjectId,
