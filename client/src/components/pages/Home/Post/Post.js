@@ -13,11 +13,13 @@ import ShareIcon from "@material-ui/icons/Share"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 import { Home } from "../../../common/Base/Home"
+import { InputBox } from "../InputBox"
 
 export const Post = () => {
   return (
     <Home>
       <div id="post-wrapper" className="px-2">
+        <InputBox />
         <Card variant="outlined">
           <CardHeader
             avatar={<Avatar aria-label="recipe">R</Avatar>}

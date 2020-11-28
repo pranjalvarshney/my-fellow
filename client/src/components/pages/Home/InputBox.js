@@ -8,7 +8,7 @@ import PollIcon from "@material-ui/icons/Poll"
 export const InputBox = () => {
   const context = useContext(AuthContext)
   return (
-    <Paper elevation={3} className="p-3">
+    <Paper elevation={1} variant="outlined" className="p-3 mb-3">
       <Button fullWidth>
         <Grid container justify="space-between" alignItems="center">
           <Avatar />
