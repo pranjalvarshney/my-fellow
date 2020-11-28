@@ -2,7 +2,25 @@ const Blog = require("../models/Blogs");
 const multer = require("multer");
 const path = require("path");
 const fs = require('fs');
-   
+
+exports.getBlogById = (req, res, next, Id) => {
+  Blog.findById(Id).exec((err, blog) => {
+    if (err) {
+      return res.status(400).json({
+        errorMsg: "An error occured",
+      })
+    }
+    if (!blog) {
+      return res.status(400).json({
+        errorMsg: "Blog not found",
+      })
+    }
+    req.blogs = blog
+    next()
+  })
+}
+
+
 fs.mkdir('uploads', (err) => { 
     if (err) {}
     fs.mkdir('uploads/blogs', (err) => { 
@@ -29,7 +47,10 @@ exports.upload = multer({ storage: storage, fileFilter: fileFilter });
 
 exports.createBlog = (req, res) => {
     const {user, title, content} = req.body;
-    const picture = req.file.path;
+    var picture;
+    if(req.file){
+      picture = req.file.path;
+    }
     const newBlog = Blog({user, title, content, picture})
     newBlog.save((err, blog) => {
         if (err) {
@@ -39,6 +60,7 @@ exports.createBlog = (req, res) => {
       })
 }
 
+// read all blogs
 exports.allblogs = (req, res) => {
     Blog.find().exec((err, blogs) => {
         if (err) {
@@ -46,4 +68,37 @@ exports.allblogs = (req, res) => {
         }
         return res.json(blogs)
       })
+}
+
+// update blog
+exports.updateBlog = (req, res) => {
+  Blog.findByIdAndUpdate(
+    { _id: req.blogs._id },
+    { $set: req.body },
+    { useFindAndModify: false, new: true },
+    (err, blog) => {
+      if (err || !blog) {
+        return res.status(400).json({
+          error: "An error occured,  try again later",
+        })
+      }
+      return res.status(200).json(blog)
+    }
+  )
+}
+
+// delete blog
+exports.deleteBlog = (req, res) => {
+  Blog.findByIdAndRemove(
+    { _id: req.blogs._id },
+    { useFindAndModify: false, new: true },
+    (err, blog) => {
+      if (err || !blog) {
+        return res.status(400).json({
+          error: "An error occured,  try again later",
+        })
+      }
+      return res.status(200).json({message: "Blog has been deleted"})
+    }
+  )
 }
