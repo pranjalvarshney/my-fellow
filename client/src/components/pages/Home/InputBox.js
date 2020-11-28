@@ -1,9 +1,10 @@
 import { Fab, Grid, Button, Paper, Avatar } from "@material-ui/core"
 import React, { useContext } from "react"
-import CreateIcon from "@material-ui/icons/Create"
 import { AuthContext } from "../../../context/authContext/authContext"
 import BrokenImageIcon from "@material-ui/icons/BrokenImage"
 import PollIcon from "@material-ui/icons/Poll"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEdit, faFeather } from "@fortawesome/free-solid-svg-icons"
 
 export const InputBox = () => {
   const context = useContext(AuthContext)
@@ -31,7 +32,14 @@ export const InputBox = () => {
         className="pt-2"
       >
         <Grid item>
-          <Button startIcon={<CreateIcon />}>Write Blog</Button>
+          <Button startIcon={<FontAwesomeIcon icon={faEdit} />}>
+            Create Post
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button startIcon={<FontAwesomeIcon icon={faFeather} />}>
+            Write Blog
+          </Button>
         </Grid>
         <Grid item>
           <Button startIcon={<BrokenImageIcon />}>Post Ad</Button>
