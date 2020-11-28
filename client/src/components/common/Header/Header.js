@@ -14,17 +14,20 @@ import {
 } from "@material-ui/core"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 import { AuthContext } from "../../../context/authContext/authContext"
-import HomeIcon from "@material-ui/icons/Home"
-import MenuBookIcon from "@material-ui/icons/MenuBook"
-import ViewCarouselIcon from "@material-ui/icons/ViewCarousel"
-import BusinessCenterIcon from "@material-ui/icons/BusinessCenter"
 import { Link, withRouter } from "react-router-dom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {
+  faUserGraduate,
+  faHome,
+  faBookReader,
+  faHandsHelping,
+} from "@fortawesome/free-solid-svg-icons"
 
 const currentTab = (history, path) => {
   if (history.location.pathname === path) {
-    return { color: "blue", fontSize: "36px" }
+    return { color: "blue", fontSize: "28px" }
   } else {
-    return { color: "grey", fontSize: "32px" }
+    return { color: "grey", fontSize: "24px" }
   }
 }
 const Header = ({ history }) => {
@@ -53,28 +56,38 @@ const Header = ({ history }) => {
               <Grid item>
                 <Link to="/">
                   <IconButton>
-                    <HomeIcon style={currentTab(history, "/")} />
+                    <FontAwesomeIcon
+                      icon={faHome}
+                      style={currentTab(history, "/")}
+                    />
                   </IconButton>
                 </Link>
               </Grid>
               <Grid item>
                 <Link to="/blogs">
                   <IconButton>
-                    <MenuBookIcon style={currentTab(history, "/blogs")} />
+                    <FontAwesomeIcon
+                      icon={faBookReader}
+                      style={currentTab(history, "/blogs")}
+                    />
                   </IconButton>
                 </Link>
               </Grid>
               <Grid item>
                 <Link to="/ads">
                   <IconButton>
-                    <ViewCarouselIcon style={currentTab(history, "/ads")} />
+                    <FontAwesomeIcon
+                      icon={faHandsHelping}
+                      style={currentTab(history, "/ads")}
+                    />
                   </IconButton>
                 </Link>
               </Grid>
               <Grid item>
                 <Link to="/jobs-and-placements">
                   <IconButton>
-                    <BusinessCenterIcon
+                    <FontAwesomeIcon
+                      icon={faUserGraduate}
                       style={currentTab(history, "/jobs-and-placements")}
                     />
                   </IconButton>
