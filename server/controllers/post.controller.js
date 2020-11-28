@@ -3,6 +3,24 @@ const multer = require("multer");
 const path = require("path");
 const fs = require('fs');
    
+exports.getPostById = (req, res, next, Id) => {
+  Post.findById(Id).exec((err, post) => {
+    if (err) {
+      return res.status(400).json({
+        errorMsg: "An error occured",
+      })
+    }
+    if (!post) {
+      return res.status(400).json({
+        errorMsg: "Post not found",
+      })
+    }
+    req.posts = post
+    next()
+  })
+}
+
+
 fs.mkdir('uploads', (err) => { 
     if (err) {}
     fs.mkdir('uploads/posts', (err) => { 
@@ -51,4 +69,37 @@ exports.allposts = (req, res) => {
     }
     return res.json(posts)
   })
+}
+
+// update post
+exports.updatePost = (req, res) => {
+  Post.findByIdAndUpdate(
+    { _id: req.posts._id },
+    { $set: req.body },
+    { useFindAndModify: false, new: true },
+    (err, post) => {
+      if (err || !post) {
+        return res.status(400).json({
+          error: "An error occured,  try again later",
+        })
+      }
+      return res.status(200).json(post)
+    }
+  )
+}
+
+// delete post
+exports.deletePost = (req, res) => {
+  Post.findByIdAndRemove(
+    { _id: req.posts._id },
+    { useFindAndModify: false, new: true },
+    (err, post) => {
+      if (err || !post) {
+        return res.status(400).json({
+          error: "An error occured,  try again later",
+        })
+      }
+      return res.status(200).json({message: "Post has been deleted"})
+    }
+  )
 }
