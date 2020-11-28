@@ -15,11 +15,11 @@ const storage = multer.diskStorage({
       cb(null, 'uploads/posts');
   },
   filename: (req, file, cb) => {
-      cb(null, file.fieldname + "_" + Date.now() + "_" + path.extname(file.originalname));
+    cb(null, "post_" + new Date(Date.now()).toISOString().replace(/-|:|Z|\./g, '').replace(/T/g, '_') + path.extname(file.originalname));
   }
 });
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') {
+  if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png' || file.mimetype == 'image/gif' || file.mimetype == 'image/svg+xml' || file.mimetype == 'video/mp4') {
       cb(null, true);
   } else {
       cb(null, false);
