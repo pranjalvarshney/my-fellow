@@ -72,6 +72,17 @@ exports.allAds = (req, res) => {
         return res.json(ads)
     })
 }
+
+//Read a particular ad
+exports.getAd = (req, res) => {
+    Ads.find({_id: req.ads._id}).exec((err, ad) => {
+        if (err) {
+          res.status(400).json("error")
+        }
+        return res.json(ad)
+    })
+}
+
     
 //Update an Ad
 exports.updateAd = (req, res) => {
