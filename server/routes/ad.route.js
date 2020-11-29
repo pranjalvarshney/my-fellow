@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAdById, createAd, upload, allAds } = require("../controllers/ad.controller");
+const { getAdById, createAd, upload, allAds, updateAd, deleteAd } = require("../controllers/ad.controller");
 const { isSignedIn, isAuthenticated } = require("../controllers/auth.controller");
 const { getUserById } = require("../controllers/user.controller");
 const router = express.Router();
@@ -13,5 +13,11 @@ router.post("/create/ad/:userId", isSignedIn, isAuthenticated, upload.array("pic
 
 // get all ads - read all
 router.get("/ads", isSignedIn, allAds);
+
+// update ad
+router.put("/update/ad/:userId/:adId", isSignedIn, isAuthenticated, updateAd);
+
+// delete ad
+router.delete("/delete/ad/:userId/:adId",isSignedIn, isAuthenticated, deleteAd);
 
 module.exports = router;

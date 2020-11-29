@@ -45,6 +45,7 @@ const fileFilter = (req, file, cb) => {
 }
 exports.upload = multer({ storage: storage, fileFilter: fileFilter });
 
+//Create an Ad
 exports.createAd = (req, res) => {
     const {user, title, content, contact, price} = req.body;
     const files = req.files
@@ -62,6 +63,7 @@ exports.createAd = (req, res) => {
       })
 }
 
+//Read all ads
 exports.allAds = (req, res) => {
     Ads.find().exec((err, ads) => {
         if (err) {
@@ -70,4 +72,36 @@ exports.allAds = (req, res) => {
         return res.json(ads)
     })
 }
+    
+//Update an Ad
+exports.updateAd = (req, res) => {
+    Ads.findByIdAndUpdate(
+        { _id: req.ads._id },
+        { $set: req.body },
+        { useFindAndModify: false, new: true },
+        (err, ad) => {
+        if (err || !ad) {
+            return res.status(400).json({
+                error: "An error occured,  try again later",
+            })
+        }
+        return res.status(200).json(ad)
+    })
+}
+
+//Delete an Ad
+exports.deleteAd = (req, res) => {
+    Ads.findByIdAndRemove(
+        { _id: req.ads._id },
+        { useFindAndModify: false, new: true },
+        (err, ad) => {
+          if (err || !ad) {
+            return res.status(400).json({
+              error: "An error occured,  try again later",
+            })
+          }
+          return res.status(200).json({message: "Ad has been deleted"})
+        }
+      )
+    }
     
