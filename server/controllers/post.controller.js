@@ -71,6 +71,16 @@ exports.allposts = (req, res) => {
   })
 }
 
+//Read a particular post
+exports.getPost = (req, res) => {
+    Post.find({_id: req.posts._id}).exec((err, post) => {
+        if (err) {
+          res.status(400).json("error")
+        }
+        return res.json(post)
+    })
+}
+
 // update post
 exports.updatePost = (req, res) => {
   Post.findByIdAndUpdate(
