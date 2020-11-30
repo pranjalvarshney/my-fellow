@@ -70,6 +70,17 @@ exports.allblogs = (req, res) => {
       })
 }
 
+//Read a particular blog
+exports.getBlog = (req, res) => {
+    Blog.find({_id: req.blogs._id}).exec((err, blog) => {
+        if (err) {
+          res.status(400).json("error")
+        }
+        return res.json(blog)
+    })
+}
+
+
 // update blog
 exports.updateBlog = (req, res) => {
   Blog.findByIdAndUpdate(
