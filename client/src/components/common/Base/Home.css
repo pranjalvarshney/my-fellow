@@ -19,10 +19,10 @@
 .home-right-bar::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
-#post-wrapper {
+#home-center-wrapper {
   height: calc(100vh - 100px);
   overflow-y: auto;
 }
-#post-wrapper::-webkit-scrollbar {
+#home-center-wrapper::-webkit-scrollbar {
   display: none;
 }
