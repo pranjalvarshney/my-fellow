@@ -1,6 +1,6 @@
-import { Grid, TextareaAutosize } from "@material-ui/core"
+import { Grid, Button, TextareaAutosize } from "@material-ui/core"
 import React, { useState } from "react"
-import { Modal, Button, Form } from "react-bootstrap"
+import { Modal, Form } from "react-bootstrap"
 
 export const CreatePost = ({ show, handleModal }) => {
   const [uploadFile, setUploadFile] = useState(null)
