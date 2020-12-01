@@ -17,6 +17,7 @@ app.use(cookieparser())
 app.use(express.json())
 // routes
 
+app.use("/uploads", express.static("uploads"))
 app.use("/api/v1", require("./routes/auth.route"))
 app.use("/api/v1", require("./routes/user.route"))
 app.use("/api/v1", require("./routes/post.route"))
