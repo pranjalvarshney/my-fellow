@@ -9,7 +9,6 @@ import { CreatePost } from "../Modals/CreatePost"
 
 export const InputBox = () => {
   const context = useContext(AuthContext)
-
   const [showPost, setShow] = useState(false)
 
   const handleModalPost = () => {
@@ -28,7 +27,6 @@ export const InputBox = () => {
             disabled
             style={{ width: "90%" }}
             size="medium"
-            no
           >
             {`What's on your mind? ${context.user.name}`}
           </Fab>

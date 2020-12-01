@@ -1,7 +1,12 @@
 import axios from "axios"
 import React, { useReducer } from "react"
 import { API } from "../../utils/proxy"
-import { POSTS_GET_ALL } from "../types"
+import {
+  POSTS_CREATE,
+  POSTS_ERROR,
+  POSTS_GET_ALL,
+  POSTS_LOADING,
+} from "../types"
 import { PostContext } from "./postContext"
 import postReducer from "./postReducer"
 
@@ -15,6 +20,10 @@ export const PostState = ({ children }) => {
 
   const getAllPost = async () => {
     try {
+      dispatch({
+        type: POSTS_LOADING,
+        payload: true,
+      })
       const response = await axios.get(`${API}/posts`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
@@ -25,11 +34,49 @@ export const PostState = ({ children }) => {
         type: POSTS_GET_ALL,
         payload: response.data,
       })
-    } catch (error) {}
+    } catch (error) {
+      dispatch({
+        type: POSTS_ERROR,
+        payload: error.response.errorMsg,
+      })
+    }
+  }
+
+  const createPost = async (formData, userId) => {
+    try {
+      dispatch({
+        type: POSTS_LOADING,
+        payload: true,
+      })
+
+      const response = await axios.post(
+        `${API}/create/post/${userId}`,
+        formData,
+        {
+          headers: {
+            "content-type": "multipart/form-data",
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("_token")
+            )}`,
+          },
+        }
+      )
+      dispatch({
+        type: POSTS_CREATE,
+        payload: response.data,
+      })
+      console.log(response.data)
+    } catch (error) {
+      console.log(error.response)
+      dispatch({
+        type: POSTS_ERROR,
+        payload: error.response.errorMsg,
+      })
+    }
   }
 
   return (
-    <PostContext.Provider value={{ post: state.post, getAllPost }}>
+    <PostContext.Provider value={{ post: state.post, getAllPost, createPost }}>
       {children}
     </PostContext.Provider>
   )
