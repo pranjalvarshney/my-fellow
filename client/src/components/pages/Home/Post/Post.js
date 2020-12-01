@@ -39,7 +39,7 @@ export const Post = () => {
               alignItems="center"
             >
               <CameraIcon fontSize="large" />
-              <h6 className="">No post out there</h6>
+              <h6 className="mt-2">No post out there</h6>
             </Grid>
           </div>
         )}

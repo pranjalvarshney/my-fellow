@@ -8,11 +8,11 @@ import {
   Typography,
 } from "@material-ui/core"
 import React from "react"
-
 import FavoriteIcon from "@material-ui/icons/Favorite"
 import ShareIcon from "@material-ui/icons/Share"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
+import Moment from "react-moment"
 
 export const PostCard = ({ post }) => {
   return (
@@ -25,18 +25,16 @@ export const PostCard = ({ post }) => {
           </IconButton>
         }
         title={post.user}
-        subheader={post.createdAt}
+        subheader={<Moment fromNow>{post.createdAt}</Moment>}
       />
       <img
         width="100%"
-        src="https://www.healthyfanz.com/wp-content/uploads/2020/01/Jalebi-Recipe-Sweet-Dish.jpg"
+        src={`localhost:4040/${post.picture[0]}`}
         alt="Paella dish"
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {post.content}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
