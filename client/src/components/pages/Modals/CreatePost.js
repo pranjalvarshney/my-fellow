@@ -1,10 +1,12 @@
 import { Grid, Button, TextareaAutosize } from "@material-ui/core"
 import React, { useState } from "react"
 import { Modal, Form } from "react-bootstrap"
+import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate"
 
 export const CreatePost = ({ show, handleModal }) => {
   const [uploadFile, setUploadFile] = useState(null)
   const [content, setContent] = useState("")
+  console.log(uploadFile, content)
   return (
     <Modal show={show} onHide={handleModal} centered id="input-modal">
       <Modal.Header closeButton>
@@ -35,7 +37,23 @@ export const CreatePost = ({ show, handleModal }) => {
             </Grid>
           </Grid>
           <Grid item md={6}>
-            <img src={uploadFile} alt="input file" width="100%" />
+            {uploadFile ? (
+              <img src={uploadFile} alt="input file" width="100%" />
+            ) : (
+              <div
+                className="container"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "60%",
+                  flexDirection: "column",
+                }}
+              >
+                <AddPhotoAlternateIcon fontSize="large" />
+                <h6>Image Preview</h6>
+              </div>
+            )}
           </Grid>
         </Grid>
       </Modal.Body>
