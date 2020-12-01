@@ -32,7 +32,7 @@ router.post(
 router.get("/posts", isSignedIn, allposts)
 
 //get a particular post
-router.get("/posts/:postId", isSignedIn, getPost)
+router.get("/post/:postId", isSignedIn, getPost)
 
 // update post
 router.put(
