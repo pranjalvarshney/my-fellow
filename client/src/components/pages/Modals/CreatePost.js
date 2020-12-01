@@ -20,7 +20,6 @@ export const CreatePost = ({ show, handleModal }) => {
     formData.append("user", authContext.user._id)
     formData.append("content", content)
     formData.append("picture", uploadFile)
-    console.log(formData.values)
     postContext.createPost(formData, authContext.user._id)
   }
 
