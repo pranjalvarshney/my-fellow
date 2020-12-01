@@ -24,7 +24,7 @@ export const PostCard = ({ post }) => {
             <MoreVertIcon />
           </IconButton>
         }
-        title={post.user}
+        title={post.user.name}
         subheader={<Moment fromNow>{post.createdAt}</Moment>}
       />
       <img width="100%" src={`${post.picture[0]}`} alt="Paella dish" />
