@@ -1,8 +1,8 @@
 const Post = require("../models/Post")
-const multer = require("multer");
-const path = require("path");
-const fs = require('fs');
-   
+const multer = require("multer")
+const path = require("path")
+const fs = require("fs")
+
 exports.getPostById = (req, res, next, Id) => {
   Post.findById(Id).exec((err, post) => {
     if (err) {
@@ -20,37 +20,51 @@ exports.getPostById = (req, res, next, Id) => {
   })
 }
 
-
-fs.mkdir('uploads', (err) => { 
-    if (err) {}
-    fs.mkdir('uploads/posts', (err) => { 
-      if (err) {}
-  });
-}); 
+fs.mkdir("uploads", (err) => {
+  if (err) {
+  }
+  fs.mkdir("uploads/posts", (err) => {
+    if (err) {
+    }
+  })
+})
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-      cb(null, 'uploads/posts');
+    cb(null, "uploads/posts")
   },
   filename: (req, file, cb) => {
-    cb(null, "post_" + new Date(Date.now()).toISOString().replace(/-|:|Z|\./g, '').replace(/T/g, '_') + path.extname(file.originalname));
-  }
-});
+    cb(
+      null,
+      "post_" +
+        new Date(Date.now())
+          .toISOString()
+          .replace(/-|:|Z|\./g, "")
+          .replace(/T/g, "_") +
+        path.extname(file.originalname)
+    )
+  },
+})
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png' || file.mimetype == 'image/gif' || file.mimetype == 'image/svg+xml' || file.mimetype == 'video/mp4') {
-      cb(null, true);
+  if (
+    file.mimetype == "image/jpeg" ||
+    file.mimetype == "image/png" ||
+    file.mimetype == "image/gif" ||
+    file.mimetype == "image/svg+xml" ||
+    file.mimetype == "video/mp4"
+  ) {
+    cb(null, true)
   } else {
-      cb(null, false);
+    cb(null, false)
   }
 }
-exports.upload = multer({ storage: storage, fileFilter: fileFilter });
+exports.upload = multer({ storage: storage, fileFilter: fileFilter })
 
 exports.createPost = (req, res) => {
   const { user, content } = req.body
   const files = req.files
   const picture = []
-  for (let i = 0; i < files.length; i++)
-  {
+  for (let i = 0; i < files.length; i++) {
     picture[i] = files[i].path
   }
   const newPost = Post({ user, content, picture })
@@ -73,29 +87,52 @@ exports.allposts = (req, res) => {
 
 //Read a particular post
 exports.getPost = (req, res) => {
-    Post.find({_id: req.posts._id}).exec((err, post) => {
-        if (err) {
-          res.status(400).json("error")
-        }
-        return res.json(post)
-    })
+  Post.find({ _id: req.posts._id }).exec((err, post) => {
+    if (err) {
+      res.status(400).json("error")
+    }
+    return res.json(post)
+  })
 }
 
 // update post
 exports.updatePost = (req, res) => {
-  Post.findByIdAndUpdate(
-    { _id: req.posts._id },
-    { $set: req.body },
-    { useFindAndModify: false, new: true },
-    (err, post) => {
-      if (err || !post) {
-        return res.status(400).json({
-          error: "An error occured,  try again later",
+  Post.findById({ _id: req.posts._id }).exec((err, post) => {
+    let path = post.picture[0]
+
+    fs.readdir(path, (err, files) => {
+      if (path) {
+        fs.unlink(path, (err) => {
+          if (err) {
+            console.error(err)
+            return
+          }
+
+          const { user, content } = req.body
+          const files = req.files
+          const picture = []
+          for (let i = 0; i < files.length; i++) {
+            picture[i] = files[i].path
+          }
+          const updateObj = { user, content, picture }
+
+          Post.findByIdAndUpdate(
+            { _id: req.posts._id },
+            { $set: updateObj },
+            { useFindAndModify: false, new: true },
+            (err, post) => {
+              if (err || !post) {
+                return res.status(400).json({
+                  error: "An error occured,  try again later",
+                })
+              }
+              return res.status(200).json(post)
+            }
+          )
         })
       }
-      return res.status(200).json(post)
-    }
-  )
+    })
+  })
 }
 
 // delete post
@@ -109,7 +146,7 @@ exports.deletePost = (req, res) => {
           error: "An error occured,  try again later",
         })
       }
-      return res.status(200).json({message: "Post has been deleted"})
+      return res.status(200).json({ message: "Post has been deleted" })
     }
   )
 }

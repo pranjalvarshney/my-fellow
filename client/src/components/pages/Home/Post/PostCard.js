@@ -16,7 +16,7 @@ import Moment from "react-moment"
 
 export const PostCard = ({ post }) => {
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" className="mb-3">
       <CardHeader
         avatar={<Avatar aria-label="recipe">R</Avatar>}
         action={
@@ -27,11 +27,7 @@ export const PostCard = ({ post }) => {
         title={post.user}
         subheader={<Moment fromNow>{post.createdAt}</Moment>}
       />
-      <img
-        width="100%"
-        src={`localhost:4040/${post.picture[0]}`}
-        alt="Paella dish"
-      />
+      <img width="100%" src={`${post.picture[0]}`} alt="Paella dish" />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {post.content}
