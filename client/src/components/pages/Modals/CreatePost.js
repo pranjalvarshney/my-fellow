@@ -31,8 +31,8 @@ export const CreatePost = ({ show, handleModal }) => {
                 onChange={(e) =>
                   setUploadFile(URL.createObjectURL(e.target.files[0]))
                 }
-                id="exampleFormControlFile1"
                 label="Upload media"
+                multiple
               />
             </Grid>
           </Grid>

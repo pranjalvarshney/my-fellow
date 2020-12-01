@@ -16,7 +16,7 @@ import Moment from "react-moment"
 
 export const PostCard = ({ post }) => {
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" className="mb-3">
       <CardHeader
         avatar={<Avatar aria-label="recipe">R</Avatar>}
         action={
