@@ -12,7 +12,7 @@ export const CreatePost = ({ show, handleModal }) => {
       </Modal.Header>
 
       <Modal.Body>
-        <Grid container justify="space-between" direction="row" md={12}>
+        <Grid container justify="space-between" direction="row">
           <Grid item container direction="column" md={4}>
             <Grid item>
               <TextareaAutosize
