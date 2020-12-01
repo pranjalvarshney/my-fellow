@@ -4,20 +4,24 @@ const path = require("path")
 const fs = require("fs")
 
 exports.getPostById = (req, res, next, Id) => {
-  Post.findById(Id).exec((err, post) => {
-    if (err) {
-      return res.status(400).json({
-        errorMsg: "An error occured",
-      })
-    }
-    if (!post) {
-      return res.status(400).json({
-        errorMsg: "Post not found",
-      })
-    }
-    req.posts = post
-    next()
-  })
+  Post.findById(Id)
+    .populate("user")
+    .exec((err, post) => {
+      if (err) {
+        return res.status(400).json({
+          errorMsg: "An error occured",
+        })
+      }
+      if (!post) {
+        return res.status(400).json({
+          errorMsg: "Post not found",
+        })
+      }
+      post.user.salt = undefined
+      post.user.encryptedpassword = undefined
+      req.post = post
+      next()
+    })
 }
 
 fs.mkdir("uploads", (err) => {
@@ -77,27 +81,34 @@ exports.createPost = (req, res) => {
 }
 
 exports.allposts = (req, res) => {
-  Post.find().exec((err, posts) => {
-    if (err) {
-      res.status(400).json("error")
-    }
-    return res.json(posts)
-  })
+  Post.find()
+    .populate("user")
+    .exec((err, posts) => {
+      if (err) {
+        res.status(400).json("error")
+      }
+      posts.map((post) => {
+        post.user.salt = undefined
+        post.user.encryptedpassword = undefined
+      })
+      return res.json(posts)
+    })
 }
 
 //Read a particular post
 exports.getPost = (req, res) => {
-  Post.find({ _id: req.posts._id }).exec((err, post) => {
-    if (err) {
-      res.status(400).json("error")
-    }
-    return res.json(post)
-  })
+  // Post.find({ _id: req.post._id }).exec((err, post) => {
+  //   if (err) {
+  //     res.status(400).json("error")
+  //   }
+  //   return res.json(post)
+  // })
+  return res.json(req.post)
 }
 
 // update post
 exports.updatePost = (req, res) => {
-  Post.findById({ _id: req.posts._id }).exec((err, post) => {
+  Post.findById({ _id: req.post._id }).exec((err, post) => {
     let path = post.picture[0]
 
     fs.readdir(path, (err, files) => {
@@ -117,7 +128,7 @@ exports.updatePost = (req, res) => {
           const updateObj = { user, content, picture }
 
           Post.findByIdAndUpdate(
-            { _id: req.posts._id },
+            { _id: req.post._id },
             { $set: updateObj },
             { useFindAndModify: false, new: true },
             (err, post) => {
@@ -138,7 +149,7 @@ exports.updatePost = (req, res) => {
 // delete post
 exports.deletePost = (req, res) => {
   Post.findByIdAndRemove(
-    { _id: req.posts._id },
+    { _id: req.post._id },
     { useFindAndModify: false, new: true },
     (err, post) => {
       if (err || !post) {
