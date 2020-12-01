@@ -1,6 +1,6 @@
-import { Grid, TextareaAutosize } from "@material-ui/core"
+import { Grid, Button, TextareaAutosize } from "@material-ui/core"
 import React, { useState } from "react"
-import { Modal, Button, Form } from "react-bootstrap"
+import { Modal, Form } from "react-bootstrap"
 
 export const CreatePost = ({ show, handleModal }) => {
   const [uploadFile, setUploadFile] = useState(null)
@@ -12,7 +12,7 @@ export const CreatePost = ({ show, handleModal }) => {
       </Modal.Header>
 
       <Modal.Body>
-        <Grid container justify="space-between" direction="row" md={12}>
+        <Grid container justify="space-between" direction="row">
           <Grid item container direction="column" md={4}>
             <Grid item>
               <TextareaAutosize
