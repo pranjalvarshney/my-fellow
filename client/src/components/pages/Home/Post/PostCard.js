@@ -7,14 +7,17 @@ import {
   IconButton,
   Typography,
 } from "@material-ui/core"
-import React from "react"
+import React, { useContext } from "react"
 import FavoriteIcon from "@material-ui/icons/Favorite"
 import ShareIcon from "@material-ui/icons/Share"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 import Moment from "react-moment"
+import { PostContext } from "../../../../context/postContext/postContext"
 
 export const PostCard = ({ post }) => {
+  const context = useContext(PostContext)
+  console.log(context.loading)
   return (
     <Card variant="outlined" className="mb-3">
       <CardHeader

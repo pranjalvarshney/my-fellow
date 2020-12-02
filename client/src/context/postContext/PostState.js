@@ -14,7 +14,7 @@ export const PostState = ({ children }) => {
   const initialState = {
     post: [],
     error: "",
-    loading: "",
+    loading: false,
   }
   const [state, dispatch] = useReducer(postReducer, initialState)
 
@@ -24,6 +24,7 @@ export const PostState = ({ children }) => {
         type: POSTS_LOADING,
         payload: true,
       })
+      console.log(state)
       const response = await axios.get(`${API}/posts`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
@@ -35,6 +36,7 @@ export const PostState = ({ children }) => {
         payload: response.data,
       })
     } catch (error) {
+      console.log(error.response)
       dispatch({
         type: POSTS_ERROR,
         payload: error.response,
@@ -76,7 +78,15 @@ export const PostState = ({ children }) => {
   }
 
   return (
-    <PostContext.Provider value={{ post: state.post, getAllPost, createPost }}>
+    <PostContext.Provider
+      value={{
+        post: state.post,
+        loading: state.loading,
+        error: state.error,
+        getAllPost,
+        createPost,
+      }}
+    >
       {children}
     </PostContext.Provider>
   )

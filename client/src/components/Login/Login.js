@@ -27,8 +27,6 @@ export const Login = () => {
     e.preventDefault()
 
     await context.signinUser(formData)
-    try {
-    } catch (error) {}
   }
 
   return (
