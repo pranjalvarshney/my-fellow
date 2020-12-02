@@ -63,3 +63,20 @@ exports.getJob = (req, res) => {
     return res.json(job);
   });
 };
+
+// update job
+exports.updateJob = (req, res) => {
+  Job.findByIdAndUpdate(
+    { _id: req.job._id },
+    { $set: req.body },
+    { useFindAndModify: false, new: true },
+    (err, job) => {
+      if (err || !job) {
+        return res.status(400).json({
+          error: "An error occured,  try again later",
+        });
+      }
+      return res.status(200).json(job);
+    }
+  );
+};
