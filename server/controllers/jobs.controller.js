@@ -10,10 +10,10 @@ exports.getJobById = (req, res, next, Id) => {
     }
     if (!job) {
       return res.status(400).json({
-        errorMsg: "Blog not found",
+        errorMsg: "Job not found",
       });
     }
-    req.jobs = job;
+    req.job = job;
     next();
   });
 };
@@ -32,9 +32,22 @@ exports.createJob = (req, res) => {
 
   newJob.save((err, job) => {
     if (err) {
-      res.status(400).json("error");
-      console.log(err);
+      res.status(400).json({
+        errorMsg: "An error occured",
+      });
     }
     return res.status(200).json(job);
+  });
+};
+
+// read all jobs
+exports.allJobs = (req, res) => {
+  Job.find().exec((err, jobs) => {
+    if (err) {
+      res.status(400).json({
+        errorMsg: "An error occured",
+      });
+    }
+    return res.json(jobs);
   });
 };

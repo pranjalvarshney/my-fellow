@@ -47,7 +47,7 @@ const JobSchema = new mongoose.Schema(
       abtCompany: {
         type: String,
         max: 3000,
-        // required: true,
+        required: true,
       },
     },
 
@@ -55,7 +55,7 @@ const JobSchema = new mongoose.Schema(
       workDesc: {
         type: String,
         max: 3000,
-        // required: true,
+        required: true,
       },
 
       skillsReq: [
