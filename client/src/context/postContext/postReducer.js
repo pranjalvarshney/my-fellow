@@ -16,7 +16,7 @@ export default (state, action) => {
     case POSTS_LOADING:
       return {
         ...state,
-        loading: action.payload,
+        loading: true,
       }
     case POSTS_ERROR:
       return {
@@ -29,6 +29,7 @@ export default (state, action) => {
         ...state,
         post: action.payload,
         loading: false,
+        error: "",
       }
     default:
       return state
