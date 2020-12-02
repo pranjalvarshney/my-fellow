@@ -63,7 +63,9 @@ exports.createBlog = (req, res) => {
   const newBlog = Blog({ user, title, content, picture });
   newBlog.save((err, blog) => {
     if (err) {
-      res.status(400).json("error");
+      res.status(400).json({
+        errorMsg: "An error occured",
+      });
     }
     return res.status(200).json(blog);
   });
@@ -73,7 +75,9 @@ exports.createBlog = (req, res) => {
 exports.allblogs = (req, res) => {
   Blog.find().exec((err, blogs) => {
     if (err) {
-      res.status(400).json("error");
+      res.status(400).json({
+        errorMsg: "An error occured",
+      });
     }
     return res.json(blogs);
   });
@@ -83,7 +87,9 @@ exports.allblogs = (req, res) => {
 exports.getBlog = (req, res) => {
   Blog.find({ _id: req.blogs._id }).exec((err, blog) => {
     if (err) {
-      res.status(400).json("error");
+      res.status(400).json({
+        errorMsg: "An error occured",
+      });
     }
     return res.json(blog);
   });
