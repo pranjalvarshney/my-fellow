@@ -7,6 +7,9 @@ const {
   getJobById,
   createJob,
   allJobs,
+  getJob,
+  updateJob,
+  deleteJob,
 } = require("../controllers/jobs.controller");
 const { getUserById } = require("../controllers/user.controller");
 const router = express.Router();
@@ -18,7 +21,25 @@ router.param("jobId", getJobById);
 // create job
 router.post("/create/job/:userId", isSignedIn, isAuthenticated, createJob);
 
-// all blogs
+// read all jobs
 router.get("/jobs", isSignedIn, allJobs);
 
+//read a particular job
+router.get("/jobs/:jobId", isSignedIn, getJob);
+
+// update job
+router.put(
+  "/update/job/:userId/:jobId",
+  isSignedIn,
+  isAuthenticated,
+  updateJob
+);
+
+// delete job
+router.delete(
+  "/delete/job/:userId/:jobId",
+  isSignedIn,
+  isAuthenticated,
+  deleteJob
+);
 module.exports = router;
