@@ -27,13 +27,16 @@ export const PostCard = ({ post }) => {
         title={post.user.name}
         subheader={<Moment fromNow>{post.createdAt}</Moment>}
       />
-      <img width="100%" src={`${post.picture[0]}`} alt="Paella dish" />
-      <CardContent>
+      <CardContent className="py-1">
         <Typography variant="body2" color="textSecondary" component="p">
           {post.content}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      {post.picture.length > 0 && (
+        <img width="100%" src={`${post.picture[0]}`} alt={post.picture[0]} />
+      )}
+
+      <CardActions disableSpacing className="py-1">
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>

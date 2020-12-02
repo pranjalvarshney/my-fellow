@@ -11,8 +11,6 @@ export const CreatePost = ({ show, handleModal }) => {
   const [uploadFile, setUploadFile] = useState(null)
   const [preview, setPreview] = useState(null)
   const [content, setContent] = useState("")
-  // const [formData]
-  // console.log(uploadFile, content)
 
   const handleForm = async (e) => {
     e.preventDefault()
@@ -21,6 +19,8 @@ export const CreatePost = ({ show, handleModal }) => {
     formData.append("content", content)
     formData.append("picture", uploadFile)
     postContext.createPost(formData, authContext.user._id)
+    handleModal()
+    window.location.reload()
   }
 
   return (
