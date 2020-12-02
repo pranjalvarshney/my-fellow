@@ -14,7 +14,7 @@ export const PostState = ({ children }) => {
   const initialState = {
     post: [],
     error: "",
-    loading: false,
+    loading: true,
   }
   const [state, dispatch] = useReducer(postReducer, initialState)
 
@@ -30,6 +30,8 @@ export const PostState = ({ children }) => {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
         },
       })
+
+      console.log(state)
       console.log(response.data)
       dispatch({
         type: POSTS_GET_ALL,

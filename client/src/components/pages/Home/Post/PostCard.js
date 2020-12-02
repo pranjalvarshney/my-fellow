@@ -7,17 +7,14 @@ import {
   IconButton,
   Typography,
 } from "@material-ui/core"
-import React, { useContext } from "react"
+import React from "react"
 import FavoriteIcon from "@material-ui/icons/Favorite"
 import ShareIcon from "@material-ui/icons/Share"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 import Moment from "react-moment"
-import { PostContext } from "../../../../context/postContext/postContext"
 
 export const PostCard = ({ post }) => {
-  const context = useContext(PostContext)
-  console.log(context.loading)
   return (
     <Card variant="outlined" className="mb-3">
       <CardHeader
@@ -30,15 +27,15 @@ export const PostCard = ({ post }) => {
         title={post.user.name}
         subheader={<Moment fromNow>{post.createdAt}</Moment>}
       />
+
+      {post.picture.length > 0 && (
+        <img width="100%" src={`${post.picture[0]}`} alt={post.picture[0]} />
+      )}
       <CardContent className="py-1">
         <Typography variant="body2" color="textSecondary" component="p">
           {post.content}
         </Typography>
       </CardContent>
-      {post.picture.length > 0 && (
-        <img width="100%" src={`${post.picture[0]}`} alt={post.picture[0]} />
-      )}
-
       <CardActions disableSpacing className="py-1">
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
