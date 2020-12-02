@@ -20,16 +20,26 @@ export const InputBox = () => {
     <>
       {showPost && <CreatePost show={showPost} handleModal={handleModalPost} />}
       <Paper elevation={1} variant="outlined" className="p-3 mb-3">
-        <Grid container justify="space-between" alignItems="center">
-          <Avatar />
-          <Fab
-            variant="extended"
-            disabled
-            style={{ width: "90%" }}
-            size="medium"
-          >
-            {`What's on your mind? ${context.user.name}`}
-          </Fab>
+        <Grid
+          container
+          justify="center"
+          direction="row"
+          spacing={6}
+          alignItems="center"
+        >
+          <Grid item xs={1}>
+            <Avatar />
+          </Grid>
+          <Grid item xs={10}>
+            <Fab
+              variant="extended"
+              disabled
+              style={{ width: "100%" }}
+              size="medium"
+            >
+              {`What's on your mind? ${context.user.name}`}
+            </Fab>
+          </Grid>
         </Grid>
 
         <Grid
