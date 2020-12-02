@@ -51,3 +51,15 @@ exports.allJobs = (req, res) => {
     return res.json(jobs);
   });
 };
+
+//Read a particular job
+exports.getJob = (req, res) => {
+  Job.find({ _id: req.job._id }).exec((err, job) => {
+    if (err) {
+      res.status(400).json({
+        errorMsg: "An error occured",
+      });
+    }
+    return res.json(job);
+  });
+};

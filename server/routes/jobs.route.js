@@ -7,6 +7,7 @@ const {
   getJobById,
   createJob,
   allJobs,
+  getJob,
 } = require("../controllers/jobs.controller");
 const { getUserById } = require("../controllers/user.controller");
 const router = express.Router();
@@ -18,7 +19,10 @@ router.param("jobId", getJobById);
 // create job
 router.post("/create/job/:userId", isSignedIn, isAuthenticated, createJob);
 
-// all blogs
+// read all jobs
 router.get("/jobs", isSignedIn, allJobs);
+
+//read a particular job
+router.get("/jobs/:jobId", isSignedIn, getJob);
 
 module.exports = router;
