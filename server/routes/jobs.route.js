@@ -9,6 +9,7 @@ const {
   allJobs,
   getJob,
   updateJob,
+  deleteJob,
 } = require("../controllers/jobs.controller");
 const { getUserById } = require("../controllers/user.controller");
 const router = express.Router();
@@ -34,4 +35,11 @@ router.put(
   updateJob
 );
 
+// delete job
+router.delete(
+  "/delete/job/:userId/:jobId",
+  isSignedIn,
+  isAuthenticated,
+  deleteJob
+);
 module.exports = router;

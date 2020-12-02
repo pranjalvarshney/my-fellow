@@ -80,3 +80,19 @@ exports.updateJob = (req, res) => {
     }
   );
 };
+
+// delete job
+exports.deleteJob = (req, res) => {
+  Job.findByIdAndRemove(
+    { _id: req.job._id },
+    { useFindAndModify: false, new: true },
+    (err, job) => {
+      if (err || !job) {
+        return res.status(400).json({
+          error: "An error occured,  try again later",
+        });
+      }
+      return res.status(200).json({ message: "Job has been removed" });
+    }
+  );
+};
