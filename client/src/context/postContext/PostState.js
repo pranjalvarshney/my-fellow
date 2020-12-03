@@ -71,6 +71,7 @@ export const PostState = ({ children }) => {
         type: POSTS_CREATE,
         payload: "Successfully created!",
       })
+      getAllPost()
       console.log(response.data)
     } catch (error) {
       console.log(error.response)
@@ -104,6 +105,25 @@ export const PostState = ({ children }) => {
     }
   }
 
+  const updatePost = async (formData, userId, postId) => {
+    try {
+      const response = await axios.put(
+        `${API}/update/post/${userId}/${postId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer  ${JSON.parse(
+              localStorage.getItem("_token")
+            )}`,
+          },
+        }
+      )
+      console.log(response.data)
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
+
   return (
     <PostContext.Provider
       value={{
@@ -113,6 +133,7 @@ export const PostState = ({ children }) => {
         success: state.success,
         getAllPost,
         createPost,
+        updatePost,
         deletePost,
       }}
     >

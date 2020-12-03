@@ -48,8 +48,16 @@ export const PostCard = ({ post }) => {
               onClose={handleClose}
               TransitionComponent={Fade}
             >
-              <MenuItem onClick={handleClose}>Share</MenuItem>
-              <MenuItem onClick={handleClose}>Bookmark</MenuItem>
+              {authContext.user._id === post.user._id ? (
+                <MenuItem
+                  onClick={() => {
+                    // postContext.updatePost(formData,authContext.user._id, post._id)
+                    // handleClose()
+                  }}
+                >
+                  Edit
+                </MenuItem>
+              ) : null}
               {authContext.user._id === post.user._id ? (
                 <MenuItem
                   onClick={() => {
@@ -60,6 +68,9 @@ export const PostCard = ({ post }) => {
                   Delete
                 </MenuItem>
               ) : null}
+              <MenuItem onClick={handleClose}>Share</MenuItem>
+              <MenuItem onClick={handleClose}>Bookmark</MenuItem>
+
               <MenuItem onClick={handleClose}>Report Post</MenuItem>
             </Menu>
           </>
@@ -72,7 +83,7 @@ export const PostCard = ({ post }) => {
         <img width="100%" src={`${post.picture[0]}`} alt={post.picture[0]} />
       )}
       <CardContent className="py-1">
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="body2" component="p">
           {post.content}
         </Typography>
       </CardContent>

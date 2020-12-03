@@ -20,7 +20,6 @@ export const CreatePost = ({ show, handleModal }) => {
     formData.append("picture", uploadFile)
     postContext.createPost(formData, authContext.user._id)
     handleModal()
-    window.location.reload()
   }
 
   return (
