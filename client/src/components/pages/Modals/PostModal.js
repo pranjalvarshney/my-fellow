@@ -8,19 +8,19 @@ export const PostModal = ({ show, handleModal, postFunction, title, post }) => {
   const authContext = useContext(AuthContext)
   const [uploadFile, setUploadFile] = useState(null)
   const [preview, setPreview] = useState(
-    post === undefined ? null : post.picture[0]
+    post === undefined ? "" : post.picture[0]
   )
-  const [content, setContent] = useState(
-    post === undefined ? null : post.content
-  )
-
+  const [content, setContent] = useState(post === undefined ? "" : post.content)
+  console.log(preview)
   const handleForm = async (e) => {
     e.preventDefault()
     const formData = new FormData()
     formData.append("user", authContext.user._id)
     formData.append("content", content)
     formData.append("picture", uploadFile)
-    postFunction(formData, authContext.user._id)
+    post
+      ? postFunction(formData, authContext.user._id, post._id)
+      : postFunction(formData, authContext.user._id)
     handleModal()
   }
 
@@ -56,7 +56,7 @@ export const PostModal = ({ show, handleModal, postFunction, title, post }) => {
               </Grid>
             </Grid>
             <Grid item md={6}>
-              {uploadFile ? (
+              {uploadFile || preview ? (
                 <img src={preview} alt="input file" width="100%" />
               ) : (
                 <div

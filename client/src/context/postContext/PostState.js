@@ -67,12 +67,14 @@ export const PostState = ({ children }) => {
           },
         }
       )
-      dispatch({
-        type: POSTS_CREATE,
-        payload: "Successfully created!",
-      })
-      getAllPost()
-      console.log(response.data)
+      if (response) {
+        dispatch({
+          type: POSTS_CREATE,
+          payload: "Successfully created!",
+        })
+        getAllPost()
+        console.log(response.data)
+      }
     } catch (error) {
       console.log(error.response)
       dispatch({
@@ -94,14 +96,18 @@ export const PostState = ({ children }) => {
           },
         }
       )
-      dispatch({
-        type: POSTS_SUCCESS,
-        payload: response.data.message,
-      })
-      getAllPost()
-      // console.log(response.data)
+      if (response) {
+        dispatch({
+          type: POSTS_SUCCESS,
+          payload: response.data.message,
+        })
+        getAllPost()
+      }
     } catch (error) {
-      console.log(error.response)
+      dispatch({
+        type: POSTS_ERROR,
+        payload: error.response,
+      })
     }
   }
 
@@ -112,15 +118,24 @@ export const PostState = ({ children }) => {
         formData,
         {
           headers: {
-            Authorization: `Bearer  ${JSON.parse(
+            Authorization: `Bearer ${JSON.parse(
               localStorage.getItem("_token")
             )}`,
           },
         }
       )
-      console.log(response.data)
+      if (response) {
+        dispatch({
+          type: POSTS_CREATE,
+          payload: "Updated Successfully!",
+        })
+        getAllPost()
+      }
     } catch (error) {
-      console.log(error.response)
+      dispatch({
+        type: POSTS_ERROR,
+        payload: error.response,
+      })
     }
   }
 
