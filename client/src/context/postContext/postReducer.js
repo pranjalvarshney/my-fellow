@@ -3,6 +3,7 @@ import {
   POSTS_ERROR,
   POSTS_GET_ALL,
   POSTS_LOADING,
+  POSTS_SUCCESS,
 } from "../types"
 
 /* eslint-disable import/no-anonymous-default-export */
@@ -11,6 +12,7 @@ export default (state, action) => {
     case POSTS_CREATE:
       return {
         ...state,
+        success: action.payload,
         loading: false,
       }
     case POSTS_LOADING:
@@ -23,12 +25,20 @@ export default (state, action) => {
         ...state,
         loading: false,
         error: action.payload,
+        success: "",
       }
     case POSTS_GET_ALL:
       return {
         ...state,
         post: action.payload,
         loading: false,
+        error: "",
+      }
+    case POSTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: action.payload,
         error: "",
       }
     default:
