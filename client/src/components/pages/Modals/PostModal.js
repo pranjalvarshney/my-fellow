@@ -2,15 +2,17 @@ import { Grid, Button, TextareaAutosize } from "@material-ui/core"
 import React, { useContext, useState } from "react"
 import { Modal, Form } from "react-bootstrap"
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate"
-import { PostContext } from "../../../context/postContext/postContext"
 import { AuthContext } from "../../../context/authContext/authContext"
 
-export const CreatePost = ({ show, handleModal }) => {
-  const postContext = useContext(PostContext)
+export const PostModal = ({ show, handleModal, postFunction, title, post }) => {
   const authContext = useContext(AuthContext)
   const [uploadFile, setUploadFile] = useState(null)
-  const [preview, setPreview] = useState(null)
-  const [content, setContent] = useState("")
+  const [preview, setPreview] = useState(
+    post === undefined ? null : post.picture[0]
+  )
+  const [content, setContent] = useState(
+    post === undefined ? null : post.content
+  )
 
   const handleForm = async (e) => {
     e.preventDefault()
@@ -18,14 +20,14 @@ export const CreatePost = ({ show, handleModal }) => {
     formData.append("user", authContext.user._id)
     formData.append("content", content)
     formData.append("picture", uploadFile)
-    postContext.createPost(formData, authContext.user._id)
+    postFunction(formData, authContext.user._id)
     handleModal()
   }
 
   return (
     <Modal show={show} onHide={handleModal} centered id="input-modal">
       <Modal.Header closeButton>
-        <Modal.Title>Create Post</Modal.Title>
+        <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
