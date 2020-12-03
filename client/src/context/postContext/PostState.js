@@ -6,6 +6,7 @@ import {
   POSTS_ERROR,
   POSTS_GET_ALL,
   POSTS_LOADING,
+  POSTS_SUCCESS,
 } from "../types"
 import { PostContext } from "./postContext"
 import postReducer from "./postReducer"
@@ -92,7 +93,12 @@ export const PostState = ({ children }) => {
           },
         }
       )
-      console.log(response.data)
+      dispatch({
+        type: POSTS_SUCCESS,
+        payload: response.data.message,
+      })
+      getAllPost()
+      // console.log(response.data)
     } catch (error) {
       console.log(error.response)
     }

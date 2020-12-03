@@ -55,7 +55,6 @@ export const PostCard = ({ post }) => {
                   onClick={() => {
                     postContext.deletePost(authContext.user._id, post._id)
                     handleClose()
-                    window.location.reload()
                   }}
                 >
                   Delete
