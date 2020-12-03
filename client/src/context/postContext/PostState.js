@@ -14,6 +14,7 @@ export const PostState = ({ children }) => {
   const initialState = {
     post: [],
     error: "",
+    success: "",
     loading: true,
   }
   const [state, dispatch] = useReducer(postReducer, initialState)
@@ -24,14 +25,14 @@ export const PostState = ({ children }) => {
         type: POSTS_LOADING,
         payload: true,
       })
-      console.log(state)
+      // console.log(state)
       const response = await axios.get(`${API}/posts`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
         },
       })
 
-      console.log(state)
+      // console.log(state)
       console.log(response.data)
       dispatch({
         type: POSTS_GET_ALL,
@@ -67,7 +68,7 @@ export const PostState = ({ children }) => {
       )
       dispatch({
         type: POSTS_CREATE,
-        payload: response.data,
+        payload: "Successfully created!",
       })
       console.log(response.data)
     } catch (error) {
@@ -79,14 +80,34 @@ export const PostState = ({ children }) => {
     }
   }
 
+  const deletePost = async (userID, postId) => {
+    try {
+      const response = await axios.delete(
+        `${API}/delete/post/${userID}/${postId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("_token")
+            )}`,
+          },
+        }
+      )
+      console.log(response.data)
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
+
   return (
     <PostContext.Provider
       value={{
         post: state.post,
         loading: state.loading,
         error: state.error,
+        success: state.success,
         getAllPost,
         createPost,
+        deletePost,
       }}
     >
       {children}

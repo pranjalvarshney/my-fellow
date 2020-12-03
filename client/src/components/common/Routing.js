@@ -12,9 +12,11 @@ import { Blog } from "../pages/Home/Blog/Blog"
 import { Profile } from "../pages/Profile/Profile"
 import { JobsAndPlacements } from "../pages/Home/JobsAndPlacements/JobsAndPlacements"
 import { Ads } from "../pages/Home/Ads/Ads"
+import { PostContext } from "../../context/postContext/postContext"
 
 export const Routing = () => {
-  const context = useContext(AuthContext)
+  const authContext = useContext(AuthContext)
+  const postContext = useContext(PostContext)
 
   const [responseMsg, setResponseMsg] = useState({
     successStatus: false,
@@ -53,20 +55,32 @@ export const Routing = () => {
   }
 
   useEffect(() => {
-    if (context.error) {
+    if (authContext.error) {
       setResponseMsg({
         errorStatus: true,
-        msg: context.error,
+        msg: authContext.error,
       })
     }
-  }, [context])
+    if (postContext.error) {
+      setResponseMsg({
+        errorStatus: true,
+        msg: postContext.error,
+      })
+    }
+    if (postContext.success) {
+      setResponseMsg({
+        successStatus: true,
+        msg: postContext.success,
+      })
+    }
+  }, [authContext, postContext])
 
   return (
     <>
       {responseMsg.errorStatus || responseMsg.successStatus
         ? showResponseMsg()
         : null}
-      {context.loading && <Loading />}
+      {authContext.loading && <Loading />}
       <BrowserRouter>
         <Switch>
           <PrivateRoute exact path="/" component={Post} />

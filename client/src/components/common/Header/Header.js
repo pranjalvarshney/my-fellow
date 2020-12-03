@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 import { AuthContext } from "../../../context/authContext/authContext"
-import { Link, withRouter } from "react-router-dom"
+import { Link, useHistory, withRouter } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faUserGraduate,
@@ -31,6 +31,7 @@ const currentTab = (history, path) => {
   }
 }
 const Header = ({ history }) => {
+  const usehistory = useHistory()
   const context = useContext(AuthContext)
   const [moreOption, setMoreOption] = useState(null)
   const handleMoreOption = (e) => {
@@ -46,7 +47,12 @@ const Header = ({ history }) => {
       <AppBar style={{ background: "white" }} elevation={3}>
         <Toolbar className="header">
           <div className="header-part-1">
-            <Button style={{ textTransform: "none" }}>
+            <Button
+              style={{ textTransform: "none" }}
+              onClick={() => {
+                usehistory.push("/")
+              }}
+            >
               <img src="/logo192.png" alt="logo" height="40px" />
               <Typography variant="h6">My Fellow</Typography>
             </Button>
