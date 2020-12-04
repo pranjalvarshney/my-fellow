@@ -5,7 +5,7 @@ const blogSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
-      required: true
+      required: true,
     },
     title: {
       type: String,
@@ -16,7 +16,7 @@ const blogSchema = new mongoose.Schema(
     content: {
       type: String,
       max: 3000,
-      required: true
+      required: true,
     },
     picture: {
       type: String,
@@ -28,21 +28,19 @@ const blogSchema = new mongoose.Schema(
       },
     ],
     comments: [
-			{
-				user: {
-					type: mongoose.Schema.ObjectId,
-					ref: 'User'
-				},
-				text: {
-					type: String,
-					required: true
-				}
-			}
-		]
+      {
+        user: {
+          type: mongoose.Schema.ObjectId,
+          ref: "User",
+        },
+        text: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   { timestamps: true }
-)
+);
 
-module.exports = mongoose.model('Blog', blogSchema);
-
-
+module.exports = mongoose.model("Blog", blogSchema);

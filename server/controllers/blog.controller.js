@@ -106,35 +106,47 @@ exports.updateBlog = (req, res) => {
             console.error(err);
             return;
           }
-
-          const { user, title, content } = req.body;
-          var picture;
-          if (req.file) {
-            picture = req.file.path;
-          }
-          const updateObj = { user, title, content, picture };
-
-          Blog.findByIdAndUpdate(
-            { _id: req.blogs._id },
-            { $set: updateObj },
-            { useFindAndModify: false, new: true },
-            (err, blog) => {
-              if (err || !blog) {
-                return res.status(400).json({
-                  error: "An error occured,  try again later",
-                });
-              }
-              return res.status(200).json(blog);
-            }
-          );
         });
       }
     });
   });
+  const { user, title, content } = req.body;
+  var picture;
+  if (req.file) {
+    picture = req.file.path;
+  }
+  const updateObj = { user, title, content, picture };
+
+  Blog.findByIdAndUpdate(
+    { _id: req.blogs._id },
+    { $set: updateObj },
+    { useFindAndModify: false, new: true },
+    (err, blog) => {
+      if (err || !blog) {
+        return res.status(400).json({
+          error: "An error occured,  try again later",
+        });
+      }
+      return res.status(200).json(blog);
+    }
+  );
 };
 
 // delete blog
 exports.deleteBlog = (req, res) => {
+  Blog.findById({ _id: req.blogs._id }).exec((err, blog) => {
+    let path = blog.picture;
+    fs.readdir(path, (err, files) => {
+      if (path) {
+        fs.unlink(path, (err) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+        });
+      }
+    });
+  });
   Blog.findByIdAndRemove(
     { _id: req.blogs._id },
     { useFindAndModify: false, new: true },

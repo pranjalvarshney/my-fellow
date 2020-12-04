@@ -128,33 +128,48 @@ exports.updatePost = (req, res) => {
         }
       });
     }
-
-    const { user, content } = req.body;
-    const files = req.files;
-    const picture = [];
-    for (let i = 0; i < files.length; i++) {
-      picture[i] = files[i].path;
-    }
-    const updateObj = { user, content, picture };
-
-    Post.findByIdAndUpdate(
-      { _id: req.post._id },
-      { $set: updateObj },
-      { useFindAndModify: false, new: true },
-      (err, post) => {
-        if (err || !post) {
-          return res.status(400).json({
-            error: "An error occured,  try again later",
-          });
-        }
-        return res.status(200).json(post);
-      }
-    );
   });
+  const { user, content } = req.body;
+  const files = req.files;
+  const picture = [];
+  for (let i = 0; i < files.length; i++) {
+    picture[i] = files[i].path;
+  }
+  const updateObj = { user, content, picture };
+
+  Post.findByIdAndUpdate(
+    { _id: req.post._id },
+    { $set: updateObj },
+    { useFindAndModify: false, new: true },
+    (err, post) => {
+      if (err || !post) {
+        return res.status(400).json({
+          error: "An error occured,  try again later",
+        });
+      }
+      return res.status(200).json(post);
+    }
+  );
 };
 
 // delete post
 exports.deletePost = (req, res) => {
+  Post.findById({ _id: req.post._id }).exec((err, post) => {
+    for (let picture of post.picture) {
+      let path = picture;
+
+      fs.readdir(path, (err, files) => {
+        if (path) {
+          fs.unlink(path, (err) => {
+            if (err) {
+              console.error(err);
+              return;
+            }
+          });
+        }
+      });
+    }
+  });
   Post.findByIdAndRemove(
     { _id: req.post._id },
     { useFindAndModify: false, new: true },
