@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const adsSchema = new mongoose.Schema(
   {
@@ -18,18 +18,18 @@ const adsSchema = new mongoose.Schema(
       max: 3000,
     },
     contact: {
-			type: String,
-			required: true
+      type: String,
+      required: true,
     },
     price: {
       type: Number,
       min: 0,
-      required: true
+      required: true,
     },
     picture: [
       {
         type: String,
-      }
+      },
     ],
     comments: [
       {
@@ -45,6 +45,6 @@ const adsSchema = new mongoose.Schema(
     ],
   },
   { timestamps: true }
-)
+);
 
-module.exports = mongoose.model("Ads", adsSchema)
+module.exports = mongoose.model("Ads", adsSchema);
