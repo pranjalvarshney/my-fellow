@@ -14,11 +14,14 @@ export default (state, action) => {
         ...state,
         success: action.payload,
         loading: false,
+        error: "",
       }
     case POSTS_LOADING:
       return {
         ...state,
         loading: true,
+        error: "",
+        success: "",
       }
     case POSTS_ERROR:
       return {
@@ -33,6 +36,7 @@ export default (state, action) => {
         post: action.payload,
         loading: false,
         error: "",
+        success: "",
       }
     case POSTS_SUCCESS:
       return {

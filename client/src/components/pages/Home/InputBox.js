@@ -5,20 +5,30 @@ import BrokenImageIcon from "@material-ui/icons/BrokenImage"
 import PollIcon from "@material-ui/icons/Poll"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEdit, faFeather } from "@fortawesome/free-solid-svg-icons"
-import { CreatePost } from "../Modals/CreatePost"
+import { PostModal } from "../Modals/PostModal"
+import { PostContext } from "../../../context/postContext/postContext"
 
 export const InputBox = () => {
-  const context = useContext(AuthContext)
+  const authContext = useContext(AuthContext)
+  const postContext = useContext(PostContext)
   const [showPost, setShow] = useState(false)
 
   const handleModalPost = () => {
-    console.log(showPost)
+    // console.log(showPost)
     setShow(!showPost)
   }
 
   return (
     <>
-      {showPost && <CreatePost show={showPost} handleModal={handleModalPost} />}
+      {showPost && (
+        <PostModal
+          show={showPost}
+          handleModal={handleModalPost}
+          postFunction={postContext.createPost}
+          title="Create post"
+          post={undefined}
+        />
+      )}
       <Paper elevation={1} variant="outlined" className="p-3 mb-3">
         <Grid
           container
@@ -37,7 +47,7 @@ export const InputBox = () => {
               style={{ width: "100%" }}
               size="medium"
             >
-              {`What's on your mind? ${context.user.name}`}
+              {`What's on your mind? ${authContext.user.name}`}
             </Fab>
           </Grid>
         </Grid>

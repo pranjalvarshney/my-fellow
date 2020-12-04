@@ -67,11 +67,14 @@ export const PostState = ({ children }) => {
           },
         }
       )
-      dispatch({
-        type: POSTS_CREATE,
-        payload: "Successfully created!",
-      })
-      console.log(response.data)
+      if (response) {
+        dispatch({
+          type: POSTS_CREATE,
+          payload: "Successfully created!",
+        })
+        getAllPost()
+        console.log(response.data)
+      }
     } catch (error) {
       console.log(error.response)
       dispatch({
@@ -93,14 +96,46 @@ export const PostState = ({ children }) => {
           },
         }
       )
-      dispatch({
-        type: POSTS_SUCCESS,
-        payload: response.data.message,
-      })
-      getAllPost()
-      // console.log(response.data)
+      if (response) {
+        dispatch({
+          type: POSTS_SUCCESS,
+          payload: response.data.message,
+        })
+        getAllPost()
+      }
     } catch (error) {
-      console.log(error.response)
+      dispatch({
+        type: POSTS_ERROR,
+        payload: error.response,
+      })
+    }
+  }
+
+  const updatePost = async (formData, userId, postId) => {
+    try {
+      const response = await axios.put(
+        `${API}/update/post/${userId}/${postId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("_token")
+            )}`,
+          },
+        }
+      )
+      if (response) {
+        dispatch({
+          type: POSTS_CREATE,
+          payload: "Updated Successfully!",
+        })
+        getAllPost()
+      }
+    } catch (error) {
+      dispatch({
+        type: POSTS_ERROR,
+        payload: error.response,
+      })
     }
   }
 
@@ -113,6 +148,7 @@ export const PostState = ({ children }) => {
         success: state.success,
         getAllPost,
         createPost,
+        updatePost,
         deletePost,
       }}
     >

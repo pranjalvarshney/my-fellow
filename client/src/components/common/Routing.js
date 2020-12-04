@@ -22,6 +22,7 @@ export const Routing = () => {
     successStatus: false,
     errorStatus: false,
     msg: "",
+    color: null,
   })
   const handleClose = () => {
     setResponseMsg({
@@ -29,6 +30,7 @@ export const Routing = () => {
       successStatus: false,
       errorStatus: false,
       msg: "",
+      color: null,
     })
   }
   const showResponseMsg = () => {
@@ -45,7 +47,7 @@ export const Routing = () => {
         <SnackbarContent
           message={responseMsg.msg}
           style={{
-            background: "#ff7961",
+            background: responseMsg.color,
             display: "flex",
             justifyContent: "center",
           }}
@@ -59,18 +61,28 @@ export const Routing = () => {
       setResponseMsg({
         errorStatus: true,
         msg: authContext.error,
+        color: "#ff7961",
       })
     }
     if (postContext.error) {
       setResponseMsg({
         errorStatus: true,
         msg: postContext.error,
+        color: "#ff7961",
+      })
+    }
+    if (authContext.success) {
+      setResponseMsg({
+        successStatus: true,
+        msg: authContext.success,
+        color: "#58D68D",
       })
     }
     if (postContext.success) {
       setResponseMsg({
         successStatus: true,
         msg: postContext.success,
+        color: "#58D68D",
       })
     }
   }, [authContext, postContext])

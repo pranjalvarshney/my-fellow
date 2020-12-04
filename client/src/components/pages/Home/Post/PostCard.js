@@ -18,6 +18,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert"
 import Moment from "react-moment"
 import { AuthContext } from "../../../../context/authContext/authContext"
 import { PostContext } from "../../../../context/postContext/postContext"
+import { PostModal } from "../../Modals/PostModal"
 
 export const PostCard = ({ post }) => {
   const authContext = useContext(AuthContext)
@@ -30,9 +31,25 @@ export const PostCard = ({ post }) => {
   const handleClose = () => {
     setMoreOption(null)
   }
+  const [showPost, setShow] = useState(false)
+
+  const handleModalPost = () => {
+    // console.log(showPost)
+    handleClose()
+    setShow(!showPost)
+  }
 
   return (
     <Card variant="outlined" className="mb-3">
+      {showPost && (
+        <PostModal
+          show={showPost}
+          handleModal={handleModalPost}
+          postFunction={postContext.updatePost}
+          title="Update post"
+          post={post}
+        />
+      )}
       <CardHeader
         avatar={<Avatar aria-label="recipe">R</Avatar>}
         action={
@@ -48,8 +65,9 @@ export const PostCard = ({ post }) => {
               onClose={handleClose}
               TransitionComponent={Fade}
             >
-              <MenuItem onClick={handleClose}>Share</MenuItem>
-              <MenuItem onClick={handleClose}>Bookmark</MenuItem>
+              {authContext.user._id === post.user._id ? (
+                <MenuItem onClick={handleModalPost}>Edit</MenuItem>
+              ) : null}
               {authContext.user._id === post.user._id ? (
                 <MenuItem
                   onClick={() => {
@@ -60,6 +78,9 @@ export const PostCard = ({ post }) => {
                   Delete
                 </MenuItem>
               ) : null}
+              <MenuItem onClick={handleClose}>Share</MenuItem>
+              <MenuItem onClick={handleClose}>Bookmark</MenuItem>
+
               <MenuItem onClick={handleClose}>Report Post</MenuItem>
             </Menu>
           </>
@@ -72,7 +93,7 @@ export const PostCard = ({ post }) => {
         <img width="100%" src={`${post.picture[0]}`} alt={post.picture[0]} />
       )}
       <CardContent className="py-1">
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="body1" component="p">
           {post.content}
         </Typography>
       </CardContent>
