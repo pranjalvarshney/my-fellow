@@ -1,54 +1,67 @@
-const express = require("express")
+const express = require("express");
 const {
-  isSignedIn,
-  isAuthenticated,
-} = require("../controllers/auth.controller")
+	isSignedIn,
+	isAuthenticated,
+} = require("../controllers/auth.controller");
 const {
-  createPost,
-  allposts,
-  upload,
-  getPostById,
-  updatePost,
-  deletePost,
-  getPost,
-} = require("../controllers/post.controller")
-const { getUserById } = require("../controllers/user.controller")
-const router = express.Router()
+	createPost,
+	allposts,
+	upload,
+	getPostById,
+	updatePost,
+	deletePost,
+	getPost,
+	likePost,
+	unlikePost,
+} = require("../controllers/post.controller");
+const { getUserById } = require("../controllers/user.controller");
+const router = express.Router();
 
 //param
-router.param("userId", getUserById)
-router.param("postId", getPostById)
+router.param("userId", getUserById);
+router.param("postId", getPostById);
 
 // post route - create
 router.post(
-  "/create/post/:userId",
-  isSignedIn,
-  isAuthenticated,
-  upload.array("picture", 10),
-  createPost
-)
+	"/create/post/:userId",
+	isSignedIn,
+	isAuthenticated,
+	upload.array("picture", 10),
+	createPost
+);
 
 // get all posts - read all
-router.get("/posts", isSignedIn, allposts)
+router.get("/posts", isSignedIn, allposts);
 
 //get a particular post
-router.get("/post/:postId", isSignedIn, getPost)
+router.get("/post/:postId", isSignedIn, getPost);
 
 // update post
 router.put(
-  "/update/post/:userId/:postId",
-  isSignedIn,
-  isAuthenticated,
-  upload.array("picture", 10),
-  updatePost
-)
+	"/update/post/:userId/:postId",
+	isSignedIn,
+	isAuthenticated,
+	upload.array("picture", 10),
+	updatePost
+);
 
 // delete post
 router.delete(
-  "/delete/post/:userId/:postId",
-  isSignedIn,
-  isAuthenticated,
-  deletePost
-)
+	"/delete/post/:userId/:postId",
+	isSignedIn,
+	isAuthenticated,
+	deletePost
+);
 
-module.exports = router
+// Like a post
+router.put("/post/like/:userId/:postId", isSignedIn, isAuthenticated, likePost);
+
+// Unlike a post
+router.put(
+	"/post/unlike/:userId/:postId",
+	isSignedIn,
+	isAuthenticated,
+	unlikePost
+);
+
+module.exports = router;
