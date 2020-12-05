@@ -52,7 +52,7 @@ router.delete(
   deleteAd
 );
 
-// comment a ad
+// comment on an ad
 router.put("/ad/comment/:userId/:adId", isSignedIn, isAuthenticated, commentAd);
 
 module.exports = router;
