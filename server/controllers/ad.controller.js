@@ -2,6 +2,7 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const Ads = require("../models/Ads");
+const { getUserById } = require("../controllers/user.controller");
 
 exports.getAdById = (req, res, next, Id) => {
   Ads.findById(Id).exec((err, ad) => {
@@ -169,4 +170,27 @@ exports.deleteAd = (req, res) => {
       return res.status(200).json({ message: "Ad has been deleted" });
     }
   );
+};
+
+// comment on an ad
+exports.commentAd = (req, res) => {
+  Ads.findByIdAndUpdate(
+    { _id: req.ads._id },
+    {
+      $push: {
+        comments: { user: req.profile._id, text: req.body.text },
+      },
+    },
+    {
+      new: true,
+    }
+  ).exec((err, result) => {
+    if (err) {
+      return res
+        .status(400)
+        .json({ error: "An error occured, try again later" });
+    } else {
+      res.status(200).json(result);
+    }
+  });
 };
