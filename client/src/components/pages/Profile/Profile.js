@@ -1,9 +1,11 @@
 import {
   Button,
   Card,
+  CardActions,
   CardContent,
   CardMedia,
   Grid,
+  Paper,
   Typography,
 } from "@material-ui/core"
 import React, { useContext } from "react"
@@ -36,7 +38,7 @@ export const Profile = () => {
                 />
               </Grid>
               <Grid container item md={7}>
-                <Grid container justify={"center"}>
+                <Grid container justify="center">
                   <CardContent>
                     <Typography gutterBottom variant="h4" component="h2">
                       {context.user.name}
@@ -84,6 +86,57 @@ export const Profile = () => {
               </Grid>
             </Grid>
           </Card>
+          <div className="mt-3">
+            <Grid container spacing={3} justify="space-around">
+              <Grid item xs={12} md={4}>
+                <Card variant="outlined">
+                  <CardContent>
+                    <Typography color="textSecondary" gutterBottom>
+                      Word of the Day
+                    </Typography>
+                    <Typography variant="h5" component="h2">
+                      benevolent
+                    </Typography>
+                    <Typography color="textSecondary">adjective</Typography>
+                    <Typography variant="body2" component="p">
+                      well meaning and kindly.
+                      <br />
+                      {'"a benevolent smile"'}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small">Learn More</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+              <Grid item md={8} xs={12}>
+                <Paper variant="outlined">
+                  <Grid container justify="space-around">
+                    <Grid item xs={3}>
+                      <Button variant="text" fullWidth>
+                        Posts
+                      </Button>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Button variant="text" fullWidth>
+                        Blogs
+                      </Button>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Button variant="text" fullWidth>
+                        Ads
+                      </Button>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Button variant="text" fullWidth>
+                        Bookmark
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Paper>
+              </Grid>
+            </Grid>
+          </div>
         </Grid>
         <Grid item xs={10} md={3}>
           <HomeRightBar />
