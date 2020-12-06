@@ -2,6 +2,7 @@ const Post = require("../models/Post");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const { getUserById } = require("../controllers/user.controller");
 
 exports.getPostById = (req, res, next, Id) => {
   Post.findById(Id)
@@ -182,4 +183,69 @@ exports.deletePost = (req, res) => {
       return res.status(200).json({ message: "Post has been deleted" });
     }
   );
+};
+
+// Like post
+exports.likePost = (req, res) => {
+  Post.findByIdAndUpdate(
+    { _id: req.post._id },
+    {
+      $push: { likes: req.profile._id },
+    },
+    {
+      new: true,
+    }
+  ).exec((err, result) => {
+    if (err) {
+      return res
+        .status(400)
+        .json({ error: "An error occured, try again later" });
+    } else {
+      res.status(200).json(result);
+    }
+  });
+};
+
+// Unlike post
+exports.unlikePost = (req, res) => {
+  Post.findByIdAndUpdate(
+    { _id: req.post._id },
+    {
+      $pull: { likes: req.profile._id },
+    },
+    {
+      new: true,
+    }
+  ).exec((err, result) => {
+    if (err) {
+      return res
+        .status(400)
+        .json({ error: "An error occured, try again later" });
+    } else {
+      res.status(200).json(result);
+    }
+  });
+};
+
+// comment on a post
+exports.commentPost = (req, res) => {
+  Post.findByIdAndUpdate(
+    { _id: req.post._id },
+    {
+      $push: {
+        comments: { user: req.profile._id, text: req.body.text },
+      },
+    },
+    {
+      new: true,
+    }
+  ).exec((err, result) => {
+    if (err) {
+      return res
+        .status(400)
+        .json({ error: "An error occured, try again later" });
+    } else {
+      res.status(200).json(result);
+    }
+  });
 };

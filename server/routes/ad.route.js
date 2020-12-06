@@ -7,6 +7,7 @@ const {
   updateAd,
   deleteAd,
   getAd,
+  commentAd,
 } = require("../controllers/ad.controller");
 const {
   isSignedIn,
@@ -50,5 +51,8 @@ router.delete(
   isAuthenticated,
   deleteAd
 );
+
+// comment on an ad
+router.put("/ad/comment/:userId/:adId", isSignedIn, isAuthenticated, commentAd);
 
 module.exports = router;

@@ -12,6 +12,7 @@ const {
   updateBlog,
   deleteBlog,
   getBlog,
+  commentBlog,
 } = require("../controllers/blog.controller");
 const router = express.Router();
 
@@ -31,6 +32,9 @@ router.post(
 //get a particular blog
 router.get("/blogs/:blogId", isSignedIn, getBlog);
 
+// all blogs
+router.get("/blogs", isSignedIn, allblogs);
+
 // update blog
 router.put(
   "/update/blog/:userId/:blogId",
@@ -48,7 +52,12 @@ router.delete(
   deleteBlog
 );
 
-// all blogs
-router.get("/blogs", isSignedIn, allblogs);
+// comment on a blog
+router.put(
+  "/blog/comment/:userId/:blogId",
+  isSignedIn,
+  isAuthenticated,
+  commentBlog
+);
 
 module.exports = router;

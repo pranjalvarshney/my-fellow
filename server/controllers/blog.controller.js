@@ -2,6 +2,7 @@ const Blog = require("../models/Blogs");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const { getUserById } = require("../controllers/user.controller");
 
 exports.getBlogById = (req, res, next, Id) => {
   Blog.findById(Id).exec((err, blog) => {
@@ -159,4 +160,27 @@ exports.deleteBlog = (req, res) => {
       return res.status(200).json({ message: "Blog has been deleted" });
     }
   );
+};
+
+// comment on a blog
+exports.commentBlog = (req, res) => {
+  Blog.findByIdAndUpdate(
+    { _id: req.blogs._id },
+    {
+      $push: {
+        comments: { user: req.profile._id, text: req.body.text },
+      },
+    },
+    {
+      new: true,
+    }
+  ).exec((err, result) => {
+    if (err) {
+      return res
+        .status(400)
+        .json({ error: "An error occured, try again later" });
+    } else {
+      res.status(200).json(result);
+    }
+  });
 };
