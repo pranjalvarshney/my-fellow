@@ -139,6 +139,20 @@ export const PostState = ({ children }) => {
     }
   }
 
+  const getAllPostByUserId = async (userId) => {
+    try {
+      const response = await axios.get(`${API}/${userId}/posts`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
+        },
+      })
+      const { data } = response
+      return data
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
   return (
     <PostContext.Provider
       value={{
@@ -150,6 +164,7 @@ export const PostState = ({ children }) => {
         createPost,
         updatePost,
         deletePost,
+        getAllPostByUserId,
       }}
     >
       {children}
