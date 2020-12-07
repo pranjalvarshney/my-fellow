@@ -154,8 +154,7 @@ export const PostState = ({ children }) => {
   }
 
   const likePost = async (postId, userId) => {
-    console.log(postId, userId)
-    await axios.put(
+    const response = await axios.put(
       `${API}/post/like/${userId}/${postId}`,
       {},
       {
@@ -164,6 +163,7 @@ export const PostState = ({ children }) => {
         },
       }
     )
+    console.log(response)
     try {
     } catch (error) {
       dispatch({
@@ -174,7 +174,7 @@ export const PostState = ({ children }) => {
   }
   const unLikePost = async (postId, userId) => {
     try {
-      await axios.put(
+      const response = await axios.put(
         `${API}/post/unlike/${userId}/${postId}`,
         {},
         {
@@ -185,6 +185,7 @@ export const PostState = ({ children }) => {
           },
         }
       )
+      console.log(response)
     } catch (error) {
       dispatch({
         type: POSTS_ERROR,

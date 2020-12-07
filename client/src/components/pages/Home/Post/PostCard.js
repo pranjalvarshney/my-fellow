@@ -50,15 +50,14 @@ export const PostCard = ({ post }) => {
 
       return 0
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [authContext.user._id, post.likes])
 
   const handleLikeBtn = () => {
     if (!likeStatus) {
-      postContext.unLikePost(post._id, authContext.user._id)
+      postContext.likePost(post._id, authContext.user._id)
       setLikeStatus(true)
     } else {
-      postContext.likePost(post._id, authContext.user._id)
+      postContext.unLikePost(post._id, authContext.user._id)
       setLikeStatus(false)
     }
   }
