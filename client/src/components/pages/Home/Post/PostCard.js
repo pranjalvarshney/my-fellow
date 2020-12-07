@@ -10,7 +10,7 @@ import {
   MenuItem,
   Typography,
 } from "@material-ui/core"
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import FavoriteIcon from "@material-ui/icons/Favorite"
 import ShareIcon from "@material-ui/icons/Share"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
@@ -23,6 +23,8 @@ import { PostModal } from "../../Modals/PostModal"
 export const PostCard = ({ post }) => {
   const authContext = useContext(AuthContext)
   const postContext = useContext(PostContext)
+  const [likeStatus, setLikeStatus] = useState(false)
+
   const [moreOption, setMoreOption] = useState(null)
   const handleMoreOption = (e) => {
     setMoreOption(e.currentTarget)
@@ -37,6 +39,28 @@ export const PostCard = ({ post }) => {
     // console.log(showPost)
     handleClose()
     setShow(!showPost)
+  }
+  useEffect(() => {
+    post.likes.filter((like) => {
+      if (like === authContext.user._id) {
+        setLikeStatus(true)
+      } else {
+        setLikeStatus(false)
+      }
+
+      return 0
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const handleLikeBtn = () => {
+    if (!likeStatus) {
+      postContext.unLikePost(post._id, authContext.user._id)
+      setLikeStatus(true)
+    } else {
+      postContext.likePost(post._id, authContext.user._id)
+      setLikeStatus(false)
+    }
   }
 
   return (
@@ -98,9 +122,12 @@ export const PostCard = ({ post }) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing className="py-1">
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
+        <span>
+          <IconButton onClick={handleLikeBtn}>
+            <FavoriteIcon color={likeStatus ? "secondary" : "primary"} />
+          </IconButton>
+          {post.likes.length}
+        </span>
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>

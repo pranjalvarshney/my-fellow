@@ -143,7 +143,6 @@ export const PostState = ({ children }) => {
     try {
       const response = await axios.get(`${API}/${userId}/posts`, {
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
         },
       })
@@ -153,6 +152,47 @@ export const PostState = ({ children }) => {
       console.log(error.response)
     }
   }
+
+  const likePost = async (postId, userId) => {
+    console.log(postId, userId)
+    await axios.put(
+      `${API}/post/like/${userId}/${postId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
+        },
+      }
+    )
+    try {
+    } catch (error) {
+      dispatch({
+        type: POSTS_ERROR,
+        payload: error.response.data.errorMsg,
+      })
+    }
+  }
+  const unLikePost = async (postId, userId) => {
+    try {
+      await axios.put(
+        `${API}/post/unlike/${userId}/${postId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("_token")
+            )}`,
+          },
+        }
+      )
+    } catch (error) {
+      dispatch({
+        type: POSTS_ERROR,
+        payload: error.response.data.errorMsg,
+      })
+    }
+  }
+
   return (
     <PostContext.Provider
       value={{
@@ -165,6 +205,8 @@ export const PostState = ({ children }) => {
         updatePost,
         deletePost,
         getAllPostByUserId,
+        likePost,
+        unLikePost,
       }}
     >
       {children}

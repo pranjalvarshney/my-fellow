@@ -12,7 +12,6 @@ import React, { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../../context/authContext/authContext"
 import { PostContext } from "../../../context/postContext/postContext"
 import Header from "../../common/Header/Header"
-import { HomeRightBar } from "../Home/HomeRightBar"
 import { InputBox } from "../Home/InputBox"
 import { HomeTab } from "./components/HomeTab"
 import "./Profile.css"
@@ -38,7 +37,7 @@ export const Profile = () => {
   return (
     <div className="profile container">
       <Header />
-      <Grid justify="center" spacing={3} container>
+      <Grid justify="center" container>
         <Grid item xs={10} md={10}>
           <Card className="px-3" variant="outlined">
             <Grid container direction="row" spacing={1} justify="flex-start">
