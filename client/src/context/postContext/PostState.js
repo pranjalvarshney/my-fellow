@@ -34,7 +34,7 @@ export const PostState = ({ children }) => {
       })
 
       // console.log(state)
-      console.log(response.data)
+      // console.log(response.data)
       dispatch({
         type: POSTS_GET_ALL,
         payload: response.data,
@@ -73,10 +73,10 @@ export const PostState = ({ children }) => {
           payload: "Successfully created!",
         })
         getAllPost()
-        console.log(response.data)
+        // console.log(response.data)
       }
     } catch (error) {
-      console.log(error.response)
+      // console.log(error.response)
       dispatch({
         type: POSTS_ERROR,
         payload: error.response,
@@ -139,6 +139,62 @@ export const PostState = ({ children }) => {
     }
   }
 
+  const getAllPostByUserId = async (userId) => {
+    try {
+      const response = await axios.get(`${API}/${userId}/posts`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
+        },
+      })
+      const { data } = response
+      return data
+    } catch (error) {
+      dispatch({
+        type: POSTS_ERROR,
+        payload: error.response.data.errorMsg,
+      })
+    }
+  }
+
+  const likePost = async (postId, userId) => {
+    await axios.put(
+      `${API}/post/like/${userId}/${postId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
+        },
+      }
+    )
+    try {
+    } catch (error) {
+      dispatch({
+        type: POSTS_ERROR,
+        payload: error.response.data.errorMsg,
+      })
+    }
+  }
+  const unLikePost = async (postId, userId) => {
+    try {
+      await axios.put(
+        `${API}/post/unlike/${userId}/${postId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("_token")
+            )}`,
+          },
+        }
+      )
+    } catch (error) {
+      dispatch({
+        type: POSTS_ERROR,
+        payload: error.response.data.errorMsg,
+      })
+    }
+  }
+
   return (
     <PostContext.Provider
       value={{
@@ -150,6 +206,9 @@ export const PostState = ({ children }) => {
         createPost,
         updatePost,
         deletePost,
+        getAllPostByUserId,
+        likePost,
+        unLikePost,
       }}
     >
       {children}

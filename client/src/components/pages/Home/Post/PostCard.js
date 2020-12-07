@@ -10,7 +10,7 @@ import {
   MenuItem,
   Typography,
 } from "@material-ui/core"
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import FavoriteIcon from "@material-ui/icons/Favorite"
 import ShareIcon from "@material-ui/icons/Share"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
@@ -23,6 +23,8 @@ import { PostModal } from "../../Modals/PostModal"
 export const PostCard = ({ post }) => {
   const authContext = useContext(AuthContext)
   const postContext = useContext(PostContext)
+  const [likeStatus, setLikeStatus] = useState(false)
+  const [likeCount, setLikeCount] = useState(post.likes.length)
   const [moreOption, setMoreOption] = useState(null)
   const handleMoreOption = (e) => {
     setMoreOption(e.currentTarget)
@@ -34,9 +36,31 @@ export const PostCard = ({ post }) => {
   const [showPost, setShow] = useState(false)
 
   const handleModalPost = () => {
-    // console.log(showPost)
     handleClose()
     setShow(!showPost)
+  }
+  useEffect(() => {
+    post.likes.filter((like) => {
+      if (like === authContext.user._id) {
+        setLikeStatus(true)
+      } else {
+        setLikeStatus(false)
+      }
+
+      return 0
+    })
+  }, [authContext.user._id, post.likes])
+
+  const handleLikeBtn = () => {
+    if (!likeStatus) {
+      postContext.likePost(post._id, authContext.user._id)
+      setLikeCount(post.likes.length + 1)
+      setLikeStatus(true)
+    } else {
+      postContext.unLikePost(post._id, authContext.user._id)
+      setLikeCount(post.likes.length)
+      setLikeStatus(false)
+    }
   }
 
   return (
@@ -98,9 +122,12 @@ export const PostCard = ({ post }) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing className="py-1">
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
+        <span>
+          <IconButton onClick={handleLikeBtn}>
+            <FavoriteIcon color={likeStatus ? "secondary" : "disabled"} />
+          </IconButton>
+          {likeCount}
+        </span>
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>

@@ -194,6 +194,7 @@ exports.likePost = (req, res) => {
     },
     {
       new: true,
+      useFindAndModify: false,
     }
   ).exec((err, result) => {
     if (err) {
@@ -215,6 +216,7 @@ exports.unlikePost = (req, res) => {
     },
     {
       new: true,
+      useFindAndModify: false,
     }
   ).exec((err, result) => {
     if (err) {
