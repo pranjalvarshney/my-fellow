@@ -24,7 +24,7 @@ export const PostCard = ({ post }) => {
   const authContext = useContext(AuthContext)
   const postContext = useContext(PostContext)
   const [likeStatus, setLikeStatus] = useState(false)
-
+  const [likeCount, setLikeCount] = useState(post.likes.length)
   const [moreOption, setMoreOption] = useState(null)
   const handleMoreOption = (e) => {
     setMoreOption(e.currentTarget)
@@ -36,7 +36,6 @@ export const PostCard = ({ post }) => {
   const [showPost, setShow] = useState(false)
 
   const handleModalPost = () => {
-    // console.log(showPost)
     handleClose()
     setShow(!showPost)
   }
@@ -55,9 +54,11 @@ export const PostCard = ({ post }) => {
   const handleLikeBtn = () => {
     if (!likeStatus) {
       postContext.likePost(post._id, authContext.user._id)
+      setLikeCount(post.likes.length + 1)
       setLikeStatus(true)
     } else {
       postContext.unLikePost(post._id, authContext.user._id)
+      setLikeCount(post.likes.length)
       setLikeStatus(false)
     }
   }
@@ -123,9 +124,9 @@ export const PostCard = ({ post }) => {
       <CardActions disableSpacing className="py-1">
         <span>
           <IconButton onClick={handleLikeBtn}>
-            <FavoriteIcon color={likeStatus ? "secondary" : "primary"} />
+            <FavoriteIcon color={likeStatus ? "secondary" : "disabled"} />
           </IconButton>
-          {post.likes.length}
+          {likeCount}
         </span>
         <IconButton aria-label="share">
           <ShareIcon />

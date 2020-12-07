@@ -34,7 +34,7 @@ export const PostState = ({ children }) => {
       })
 
       // console.log(state)
-      console.log(response.data)
+      // console.log(response.data)
       dispatch({
         type: POSTS_GET_ALL,
         payload: response.data,
@@ -73,10 +73,10 @@ export const PostState = ({ children }) => {
           payload: "Successfully created!",
         })
         getAllPost()
-        console.log(response.data)
+        // console.log(response.data)
       }
     } catch (error) {
-      console.log(error.response)
+      // console.log(error.response)
       dispatch({
         type: POSTS_ERROR,
         payload: error.response,
@@ -149,12 +149,15 @@ export const PostState = ({ children }) => {
       const { data } = response
       return data
     } catch (error) {
-      console.log(error.response)
+      dispatch({
+        type: POSTS_ERROR,
+        payload: error.response.data.errorMsg,
+      })
     }
   }
 
   const likePost = async (postId, userId) => {
-    const response = await axios.put(
+    await axios.put(
       `${API}/post/like/${userId}/${postId}`,
       {},
       {
@@ -163,7 +166,6 @@ export const PostState = ({ children }) => {
         },
       }
     )
-    console.log(response)
     try {
     } catch (error) {
       dispatch({
@@ -174,7 +176,7 @@ export const PostState = ({ children }) => {
   }
   const unLikePost = async (postId, userId) => {
     try {
-      const response = await axios.put(
+      await axios.put(
         `${API}/post/unlike/${userId}/${postId}`,
         {},
         {
@@ -185,7 +187,6 @@ export const PostState = ({ children }) => {
           },
         }
       )
-      console.log(response)
     } catch (error) {
       dispatch({
         type: POSTS_ERROR,
