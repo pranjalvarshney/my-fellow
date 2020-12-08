@@ -3,7 +3,6 @@ import {
   AccordionDetails,
   AccordionSummary,
   Avatar,
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -193,8 +192,8 @@ export const PostCard = ({ post }) => {
               {post.comments.map((comment) => {
                 return (
                   <span style={{ display: "flex" }} key={comment._id}>
-                    <Typography variant="body1" className="pr-3">
-                      {comment.user}
+                    <Typography variant="body2" className="pr-3">
+                      <b>{comment.user.name}</b>
                     </Typography>
                     <Typography variant="subtitle2">{comment.text}</Typography>
                   </span>

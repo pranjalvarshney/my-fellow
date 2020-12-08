@@ -6,7 +6,7 @@ const { getUserById } = require("../controllers/user.controller")
 
 exports.getPostById = (req, res, next, Id) => {
   Post.findById(Id)
-    .populate("user")
+    .populate("user likes.user comments.user")
     .exec((err, post) => {
       if (err) {
         return res.status(400).json({
@@ -20,6 +20,7 @@ exports.getPostById = (req, res, next, Id) => {
       }
       post.user.salt = undefined
       post.user.encryptedpassword = undefined
+
       req.post = post
       next()
     })
@@ -85,7 +86,7 @@ exports.createPost = (req, res) => {
 
 exports.allposts = (req, res) => {
   Post.find()
-    .populate("user")
+    .populate("user likes.user comments.user")
     .sort({ updatedAt: -1 })
     .exec((err, posts) => {
       if (err) {
@@ -196,15 +197,18 @@ exports.likePost = (req, res) => {
       new: true,
       useFindAndModify: false,
     }
-  ).exec((err, result) => {
-    if (err) {
-      return res
-        .status(400)
-        .json({ errorMsg: "An error occured, try again later" })
-    } else {
+  )
+    .populate("user likes.user")
+    .exec((err, result) => {
+      if (err) {
+        return res
+          .status(400)
+          .json({ errorMsg: "An error occured, try again later" })
+      }
+      result.user.salt = undefined
+      result.user.encryptedpassword = undefined
       res.status(200).json(result)
-    }
-  })
+    })
 }
 
 // Unlike post
@@ -218,15 +222,19 @@ exports.unlikePost = (req, res) => {
       new: true,
       useFindAndModify: false,
     }
-  ).exec((err, result) => {
-    if (err) {
-      return res
-        .status(400)
-        .json({ errorMsg: "An error occured, try again later" })
-    } else {
+  )
+    .populate("user likes.user")
+    .exec((err, result) => {
+      if (err) {
+        return res
+          .status(400)
+          .json({ errorMsg: "An error occured, try again later" })
+      }
+      result.user.salt = undefined
+      result.user.encryptedpassword = undefined
+
       res.status(200).json(result)
-    }
-  })
+    })
 }
 
 // comment on a post
@@ -240,21 +248,26 @@ exports.commentPost = (req, res) => {
     },
     {
       new: true,
+      useFindAndModify: false,
     }
-  ).exec((err, result) => {
-    if (err) {
-      return res
-        .status(400)
-        .json({ errorMsg: "An error occured, try again later" })
-    } else {
+  )
+    .populate("user comments.user")
+    .exec((err, result) => {
+      if (err) {
+        return res
+          .status(400)
+          .json({ errorMsg: "An error occured, try again later" })
+      }
+      result.user.salt = undefined
+      result.user.encryptedpassword = undefined
+
       res.status(200).json(result)
-    }
-  })
+    })
 }
 
 exports.getAllPostByUser = (req, res) => {
   Post.find({ user: req.profile._id })
-    .populate("user")
+    .populate("user likes.user comments.user")
     .sort({ updatedAt: -1 })
     .exec((err, posts) => {
       if (err) {
