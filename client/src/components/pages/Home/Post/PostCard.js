@@ -5,20 +5,29 @@ import {
   CardContent,
   CardHeader,
   Fade,
+  Grid,
   IconButton,
   Menu,
   MenuItem,
   Typography,
 } from "@material-ui/core"
 import React, { useContext, useEffect, useState } from "react"
-import FavoriteIcon from "@material-ui/icons/Favorite"
-import ShareIcon from "@material-ui/icons/Share"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 import Moment from "react-moment"
 import { AuthContext } from "../../../../context/authContext/authContext"
 import { PostContext } from "../../../../context/postContext/postContext"
 import { PostModal } from "../../Modals/PostModal"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {
+  faComment,
+  faHeart as faHeartRegualar,
+  faShareSquare,
+  faBookmark as faBookmarkRegular,
+} from "@fortawesome/free-regular-svg-icons"
+import {
+  faHeart as faHeartSolid,
+  faBookmark as faBookmarkSolid,
+} from "@fortawesome/free-solid-svg-icons"
 
 export const PostCard = ({ post }) => {
   const authContext = useContext(AuthContext)
@@ -121,20 +130,48 @@ export const PostCard = ({ post }) => {
           {post.content}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing className="py-1">
-        <span>
-          <IconButton onClick={handleLikeBtn}>
-            <FavoriteIcon color={likeStatus ? "secondary" : "disabled"} />
-          </IconButton>
-          {likeCount}
-        </span>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton aria-label="show more">
-          <ExpandMoreIcon />
-        </IconButton>
+      <CardActions disableSpacing className="my-0 py-0">
+        <Grid container justify="space-between">
+          <Grid item>
+            <IconButton onClick={handleLikeBtn}>
+              {likeStatus ? (
+                <FontAwesomeIcon
+                  icon={faHeartSolid}
+                  style={{ color: "#ed4c56" }}
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon={faHeartRegualar}
+                  style={{ color: "grey" }}
+                />
+              )}
+            </IconButton>
+            <IconButton>
+              <FontAwesomeIcon icon={faComment} />
+            </IconButton>
+            <IconButton>
+              <FontAwesomeIcon icon={faShareSquare} />
+            </IconButton>
+          </Grid>
+          <Grid item>
+            <IconButton>
+              <FontAwesomeIcon icon={faBookmarkRegular} />
+            </IconButton>
+          </Grid>
+        </Grid>
       </CardActions>
+      <Grid className="px-3" container justify="space-between">
+        <Grid item>
+          <Typography variant="subtitle2" gutterBottom>
+            {`Liked by ${likeCount}`}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="subtitle2" gutterBottom>
+            {`View all ${post.comments.length} comments`}
+          </Typography>
+        </Grid>
+      </Grid>
     </Card>
   )
 }
