@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const crypto = require("crypto")
 const uuid = require("uuid")
+const { StringDecoder } = require("string_decoder")
 
 const userSchema = new mongoose.Schema(
   {
@@ -50,6 +51,18 @@ const userSchema = new mongoose.Schema(
       type: Number,
       trim: true,
     },
+    bookmark: [
+      {
+        objType: {
+          type: String,
+          required: true,
+        },
+        objId: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   { timestamps: true }
 )

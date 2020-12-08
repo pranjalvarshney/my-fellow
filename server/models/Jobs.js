@@ -1,7 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const JobSchema = new mongoose.Schema(
   {
+    objType: "jobs",
+
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
@@ -79,6 +81,6 @@ const JobSchema = new mongoose.Schema(
     },
   },
   { timestamps: true }
-);
+)
 
-module.exports = mongoose.model("Job", JobSchema);
+module.exports = mongoose.model("Job", JobSchema)

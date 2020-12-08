@@ -1,7 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const adsSchema = new mongoose.Schema(
   {
+    objType: "ads",
+
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
@@ -45,6 +47,6 @@ const adsSchema = new mongoose.Schema(
     ],
   },
   { timestamps: true }
-);
+)
 
-module.exports = mongoose.model("Ads", adsSchema);
+module.exports = mongoose.model("Ads", adsSchema)
