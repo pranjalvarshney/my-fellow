@@ -162,6 +162,50 @@ exports.deleteBlog = (req, res) => {
   );
 };
 
+// Like blog
+exports.likeBlog = (req, res) => {
+  Blog.findByIdAndUpdate(
+    { _id: req.blogs._id },
+    {
+      $push: { likes: req.profile._id },
+    },
+    {
+      new: true,
+      useFindAndModify: false,
+    }
+  ).exec((err, result) => {
+    if (err) {
+      return res
+        .status(400)
+        .json({ errorMsg: "An error occured, try again later" });
+    } else {
+      res.status(200).json(result);
+    }
+  });
+};
+
+// Unlike blog
+exports.unlikeBlog = (req, res) => {
+  Blog.findByIdAndUpdate(
+    { _id: req.blogs._id },
+    {
+      $pull: { likes: req.profile._id },
+    },
+    {
+      new: true,
+      useFindAndModify: false,
+    }
+  ).exec((err, result) => {
+    if (err) {
+      return res
+        .status(400)
+        .json({ errorMsg: "An error occured, try again later" });
+    } else {
+      res.status(200).json(result);
+    }
+  });
+};
+
 // comment on a blog
 exports.commentBlog = (req, res) => {
   Blog.findByIdAndUpdate(

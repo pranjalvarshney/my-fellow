@@ -13,6 +13,8 @@ const {
   deleteBlog,
   getBlog,
   commentBlog,
+  likeBlog,
+  unlikeBlog,
 } = require("../controllers/blog.controller");
 const router = express.Router();
 
@@ -50,6 +52,17 @@ router.delete(
   isSignedIn,
   isAuthenticated,
   deleteBlog
+);
+
+// Like a blog
+router.put("/blog/like/:userId/:blogId", isSignedIn, isAuthenticated, likeBlog);
+
+// Unlike a blog
+router.put(
+  "/blog/unlike/:userId/:blogId",
+  isSignedIn,
+  isAuthenticated,
+  unlikeBlog
 );
 
 // comment on a blog
