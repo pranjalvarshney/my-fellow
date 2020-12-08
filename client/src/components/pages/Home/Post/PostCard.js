@@ -5,10 +5,15 @@ import {
   CardContent,
   CardHeader,
   Fade,
+  FormControl,
   Grid,
   IconButton,
+  Input,
+  InputAdornment,
+  InputLabel,
   Menu,
   MenuItem,
+  TextField,
   Typography,
 } from "@material-ui/core"
 import React, { useContext, useEffect, useState } from "react"
@@ -27,6 +32,7 @@ import {
 import {
   faHeart as faHeartSolid,
   faBookmark as faBookmarkSolid,
+  faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons"
 
 export const PostCard = ({ post }) => {
@@ -63,11 +69,11 @@ export const PostCard = ({ post }) => {
   const handleLikeBtn = () => {
     if (!likeStatus) {
       postContext.likePost(post._id, authContext.user._id)
-      setLikeCount(post.likes.length + 1)
+      setLikeCount(likeCount + 1)
       setLikeStatus(true)
     } else {
       postContext.unLikePost(post._id, authContext.user._id)
-      setLikeCount(post.likes.length)
+      setLikeCount(likeCount - 1)
       setLikeStatus(false)
     }
   }
@@ -172,6 +178,21 @@ export const PostCard = ({ post }) => {
           </Typography>
         </Grid>
       </Grid>
+      <CardActions className="pt-0">
+        <FormControl fullWidth className="mx-2 " size="small">
+          <InputLabel>Add a comment...</InputLabel>
+          <Input
+            id="standard-adornment-password"
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton>
+                  <FontAwesomeIcon icon={faPaperPlane} />
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
+      </CardActions>
     </Card>
   )
 }
