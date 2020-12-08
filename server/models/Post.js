@@ -2,7 +2,10 @@ const mongoose = require("mongoose")
 
 const postSchema = new mongoose.Schema(
   {
-    objType: "post",
+    objType: {
+      type: String,
+      default: "post",
+    },
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",

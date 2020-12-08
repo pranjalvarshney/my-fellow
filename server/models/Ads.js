@@ -2,7 +2,10 @@ const mongoose = require("mongoose")
 
 const adsSchema = new mongoose.Schema(
   {
-    objType: "ads",
+    objType: {
+      type: String,
+      default: "ads",
+    },
 
     user: {
       type: mongoose.Schema.ObjectId,

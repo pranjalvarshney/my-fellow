@@ -2,8 +2,10 @@ const mongoose = require("mongoose")
 
 const blogSchema = new mongoose.Schema(
   {
-    objType: "blog",
-
+    objType: {
+      type: String,
+      default: "blog",
+    },
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
