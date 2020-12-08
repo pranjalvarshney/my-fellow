@@ -1,5 +1,9 @@
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Avatar,
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -13,7 +17,6 @@ import {
   InputLabel,
   Menu,
   MenuItem,
-  TextField,
   Typography,
 } from "@material-ui/core"
 import React, { useContext, useEffect, useState } from "react"
@@ -166,33 +169,56 @@ export const PostCard = ({ post }) => {
           </Grid>
         </Grid>
       </CardActions>
-      <Grid className="px-3" container justify="space-between">
-        <Grid item>
-          <Typography variant="subtitle2" gutterBottom>
-            {`Liked by ${likeCount}`}
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant="subtitle2" gutterBottom>
-            {`View all ${post.comments.length} comments`}
-          </Typography>
-        </Grid>
-      </Grid>
-      <CardActions className="pt-0">
-        <FormControl fullWidth className="mx-2 " size="small">
-          <InputLabel>Add a comment...</InputLabel>
-          <Input
-            id="standard-adornment-password"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton>
-                  <FontAwesomeIcon icon={faPaperPlane} />
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-      </CardActions>
+      <Accordion variant="elevation">
+        <AccordionSummary>
+          <Grid container justify="space-between">
+            <Grid item>
+              <Typography
+                onClick={(event) => event.stopPropagation()}
+                onFocus={(event) => event.stopPropagation()}
+                variant="subtitle2"
+                gutterBottom
+              >
+                {`Liked by ${likeCount}`}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="subtitle2">{`View all ${post.comments.length} comments`}</Typography>
+            </Grid>
+          </Grid>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Grid container direction="column">
+            <Grid item>
+              {post.comments.map((comment) => {
+                return (
+                  <span style={{ display: "flex" }} key={comment._id}>
+                    <Typography variant="body1" className="pr-3">
+                      {comment.user}
+                    </Typography>
+                    <Typography variant="subtitle2">{comment.text}</Typography>
+                  </span>
+                )
+              })}
+            </Grid>
+            <Grid item>
+              <FormControl fullWidth size="small">
+                <InputLabel>Add a comment...</InputLabel>
+                <Input
+                  id="standard-adornment-password"
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton>
+                        <FontAwesomeIcon icon={faPaperPlane} />
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+            </Grid>
+          </Grid>
+        </AccordionDetails>
+      </Accordion>
     </Card>
   )
 }
