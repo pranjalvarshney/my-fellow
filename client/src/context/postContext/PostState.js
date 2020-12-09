@@ -194,6 +194,29 @@ export const PostState = ({ children }) => {
       })
     }
   }
+  const addComment = async (postId, userId, comment) => {
+    try {
+      const response = await axios.put(
+        `${API}/post/comment/${userId}/${postId}`,
+        { text: comment },
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("_token")
+            )}`,
+          },
+        }
+      )
+      if (response) {
+        getAllPost()
+      }
+    } catch (error) {
+      dispatch({
+        type: POSTS_ERROR,
+        payload: error.response.data.errorMsg,
+      })
+    }
+  }
 
   return (
     <PostContext.Provider
@@ -209,6 +232,7 @@ export const PostState = ({ children }) => {
         getAllPostByUserId,
         likePost,
         unLikePost,
+        addComment,
       }}
     >
       {children}

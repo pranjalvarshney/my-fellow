@@ -40,6 +40,8 @@ import {
 export const PostCard = ({ post }) => {
   const authContext = useContext(AuthContext)
   const postContext = useContext(PostContext)
+  const [bookmarkStatus, setBookmarkStatus] = useState(false)
+  const [comment, setComment] = useState("")
   const [likeStatus, setLikeStatus] = useState(false)
   const [likeCount, setLikeCount] = useState(post.likes.length)
   const [moreOption, setMoreOption] = useState(null)
@@ -79,7 +81,12 @@ export const PostCard = ({ post }) => {
       setLikeStatus(false)
     }
   }
-
+  const handleBookmarkBtn = () => {
+    setBookmarkStatus(!bookmarkStatus)
+  }
+  const handleCommentSend = async () => {
+    await postContext.addComment(post._id, authContext.user._id, comment)
+  }
   return (
     <Card variant="outlined" className="mb-3">
       {showPost && (
@@ -162,8 +169,12 @@ export const PostCard = ({ post }) => {
             </IconButton>
           </Grid>
           <Grid item>
-            <IconButton>
-              <FontAwesomeIcon icon={faBookmarkRegular} />
+            <IconButton onClick={handleBookmarkBtn}>
+              {bookmarkStatus ? (
+                <FontAwesomeIcon icon={faBookmarkSolid} />
+              ) : (
+                <FontAwesomeIcon icon={faBookmarkRegular} />
+              )}
             </IconButton>
           </Grid>
         </Grid>
@@ -204,10 +215,13 @@ export const PostCard = ({ post }) => {
               <FormControl fullWidth size="small">
                 <InputLabel>Add a comment...</InputLabel>
                 <Input
-                  id="standard-adornment-password"
+                  value={comment}
+                  onChange={(e) => {
+                    setComment(e.target.value)
+                  }}
                   endAdornment={
                     <InputAdornment position="end">
-                      <IconButton>
+                      <IconButton type="submit" onClick={handleCommentSend}>
                         <FontAwesomeIcon icon={faPaperPlane} />
                       </IconButton>
                     </InputAdornment>
