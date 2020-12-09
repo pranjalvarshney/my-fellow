@@ -1,20 +1,20 @@
 const express = require("express");
 const {
-  isSignedIn,
-  isAuthenticated,
+	isSignedIn,
+	isAuthenticated,
 } = require("../controllers/auth.controller");
 const { getUserById } = require("../controllers/user.controller");
 const {
-  createBlog,
-  allblogs,
-  upload,
-  getBlogById,
-  updateBlog,
-  deleteBlog,
-  getBlog,
-  commentBlog,
-  likeBlog,
-  unlikeBlog,
+	createBlog,
+	allblogs,
+	upload,
+	getBlogById,
+	updateBlog,
+	deleteBlog,
+	getBlog,
+	commentBlog,
+	upvoteBlog,
+	downvoteBlog,
 } = require("../controllers/blog.controller");
 const router = express.Router();
 
@@ -24,11 +24,11 @@ router.param("blogId", getBlogById);
 
 // create blog
 router.post(
-  "/create/blog/:userId",
-  isSignedIn,
-  isAuthenticated,
-  upload.single("picture"),
-  createBlog
+	"/create/blog/:userId",
+	isSignedIn,
+	isAuthenticated,
+	upload.single("picture"),
+	createBlog
 );
 
 //get a particular blog
@@ -39,38 +39,43 @@ router.get("/blogs", isSignedIn, allblogs);
 
 // update blog
 router.put(
-  "/update/blog/:userId/:blogId",
-  isSignedIn,
-  isAuthenticated,
-  upload.single("picture"),
-  updateBlog
+	"/update/blog/:userId/:blogId",
+	isSignedIn,
+	isAuthenticated,
+	upload.single("picture"),
+	updateBlog
 );
 
 // delete blog
 router.delete(
-  "/delete/blog/:userId/:blogId",
-  isSignedIn,
-  isAuthenticated,
-  deleteBlog
+	"/delete/blog/:userId/:blogId",
+	isSignedIn,
+	isAuthenticated,
+	deleteBlog
 );
 
-// Like a blog
-router.put("/blog/like/:userId/:blogId", isSignedIn, isAuthenticated, likeBlog);
-
-// Unlike a blog
+// upvote a blog
 router.put(
-  "/blog/unlike/:userId/:blogId",
-  isSignedIn,
-  isAuthenticated,
-  unlikeBlog
+	"/blog/upvote/:userId/:blogId",
+	isSignedIn,
+	isAuthenticated,
+	upvoteBlog
+);
+
+// Downvote a blog
+router.put(
+	"/blog/downvote/:userId/:blogId",
+	isSignedIn,
+	isAuthenticated,
+	downvoteBlog
 );
 
 // comment on a blog
 router.put(
-  "/blog/comment/:userId/:blogId",
-  isSignedIn,
-  isAuthenticated,
-  commentBlog
+	"/blog/comment/:userId/:blogId",
+	isSignedIn,
+	isAuthenticated,
+	commentBlog
 );
 
 module.exports = router;
