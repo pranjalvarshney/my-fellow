@@ -158,7 +158,7 @@ export const BlogState = ({ children }) => {
 
   const upVoteBlog = async (postId, userId) => {
     await axios.put(
-      `${API}/post/like/${userId}/${postId}`,
+      `${API}/blog/like/${userId}/${postId}`,
       {},
       {
         headers: {
@@ -177,7 +177,7 @@ export const BlogState = ({ children }) => {
   const downVoteBlog = async (postId, userId) => {
     try {
       await axios.put(
-        `${API}/post/unlike/${userId}/${postId}`,
+        `${API}/blog/unlike/${userId}/${postId}`,
         {},
         {
           headers: {
@@ -197,7 +197,7 @@ export const BlogState = ({ children }) => {
   const addComment = async (postId, userId, comment) => {
     try {
       const response = await axios.put(
-        `${API}/post/comment/${userId}/${postId}`,
+        `${API}/blog/comment/${userId}/${postId}`,
         { text: comment },
         {
           headers: {
