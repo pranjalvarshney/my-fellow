@@ -7,6 +7,8 @@ const {
 const {
 	getNoticeById,
 	createNotice,
+	allNotices,
+	getNotice,
 } = require("../controllers/notice.controller");
 const { getUserById } = require("../controllers/user.controller");
 const router = express.Router();
@@ -23,5 +25,11 @@ router.post(
 	isAdmin,
 	createNotice
 );
+
+// Get all notices
+router.get("/notices", isSignedIn, allNotices);
+
+// Get a particular news/notice
+router.get("/notices/:noticeId", isSignedIn, getNotice);
 
 module.exports = router;
