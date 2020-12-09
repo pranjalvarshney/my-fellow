@@ -15,3 +15,10 @@ export const POSTS_GET_ALL = "posts_get_all"
 export const POSTS_CREATE = "posts_create"
 export const POSTS_ERROR = "posts_error"
 export const POSTS_SUCCESS = "posts_success"
+
+//BLOG
+export const BLOG_LOADING = "blogs_loading"
+export const BLOG_GET_ALL = "blogs_get_all"
+export const BLOG_CREATE = "blogs_create"
+export const BLOG_ERROR = "blogs_error"
+export const BLOG_SUCCESS = "blogs_success"

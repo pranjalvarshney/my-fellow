@@ -51,18 +51,32 @@ const userSchema = new mongoose.Schema(
       type: Number,
       trim: true,
     },
-    bookmark: [
-      {
-        objType: {
-          type: String,
-          required: true,
+    bookmark: {
+      post: [
+        {
+          type: mongoose.Schema.ObjectId,
+          ref: "Post",
         },
-        objId: {
-          type: String,
-          required: true,
+      ],
+      blog: [
+        {
+          type: mongoose.Schema.ObjectId,
+          ref: "Blog",
         },
-      },
-    ],
+      ],
+      ads: [
+        {
+          type: mongoose.Schema.ObjectId,
+          ref: "Ads",
+        },
+      ],
+      job: [
+        {
+          type: mongoose.Schema.ObjectId,
+          ref: "Job",
+        },
+      ],
+    },
   },
   { timestamps: true }
 )
