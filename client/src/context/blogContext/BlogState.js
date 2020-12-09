@@ -2,28 +2,28 @@ import axios from "axios"
 import React, { useReducer } from "react"
 import { API } from "../../utils/proxy"
 import {
-  POSTS_CREATE,
-  POSTS_ERROR,
-  POSTS_GET_ALL,
-  POSTS_LOADING,
-  POSTS_SUCCESS,
+  BLOG_CREATE,
+  BLOG_ERROR,
+  BLOG_GET_ALL,
+  BLOG_LOADING,
+  BLOG_SUCCESS,
 } from "../types"
-import { PostContext } from "./postContext"
-import postReducer from "./postReducer"
+import { BlogContext } from "./BlogContext"
+import BlogReducer from "./BlogReducer"
 
-export const PostState = ({ children }) => {
+export const BlogState = ({ children }) => {
   const initialState = {
     post: [],
     error: "",
     success: "",
     loading: true,
   }
-  const [state, dispatch] = useReducer(postReducer, initialState)
+  const [state, dispatch] = useReducer(BlogReducer, initialState)
 
-  const getAllPost = async () => {
+  const getAllBlogs = async () => {
     try {
       dispatch({
-        type: POSTS_LOADING,
+        type: BLOG_LOADING,
         payload: true,
       })
       // console.log(state)
@@ -36,22 +36,22 @@ export const PostState = ({ children }) => {
       // console.log(state)
       // console.log(response.data)
       dispatch({
-        type: POSTS_GET_ALL,
+        type: BLOG_GET_ALL,
         payload: response.data,
       })
     } catch (error) {
       console.log(error.response)
       dispatch({
-        type: POSTS_ERROR,
+        type: BLOG_ERROR,
         payload: error.response,
       })
     }
   }
 
-  const createPost = async (formData, userId) => {
+  const createBlog = async (formData, userId) => {
     try {
       dispatch({
-        type: POSTS_LOADING,
+        type: BLOG_LOADING,
         payload: true,
       })
 
@@ -69,22 +69,22 @@ export const PostState = ({ children }) => {
       )
       if (response) {
         dispatch({
-          type: POSTS_CREATE,
+          type: BLOG_CREATE,
           payload: "Successfully created!",
         })
-        getAllPost()
+        getAllBlogs()
         // console.log(response.data)
       }
     } catch (error) {
       // console.log(error.response)
       dispatch({
-        type: POSTS_ERROR,
+        type: BLOG_ERROR,
         payload: error.response,
       })
     }
   }
 
-  const deletePost = async (userID, postId) => {
+  const deleteBlog = async (userID, postId) => {
     try {
       const response = await axios.delete(
         `${API}/delete/post/${userID}/${postId}`,
@@ -98,20 +98,20 @@ export const PostState = ({ children }) => {
       )
       if (response) {
         dispatch({
-          type: POSTS_SUCCESS,
+          type: BLOG_SUCCESS,
           payload: response.data.message,
         })
-        getAllPost()
+        getAllBlogs()
       }
     } catch (error) {
       dispatch({
-        type: POSTS_ERROR,
+        type: BLOG_ERROR,
         payload: error.response,
       })
     }
   }
 
-  const updatePost = async (formData, userId, postId) => {
+  const updateBlog = async (formData, userId, postId) => {
     try {
       const response = await axios.put(
         `${API}/update/post/${userId}/${postId}`,
@@ -126,20 +126,20 @@ export const PostState = ({ children }) => {
       )
       if (response) {
         dispatch({
-          type: POSTS_CREATE,
+          type: BLOG_CREATE,
           payload: "Updated Successfully!",
         })
-        getAllPost()
+        getAllBlogs()
       }
     } catch (error) {
       dispatch({
-        type: POSTS_ERROR,
+        type: BLOG_ERROR,
         payload: error.response,
       })
     }
   }
 
-  const getAllPostByUserId = async (userId) => {
+  const getAllBlogsByUserId = async (userId) => {
     try {
       const response = await axios.get(`${API}/${userId}/posts`, {
         headers: {
@@ -150,13 +150,13 @@ export const PostState = ({ children }) => {
       return data
     } catch (error) {
       dispatch({
-        type: POSTS_ERROR,
+        type: BLOG_ERROR,
         payload: error.response.data.errorMsg,
       })
     }
   }
 
-  const likePost = async (postId, userId) => {
+  const upVoteBlog = async (postId, userId) => {
     await axios.put(
       `${API}/post/like/${userId}/${postId}`,
       {},
@@ -169,12 +169,12 @@ export const PostState = ({ children }) => {
     try {
     } catch (error) {
       dispatch({
-        type: POSTS_ERROR,
+        type: BLOG_ERROR,
         payload: error.response.data.errorMsg,
       })
     }
   }
-  const unLikePost = async (postId, userId) => {
+  const downVoteBlog = async (postId, userId) => {
     try {
       await axios.put(
         `${API}/post/unlike/${userId}/${postId}`,
@@ -189,7 +189,7 @@ export const PostState = ({ children }) => {
       )
     } catch (error) {
       dispatch({
-        type: POSTS_ERROR,
+        type: BLOG_ERROR,
         payload: error.response.data.errorMsg,
       })
     }
@@ -208,34 +208,34 @@ export const PostState = ({ children }) => {
         }
       )
       if (response) {
-        getAllPost()
+        getAllBlogs()
       }
     } catch (error) {
       dispatch({
-        type: POSTS_ERROR,
+        type: BLOG_ERROR,
         payload: error.response.data.errorMsg,
       })
     }
   }
 
   return (
-    <PostContext.Provider
+    <BlogContext.Provider
       value={{
         post: state.post,
         loading: state.loading,
         error: state.error,
         success: state.success,
-        getAllPost,
-        createPost,
-        updatePost,
-        deletePost,
-        getAllPostByUserId,
-        likePost,
-        unLikePost,
+        getAllBlogs,
+        createBlog,
+        updateBlog,
+        deleteBlog,
+        getAllBlogsByUserId,
+        upVoteBlog,
+        downVoteBlog,
         addComment,
       }}
     >
       {children}
-    </PostContext.Provider>
+    </BlogContext.Provider>
   )
 }
