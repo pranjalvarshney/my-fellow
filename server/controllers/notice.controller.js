@@ -47,3 +47,20 @@ exports.allNotices = (req, res) => {
 exports.getNotice = (req, res) => {
 	return res.json(req.notice);
 };
+
+// Update notices
+exports.updateNotice = (req, res) => {
+	Notice.findByIdAndUpdate(
+		{ _id: req.notice._id },
+		{ $set: req.body },
+		{ useFindAndModify: false, new: true },
+		(err, notice) => {
+			if (err || !notice) {
+				return res.status(400).json({
+					error: "An error occured,  try again later",
+				});
+			}
+			return res.status(200).json(notice);
+		}
+	);
+};

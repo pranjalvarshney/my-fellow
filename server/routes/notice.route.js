@@ -9,6 +9,7 @@ const {
 	createNotice,
 	allNotices,
 	getNotice,
+	updateNotice,
 } = require("../controllers/notice.controller");
 const { getUserById } = require("../controllers/user.controller");
 const router = express.Router();
@@ -31,5 +32,14 @@ router.get("/notices", isSignedIn, allNotices);
 
 // Get a particular news/notice
 router.get("/notices/:noticeId", isSignedIn, getNotice);
+
+// Update notice
+router.put(
+	"/update/notice/:userId/:noticeId",
+	isSignedIn,
+	isAuthenticated,
+	isAdmin,
+	updateNotice
+);
 
 module.exports = router;
