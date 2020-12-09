@@ -10,6 +10,7 @@ const {
 	allNotices,
 	getNotice,
 	updateNotice,
+	deleteNotice,
 } = require("../controllers/notice.controller");
 const { getUserById } = require("../controllers/user.controller");
 const router = express.Router();
@@ -42,4 +43,12 @@ router.put(
 	updateNotice
 );
 
+// Delete notice
+router.delete(
+	"/delete/notice/:userId/:noticeId",
+	isSignedIn,
+	isAuthenticated,
+	isAdmin,
+	deleteNotice
+);
 module.exports = router;

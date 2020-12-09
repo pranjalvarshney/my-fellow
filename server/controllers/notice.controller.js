@@ -64,3 +64,21 @@ exports.updateNotice = (req, res) => {
 		}
 	);
 };
+
+// Delete notices
+exports.deleteNotice = (req, res) => {
+	Notice.findByIdAndRemove(
+		{ _id: req.notice._id },
+		{ useFindAndModify: false, new: true },
+		(err, notice) => {
+			if (err || !notice) {
+				return res.status(400).json({
+					error: "An error occured,  try again later",
+				});
+			}
+			return res
+				.status(200)
+				.json({ message: "News/Notice has been removed" });
+		}
+	);
+};
