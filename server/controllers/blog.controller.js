@@ -240,3 +240,17 @@ exports.commentBlog = (req, res) => {
     }
   })
 }
+
+exports.countShareBlog = (req, res) => {
+  Blog.findById({ _id: req.blogs._id }).exec((err, blog) => {
+    if (err) {
+      return res
+        .status(400)
+        .json({ error: "An error occured, try again later" })
+    }
+
+    blog.shareCount++
+    blog.save()
+    res.json(blog._id)
+  })
+}

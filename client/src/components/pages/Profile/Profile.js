@@ -64,7 +64,7 @@ export const Profile = () => {
                     <Grid container spacing={3} justify="flex-start">
                       <Grid item>
                         <h6>
-                          <b>{"27"} </b>Post
+                          <b>{data.length} </b>Post
                         </h6>
                       </Grid>
                       <Grid item>
