@@ -4,7 +4,13 @@ import { Modal, Form } from "react-bootstrap"
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate"
 import { AuthContext } from "../../../context/authContext/authContext"
 
-export const PostModal = ({ show, handleModal, postFunction, title, post }) => {
+export const PostModal = ({
+  show,
+  handleModal,
+  postFunction,
+  modalTitle,
+  post,
+}) => {
   const authContext = useContext(AuthContext)
   const [uploadFile, setUploadFile] = useState(null)
   const [preview, setPreview] = useState(
@@ -27,7 +33,7 @@ export const PostModal = ({ show, handleModal, postFunction, title, post }) => {
   return (
     <Modal show={show} onHide={handleModal} centered id="input-modal">
       <Modal.Header closeButton>
-        <Modal.Title>{title}</Modal.Title>
+        <Modal.Title>{modalTitle}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
