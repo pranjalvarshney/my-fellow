@@ -32,7 +32,7 @@ export const BlogState = ({ children }) => {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
         },
       })
-
+      console.log(response.data)
       dispatch({
         type: BLOG_GET_ALL,
         payload: response.data,

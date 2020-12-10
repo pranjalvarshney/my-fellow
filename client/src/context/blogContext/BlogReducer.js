@@ -33,7 +33,7 @@ export default (state, action) => {
     case BLOG_GET_ALL:
       return {
         ...state,
-        post: action.payload,
+        blog: action.payload,
         loading: false,
         error: "",
         success: "",

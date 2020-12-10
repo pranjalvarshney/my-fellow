@@ -26,15 +26,16 @@ export const LoadingBlog = () => {
           }
           subheader={<Skeleton animation="wave" height={10} width="40%" />}
         />
+        <CardContent>
+          <Skeleton animation="wave" height={10} style={{ marginBottom: 6 }} />
+          <Skeleton animation="wave" height={10} style={{ marginBottom: 6 }} />
+          <Skeleton animation="wave" height={10} width="80%" />
+        </CardContent>
         <Skeleton
           animation="wave"
           variant="rect"
           style={{ width: "100%", height: "250px" }}
         />
-        <CardContent>
-          <Skeleton animation="wave" height={10} style={{ marginBottom: 6 }} />
-          <Skeleton animation="wave" height={10} width="80%" />
-        </CardContent>
       </Card>
     </div>
   )

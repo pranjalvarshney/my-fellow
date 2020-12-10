@@ -19,7 +19,7 @@ import {
   Typography,
 } from "@material-ui/core"
 import React, { useContext, useEffect, useState } from "react"
-import MoreVertIcon from "@material-ui/icons/MoreVert"
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
 import Moment from "react-moment"
 import { AuthContext } from "../../../../context/authContext/authContext"
 import { PostContext } from "../../../../context/postContext/postContext"
@@ -52,11 +52,11 @@ export const PostCard = ({ post }) => {
   const handleClose = () => {
     setMoreOption(null)
   }
-  const [showPost, setShow] = useState(false)
+  const [showPost, setShowPost] = useState(false)
 
   const handleModalPost = () => {
     handleClose()
-    setShow(!showPost)
+    setShowPost(!showPost)
   }
   useEffect(() => {
     post.likes.filter((like) => {
@@ -103,7 +103,7 @@ export const PostCard = ({ post }) => {
         action={
           <>
             <IconButton aria-label="settings" onClick={handleMoreOption}>
-              <MoreVertIcon />
+              <MoreHorizIcon />
             </IconButton>
             <Menu
               id="fade-menu"
