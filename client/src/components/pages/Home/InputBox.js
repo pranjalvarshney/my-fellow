@@ -7,15 +7,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEdit, faFeather } from "@fortawesome/free-solid-svg-icons"
 import { PostModal } from "../Modals/PostModal"
 import { PostContext } from "../../../context/postContext/postContext"
+import { BlogModal } from "../Modals/BlogModal"
+import { BlogContext } from "../../../context/blogContext/BlogContext"
 
 export const InputBox = () => {
   const authContext = useContext(AuthContext)
   const postContext = useContext(PostContext)
-  const [showPost, setShow] = useState(false)
-
+  const blogContext = useContext(BlogContext)
+  const [showPost, setShowPost] = useState(false)
+  const [showBlog, setShowBlog] = useState(false)
   const handleModalPost = () => {
     // console.log(showPost)
-    setShow(!showPost)
+    setShowPost(!showPost)
+  }
+  const handleModalBlog = () => {
+    // console.log(showBlog)
+    setShowBlog(!showBlog)
   }
 
   return (
@@ -25,8 +32,17 @@ export const InputBox = () => {
           show={showPost}
           handleModal={handleModalPost}
           postFunction={postContext.createPost}
-          title="Create post"
+          modalTitle="Create post"
           post={undefined}
+        />
+      )}
+      {showBlog && (
+        <BlogModal
+          show={showBlog}
+          handleModal={handleModalBlog}
+          blogFunction={blogContext.createBlog}
+          modalTitle="Write Blog"
+          blog={undefined}
         />
       )}
       <Paper elevation={1} variant="outlined" className="p-3 mb-3">
@@ -67,7 +83,10 @@ export const InputBox = () => {
             </Button>
           </Grid>
           <Grid item>
-            <Button startIcon={<FontAwesomeIcon icon={faFeather} />}>
+            <Button
+              onClick={handleModalBlog}
+              startIcon={<FontAwesomeIcon icon={faFeather} />}
+            >
               Write Blog
             </Button>
           </Grid>
