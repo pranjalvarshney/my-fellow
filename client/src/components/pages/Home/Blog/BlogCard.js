@@ -1,11 +1,12 @@
 import {
   faComment,
   faArrowAltCircleUp as faArrowAltCircleUpRegular,
+  faBookmark as faBookmarkRegular,
 } from "@fortawesome/free-regular-svg-icons"
 import { faShare } from "@fortawesome/free-solid-svg-icons"
 import {
-  faEllipsisH,
   faArrowAltCircleUp as faArrowAltCircleUpSolid,
+  faBookmark as faBookmarkSolid,
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
@@ -15,12 +16,13 @@ import {
   CardContent,
   CardHeader,
   Fade,
+  Grid,
   IconButton,
   Menu,
   MenuItem,
   Typography,
 } from "@material-ui/core"
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import Moment from "react-moment"
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
 import { AuthContext } from "../../../../context/authContext/authContext"
@@ -30,10 +32,40 @@ import { BlogModal } from "../../Modals/BlogModal"
 export const BlogCard = ({ blog }) => {
   const authContext = useContext(AuthContext)
   const blogContext = useContext(BlogContext)
+  const [vote, setVote] = useState(false)
+
+  const [countVote, setCountVote] = useState(blog.upvotes.length)
   const [moreOption, setMoreOption] = useState(null)
   const handleMoreOption = (e) => {
     setMoreOption(e.currentTarget)
   }
+  const [bookmarkStatus, setBookmarkStatus] = useState(false)
+
+  useEffect(() => {
+    blog.upvotes.filter((like) => {
+      if (like === authContext.user._id) {
+        setVote(true)
+      } else {
+        setVote(false)
+      }
+      return 0
+    })
+  }, [authContext.user._id, blog.upvotes])
+  const handleVote = () => {
+    if (!vote) {
+      blogContext.upVoteBlog(blog._id, authContext.user._id)
+      setCountVote(vote + 1)
+      setVote(true)
+    } else {
+      blogContext.downVoteBlog(blog._id, authContext.user._id)
+      setCountVote(vote - 1)
+      setVote(false)
+    }
+  }
+  const handleBookmarkBtn = () => {
+    setBookmarkStatus(!bookmarkStatus)
+  }
+
   const open = Boolean(moreOption)
   const handleClose = () => {
     setMoreOption(null)
@@ -108,15 +140,51 @@ export const BlogCard = ({ blog }) => {
           <img width="100%" src={blog.picture} alt={blog.picture[0]} />
         )}
         <CardActions disableSpacing>
-          <IconButton>
-            <FontAwesomeIcon icon={faArrowAltCircleUpRegular} />
-          </IconButton>
-          <IconButton>
-            <FontAwesomeIcon icon={faComment} />
-          </IconButton>
-          <IconButton>
-            <FontAwesomeIcon icon={faShare} />
-          </IconButton>
+          <Grid container justify="space-between">
+            <Grid item>
+              <IconButton onClick={handleVote}>
+                {vote ? (
+                  <FontAwesomeIcon
+                    icon={faArrowAltCircleUpSolid}
+                    style={{ color: `blue` }}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faArrowAltCircleUpRegular}
+                    style={{ color: `grey` }}
+                  />
+                )}
+              </IconButton>
+              <span>
+                <Typography variant="overline">{countVote}</Typography>
+              </span>
+              <IconButton>
+                <FontAwesomeIcon icon={faComment} />
+              </IconButton>
+              <span>
+                <Typography variant="overline">
+                  {blog.comments.length}
+                </Typography>
+              </span>
+              <IconButton>
+                <FontAwesomeIcon icon={faShare} />
+              </IconButton>
+              <span>
+                <Typography variant="overline">
+                  {blog.comments.length}
+                </Typography>
+              </span>
+            </Grid>
+            <Grid item>
+              <IconButton onClick={handleBookmarkBtn}>
+                {bookmarkStatus ? (
+                  <FontAwesomeIcon icon={faBookmarkSolid} />
+                ) : (
+                  <FontAwesomeIcon icon={faBookmarkRegular} />
+                )}
+              </IconButton>
+            </Grid>
+          </Grid>
         </CardActions>
       </Card>
     </>

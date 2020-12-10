@@ -81,7 +81,7 @@ export const BlogModal = ({
                     justifyContent: "center",
                     alignItems: "center",
                     height: "60%",
-                    fltrueexDirection: "column",
+                    flexDirection: "column",
                   }}
                 >
                   <AddPhotoAlternateIcon fontSize="large" />
