@@ -80,6 +80,7 @@ exports.createBlog = (req, res) => {
 exports.allblogs = (req, res) => {
   Blog.find()
     .populate("user upvotes.user comments.user")
+    .sort({ updatedAt: -1 })
     .exec((err, blogs) => {
       if (err) {
         res.status(400).json({
@@ -87,8 +88,10 @@ exports.allblogs = (req, res) => {
         })
       }
 
-      blogs.user.salt = undefined
-      blogs.user.encryptedpassword = undefined
+      blogs.map((blog) => {
+        blog.user.salt = undefined
+        blog.user.encryptedpassword = undefined
+      })
       return res.json(blogs)
     })
 }

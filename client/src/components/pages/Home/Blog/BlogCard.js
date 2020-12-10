@@ -42,8 +42,8 @@ export const BlogCard = ({ blog }) => {
   const [bookmarkStatus, setBookmarkStatus] = useState(false)
 
   useEffect(() => {
-    blog.upvotes.filter((like) => {
-      if (like === authContext.user._id) {
+    blog.upvotes.filter((likeId) => {
+      if (likeId === authContext.user._id) {
         setVote(true)
       } else {
         setVote(false)
@@ -54,11 +54,11 @@ export const BlogCard = ({ blog }) => {
   const handleVote = () => {
     if (!vote) {
       blogContext.upVoteBlog(blog._id, authContext.user._id)
-      setCountVote(vote + 1)
+      setCountVote(countVote + 1)
       setVote(true)
     } else {
       blogContext.downVoteBlog(blog._id, authContext.user._id)
-      setCountVote(vote - 1)
+      setCountVote(countVote - 1)
       setVote(false)
     }
   }
@@ -110,7 +110,7 @@ export const BlogCard = ({ blog }) => {
                 {authContext.user._id === blog.user._id ? (
                   <MenuItem
                     onClick={() => {
-                      blogContext.deletePost(authContext.user._id, blog._id)
+                      blogContext.deleteBlog(authContext.user._id, blog._id)
                       handleClose()
                     }}
                   >
@@ -136,8 +136,8 @@ export const BlogCard = ({ blog }) => {
             {blog.content}
           </Typography>
         </CardContent>
-        {blog.picture.length > 0 && (
-          <img width="100%" src={blog.picture} alt={blog.picture[0]} />
+        {blog.picture && (
+          <img width="100%" src={blog.picture} alt={blog.picture} />
         )}
         <CardActions disableSpacing>
           <Grid container justify="space-between">
