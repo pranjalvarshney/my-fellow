@@ -94,7 +94,7 @@ export const PostCard = ({ post }) => {
           show={showPost}
           handleModal={handleModalPost}
           postFunction={postContext.updatePost}
-          title="Update post"
+          modalTitle="Update post"
           post={post}
         />
       )}

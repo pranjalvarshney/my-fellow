@@ -13,10 +13,12 @@ import { Profile } from "../pages/Profile/Profile"
 import { JobsAndPlacements } from "../pages/Home/JobsAndPlacements/JobsAndPlacements"
 import { Ads } from "../pages/Home/Ads/Ads"
 import { PostContext } from "../../context/postContext/postContext"
+import { BlogContext } from "../../context/blogContext/BlogContext"
 
 export const Routing = () => {
   const authContext = useContext(AuthContext)
   const postContext = useContext(PostContext)
+  const blogContext = useContext(BlogContext)
 
   const [responseMsg, setResponseMsg] = useState({
     successStatus: false,
@@ -64,6 +66,13 @@ export const Routing = () => {
         color: "#ff7961",
       })
     }
+    if (blogContext.error) {
+      setResponseMsg({
+        errorStatus: true,
+        msg: blogContext.error,
+        color: "#ff7961",
+      })
+    }
     if (postContext.error) {
       setResponseMsg({
         errorStatus: true,
@@ -85,7 +94,14 @@ export const Routing = () => {
         color: "#58D68D",
       })
     }
-  }, [authContext, postContext])
+    if (blogContext.success) {
+      setResponseMsg({
+        successStatus: true,
+        msg: blogContext.success,
+        color: "#58D68D",
+      })
+    }
+  }, [authContext, postContext, blogContext])
 
   return (
     <>

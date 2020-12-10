@@ -57,7 +57,7 @@ export const BlogState = ({ children }) => {
         formData,
         {
           headers: {
-            "content-type": "multipart/form-data",
+            // "content-type": "multipart/form-data",
             Authorization: `Bearer ${JSON.parse(
               localStorage.getItem("_token")
             )}`,

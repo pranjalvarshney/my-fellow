@@ -25,6 +25,7 @@ import Moment from "react-moment"
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
 import { AuthContext } from "../../../../context/authContext/authContext"
 import { BlogContext } from "../../../../context/blogContext/BlogContext"
+import { BlogModal } from "../../Modals/BlogModal"
 
 export const BlogCard = ({ blog }) => {
   const authContext = useContext(AuthContext)
@@ -37,14 +38,23 @@ export const BlogCard = ({ blog }) => {
   const handleClose = () => {
     setMoreOption(null)
   }
-  const [showPost, setShowPost] = useState(false)
+  const [showBlog, setShowBlog] = useState(false)
 
-  const handleModalPost = () => {
+  const handleModalBlog = () => {
     handleClose()
-    setShowPost(!showPost)
+    setShowBlog(!showBlog)
   }
   return (
-    <div>
+    <>
+      {showBlog && (
+        <BlogModal
+          show={showBlog}
+          handleModal={handleModalBlog}
+          blogFunction={blogContext.updateBlog}
+          modalTitle="Update blog"
+          blog={blog}
+        />
+      )}
       <Card variant="outlined" className="mb-3">
         <CardHeader
           className="pt-3 pb-0"
@@ -63,7 +73,7 @@ export const BlogCard = ({ blog }) => {
                 TransitionComponent={Fade}
               >
                 {authContext.user._id === blog.user._id ? (
-                  <MenuItem onClick={handleModalPost}>Edit</MenuItem>
+                  <MenuItem onClick={handleModalBlog}>Edit</MenuItem>
                 ) : null}
                 {authContext.user._id === blog.user._id ? (
                   <MenuItem
@@ -87,7 +97,10 @@ export const BlogCard = ({ blog }) => {
         />
 
         <CardContent>
-          <Typography variant="body2" component="p">
+          <Typography variant="subtitle2" component="p">
+            <b>{blog.title}</b>
+          </Typography>
+          <Typography variant="subtitle2" component="p">
             {blog.content}
           </Typography>
         </CardContent>
@@ -106,6 +119,6 @@ export const BlogCard = ({ blog }) => {
           </IconButton>
         </CardActions>
       </Card>
-    </div>
+    </>
   )
 }
