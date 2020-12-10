@@ -13,7 +13,7 @@ import BlogReducer from "./BlogReducer"
 
 export const BlogState = ({ children }) => {
   const initialState = {
-    post: [],
+    blog: [],
     error: "",
     success: "",
     loading: true,
@@ -27,20 +27,17 @@ export const BlogState = ({ children }) => {
         payload: true,
       })
       // console.log(state)
-      const response = await axios.get(`${API}/posts`, {
+      const response = await axios.get(`${API}/blogs`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
         },
       })
 
-      // console.log(state)
-      // console.log(response.data)
       dispatch({
         type: BLOG_GET_ALL,
         payload: response.data,
       })
     } catch (error) {
-      console.log(error.response)
       dispatch({
         type: BLOG_ERROR,
         payload: error.response,
@@ -56,7 +53,7 @@ export const BlogState = ({ children }) => {
       })
 
       const response = await axios.post(
-        `${API}/create/post/${userId}`,
+        `${API}/create/blog/${userId}`,
         formData,
         {
           headers: {
@@ -84,10 +81,10 @@ export const BlogState = ({ children }) => {
     }
   }
 
-  const deleteBlog = async (userID, postId) => {
+  const deleteBlog = async (userID, blogId) => {
     try {
       const response = await axios.delete(
-        `${API}/delete/post/${userID}/${postId}`,
+        `${API}/delete/blog/${userID}/${blogId}`,
         {
           headers: {
             Authorization: `Bearer ${JSON.parse(
@@ -111,10 +108,10 @@ export const BlogState = ({ children }) => {
     }
   }
 
-  const updateBlog = async (formData, userId, postId) => {
+  const updateBlog = async (formData, userId, blogId) => {
     try {
       const response = await axios.put(
-        `${API}/update/post/${userId}/${postId}`,
+        `${API}/update/blog/${userId}/${blogId}`,
         formData,
         {
           headers: {
@@ -141,7 +138,7 @@ export const BlogState = ({ children }) => {
 
   const getAllBlogsByUserId = async (userId) => {
     try {
-      const response = await axios.get(`${API}/${userId}/posts`, {
+      const response = await axios.get(`${API}/${userId}/blogs`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
         },
@@ -156,9 +153,9 @@ export const BlogState = ({ children }) => {
     }
   }
 
-  const upVoteBlog = async (postId, userId) => {
+  const upVoteBlog = async (blogId, userId) => {
     await axios.put(
-      `${API}/blog/like/${userId}/${postId}`,
+      `${API}/blog/upvote/${userId}/${blogId}`,
       {},
       {
         headers: {
@@ -174,10 +171,10 @@ export const BlogState = ({ children }) => {
       })
     }
   }
-  const downVoteBlog = async (postId, userId) => {
+  const downVoteBlog = async (blogId, userId) => {
     try {
       await axios.put(
-        `${API}/blog/unlike/${userId}/${postId}`,
+        `${API}/blog/downvote/${userId}/${blogId}`,
         {},
         {
           headers: {
@@ -194,10 +191,10 @@ export const BlogState = ({ children }) => {
       })
     }
   }
-  const addComment = async (postId, userId, comment) => {
+  const addComment = async (blogId, userId, comment) => {
     try {
       const response = await axios.put(
-        `${API}/blog/comment/${userId}/${postId}`,
+        `${API}/blog/comment/${userId}/${blogId}`,
         { text: comment },
         {
           headers: {
@@ -221,7 +218,7 @@ export const BlogState = ({ children }) => {
   return (
     <BlogContext.Provider
       value={{
-        post: state.post,
+        blog: state.blog,
         loading: state.loading,
         error: state.error,
         success: state.success,
