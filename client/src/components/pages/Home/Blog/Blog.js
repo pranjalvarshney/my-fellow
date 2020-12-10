@@ -11,6 +11,7 @@ export const Blog = () => {
   const blogContext = useContext(BlogContext)
   useEffect(() => {
     blogContext.getAllBlogs()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <Home>

@@ -91,6 +91,9 @@ export const BlogCard = ({ blog }) => {
             {blog.content}
           </Typography>
         </CardContent>
+        {blog.picture.length > 0 && (
+          <img width="100%" src={blog.picture} alt={blog.picture[0]} />
+        )}
         <CardActions disableSpacing>
           <IconButton>
             <FontAwesomeIcon icon={faArrowAltCircleUpRegular} />
