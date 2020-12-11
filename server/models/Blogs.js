@@ -24,7 +24,7 @@ const blogSchema = new mongoose.Schema(
 		},
 		picture: {
 			type: String,
-			default: "",
+			default: null,
 		},
 		upvotes: [
 			{
