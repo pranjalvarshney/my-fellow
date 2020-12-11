@@ -16,6 +16,7 @@ const {
   upvoteBlog,
   downvoteBlog,
   countShareBlog,
+  getAllBlogByUser,
 } = require("../controllers/blog.controller")
 const router = express.Router()
 
@@ -80,5 +81,7 @@ router.put(
 )
 
 router.get("/share/blog/:blogId", countShareBlog)
+
+router.get("/:userId/blogs", isSignedIn, isAuthenticated, getAllBlogByUser)
 
 module.exports = router

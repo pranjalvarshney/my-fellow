@@ -112,6 +112,7 @@ export const Routing = () => {
       <BrowserRouter>
         <Switch>
           <PrivateRoute exact path="/" component={Post} />
+          <PrivateRoute exact path="/posts" component={Post} />
           <PrivateRoute
             exact
             path="/jobs-and-placements"
@@ -119,7 +120,8 @@ export const Routing = () => {
           />
           <PrivateRoute exact path="/ads" component={Ads} />
           <PrivateRoute exact path="/blogs" component={Blog} />
-          <PrivateRoute exact path="/profile" component={Profile} />
+          {/* <PrivateRoute exact path="/profile" component={Profile} /> */}
+          <PrivateRoute exact path="/:userId" component={Profile} />
           <SimpleRoute exact path="/signup" component={Signup} />
           <SimpleRoute exact path="/signin" component={Login} />
         </Switch>

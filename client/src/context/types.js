@@ -9,6 +9,11 @@ export const AUTH_SIGNIN_ERROR = "auth_signin_error"
 export const AUTH_SIGNUP_ERROR = "auth_signup_error"
 export const AUTH_ERROR = "auth_error"
 
+//USER
+export const USER_LOADING = "user_loading"
+export const USER_SUCCESS = "user_success"
+export const USER_ERROR = "user_error"
+
 //POST
 export const POSTS_LOADING = "posts_loading"
 export const POSTS_GET_ALL = "posts_get_all"
