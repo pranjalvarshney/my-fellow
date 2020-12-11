@@ -40,7 +40,7 @@ export const BlogCard = ({ blog }) => {
   const blogContext = useContext(BlogContext)
   const [vote, setVote] = useState(false)
   const [comment, setComment] = useState("")
-
+  const [shareCount, setShareCount] = useState(blog.shareCount)
   const [countVote, setCountVote] = useState(blog.upvotes.length)
   const [moreOption, setMoreOption] = useState(null)
   const handleMoreOption = (e) => {
@@ -91,6 +91,12 @@ export const BlogCard = ({ blog }) => {
 
   const handleCommentSend = async () => {
     await blogContext.addComment(blog._id, authContext.user._id, comment)
+  }
+
+  const handleShareBtn = async () => {
+    const response = await blogContext.countShare(blog._id)
+    setShareCount(response.shareCount)
+    console.log(response)
   }
   return (
     <>
@@ -182,13 +188,11 @@ export const BlogCard = ({ blog }) => {
                   {blog.comments.length}
                 </Typography>
               </span>
-              <IconButton>
+              <IconButton onClick={handleShareBtn}>
                 <FontAwesomeIcon icon={faShare} />
               </IconButton>
               <span>
-                <Typography variant="overline">
-                  {blog.comments.length}
-                </Typography>
+                <Typography variant="overline">{shareCount}</Typography>
               </span>
             </Grid>
             <Grid item>

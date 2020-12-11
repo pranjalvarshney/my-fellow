@@ -137,7 +137,7 @@ exports.updateBlog = (req, res) => {
     (err, blog) => {
       if (err || !blog) {
         return res.status(400).json({
-          error: "An error occured,  try again later",
+          errorMsg: "An error occured,  try again later",
         })
       }
       return res.status(200).json(blog)
@@ -166,7 +166,7 @@ exports.deleteBlog = (req, res) => {
     (err, blog) => {
       if (err || !blog) {
         return res.status(400).json({
-          error: "An error occured,  try again later",
+          errorMsg: "An error occured,  try again later",
         })
       }
       return res.status(200).json({ message: "Blog has been deleted" })
@@ -234,7 +234,7 @@ exports.commentBlog = (req, res) => {
     if (err) {
       return res
         .status(400)
-        .json({ error: "An error occured, try again later" })
+        .json({ errorMsg: "An error occured, try again later" })
     } else {
       res.status(200).json(result)
     }
@@ -246,11 +246,25 @@ exports.countShareBlog = (req, res) => {
     if (err) {
       return res
         .status(400)
-        .json({ error: "An error occured, try again later" })
+        .json({ errorMsg: "An error occured, try again later" })
     }
 
     blog.shareCount++
     blog.save()
-    res.json(blog._id)
+    res.json(blog)
   })
+}
+
+exports.getAllBlogByUser = (req, res) => {
+  Blog.find({ user: req.profile._id })
+    .populate("user upvotes.user comments.user")
+    .sort({ updatedAt: -1 })
+    .exec((err, blogs) => {
+      if (err) {
+        return res
+          .json(400)
+          .json({ errorMsg: "An error occured, try again later" })
+      }
+      res.status(200).json(blogs)
+    })
 }
