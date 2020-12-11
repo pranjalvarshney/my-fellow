@@ -47,8 +47,10 @@ export const Profile = ({ match }) => {
       const abc = await blogContext.getAllBlogsByUserId(match.params.userId)
       setDataBlog(abc)
     }
-    fetchPostsByUser()
-    fetchBlogsByUser()
+    if (userContext.user) {
+      fetchPostsByUser()
+      fetchBlogsByUser()
+    }
     // setData(abc.data)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match.params.userId])
@@ -166,6 +168,7 @@ export const Profile = ({ match }) => {
                       <Button
                         variant="text"
                         fullWidth
+                        color={`${type === "post" ? "primary" : ""}`}
                         onClick={() => {
                           setData(null)
                           handleClick("post")
@@ -178,6 +181,7 @@ export const Profile = ({ match }) => {
                       <Button
                         variant="text"
                         fullWidth
+                        color={`${type === "blog" ? "primary" : ""}`}
                         onClick={() => {
                           setData(null)
                           handleClick("blog")

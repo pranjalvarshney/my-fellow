@@ -82,6 +82,6 @@ router.put(
 
 router.get("/share/blog/:blogId", countShareBlog)
 
-router.get("/:userId/blogs", isSignedIn, isAuthenticated, getAllBlogByUser)
+router.get("/:userId/blogs", isSignedIn, getAllBlogByUser)
 
 module.exports = router
