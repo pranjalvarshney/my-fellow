@@ -129,10 +129,9 @@ export const Routing = () => {
           />
           <PrivateRoute exact path="/ads" component={Ads} />
           <PrivateRoute exact path="/blogs" component={Blog} />
-          <PrivateRoute exact path="/:userId" component={Profile} />
+          <PrivateRoute exact path="/profile/:userId" component={Profile} />
           <SimpleRoute exact path="/signup" component={Signup} />
           <SimpleRoute exact path="/signin" component={Login} />
-          <SimpleRoute path="/" />
         </Switch>
       </BrowserRouter>
     </>

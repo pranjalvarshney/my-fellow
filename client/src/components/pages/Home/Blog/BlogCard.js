@@ -151,7 +151,7 @@ export const BlogCard = ({ blog }) => {
           title={
             <b
               onClick={() => {
-                history.push(`/${blog.user._id}`)
+                history.push(`/profile/${blog.user._id}`)
               }}
             >
               {blog.user.name}

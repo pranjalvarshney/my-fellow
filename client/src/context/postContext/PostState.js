@@ -146,6 +146,9 @@ export const PostState = ({ children }) => {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
         },
       })
+      dispatch({
+        type: POSTS_SUCCESS,
+      })
       const { data } = response
       return data
     } catch (error) {

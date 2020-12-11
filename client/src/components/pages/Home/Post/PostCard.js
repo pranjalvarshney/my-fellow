@@ -138,7 +138,7 @@ export const PostCard = ({ post }) => {
         title={
           <b
             onClick={() => {
-              history.push(`/${post.user._id}`)
+              history.push(`/profile/${post.user._id}`)
             }}
           >
             {post.user.name}

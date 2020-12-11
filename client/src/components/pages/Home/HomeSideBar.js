@@ -25,7 +25,7 @@ export const HomeSideBar = () => {
           <ListItem
             button
             onClick={() => {
-              history.push(`/${authContext.user._id}`)
+              history.push(`/profile/${authContext.user._id}`)
             }}
           >
             <ListItemIcon>
