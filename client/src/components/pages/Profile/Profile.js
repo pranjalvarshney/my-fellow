@@ -10,16 +10,30 @@ import {
 } from "@material-ui/core"
 import React, { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../../context/authContext/authContext"
+import { BlogContext } from "../../../context/blogContext/BlogContext"
 import { PostContext } from "../../../context/postContext/postContext"
+import { UserContext } from "../../../context/userContext/UserContext"
 import Header from "../../common/Header/Header"
 import { InputBox } from "../Home/InputBox"
 import { HomeTab } from "./components/HomeTab"
 import "./Profile.css"
 
-export const Profile = () => {
+export const Profile = ({ match }) => {
   const [data, setData] = useState([])
+  const [type, setType] = useState("post")
   const authContext = useContext(AuthContext)
   const postContext = useContext(PostContext)
+  const blogContext = useContext(BlogContext)
+  const userContext = useContext(UserContext)
+
+  useEffect(() => {
+    const fetchUserDetails = async (userId) => {
+      try {
+        userContext.getUserById(userId)
+      } catch (error) {}
+    }
+    fetchUserDetails(match.params.userId)
+  }, [match.params.userId, userContext])
 
   useEffect(() => {
     async function fetchPostsByUser() {
@@ -30,9 +44,12 @@ export const Profile = () => {
     // setData(abc.data)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const handleClick = (funcName) => {
-    funcName(authContext.user._id)
-    console.log(data)
+
+  const handleClick = async (funcName, typeOf) => {
+    const response = await funcName(authContext.user._id)
+    setType(typeOf)
+    console.log(response)
+    // setData(response)
   }
   return (
     <div className="profile container">
@@ -136,30 +153,44 @@ export const Profile = () => {
                         variant="text"
                         fullWidth
                         onClick={() => {
-                          handleClick(postContext.getAllPostByUserId)
+                          handleClick(postContext.getAllPostByUserId, "post")
                         }}
                       >
                         Posts
                       </Button>
                     </Grid>
                     <Grid item xs={3}>
-                      <Button variant="text" fullWidth onClick={handleClick}>
+                      <Button
+                        variant="text"
+                        fullWidth
+                        onClick={() =>
+                          handleClick(blogContext.getAllBlogsByUserId, "blog")
+                        }
+                      >
                         Blogs
                       </Button>
                     </Grid>
                     <Grid item xs={3}>
-                      <Button variant="text" fullWidth onClick={handleClick}>
+                      <Button
+                        variant="text"
+                        fullWidth
+                        onClick={() => handleClick()}
+                      >
                         Ads
                       </Button>
                     </Grid>
                     <Grid item xs={3}>
-                      <Button variant="text" fullWidth onClick={handleClick}>
+                      <Button
+                        variant="text"
+                        fullWidth
+                        onClick={() => handleClick()}
+                      >
                         Bookmark
                       </Button>
                     </Grid>
                   </Grid>
                 </Paper>
-                <HomeTab data={data} />
+                <HomeTab data={data} type={type} />
               </Grid>
             </Grid>
           </div>

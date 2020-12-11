@@ -2,6 +2,7 @@ import {
   faComment,
   faArrowAltCircleUp as faArrowAltCircleUpRegular,
   faBookmark as faBookmarkRegular,
+  faPaperPlane,
 } from "@fortawesome/free-regular-svg-icons"
 import { faShare } from "@fortawesome/free-solid-svg-icons"
 import {
@@ -15,9 +16,14 @@ import {
   CardActions,
   CardContent,
   CardHeader,
+  Collapse,
   Fade,
+  FormControl,
   Grid,
   IconButton,
+  Input,
+  InputAdornment,
+  InputLabel,
   Menu,
   MenuItem,
   Typography,
@@ -33,7 +39,8 @@ export const BlogCard = ({ blog }) => {
   const authContext = useContext(AuthContext)
   const blogContext = useContext(BlogContext)
   const [vote, setVote] = useState(false)
-
+  const [comment, setComment] = useState("")
+  const [shareCount, setShareCount] = useState(blog.shareCount)
   const [countVote, setCountVote] = useState(blog.upvotes.length)
   const [moreOption, setMoreOption] = useState(null)
   const handleMoreOption = (e) => {
@@ -75,6 +82,21 @@ export const BlogCard = ({ blog }) => {
   const handleModalBlog = () => {
     handleClose()
     setShowBlog(!showBlog)
+  }
+  const [expanded, setExpanded] = React.useState(false)
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded)
+  }
+
+  const handleCommentSend = async () => {
+    await blogContext.addComment(blog._id, authContext.user._id, comment)
+  }
+
+  const handleShareBtn = async () => {
+    const response = await blogContext.countShare(blog._id)
+    setShareCount(response.shareCount)
+    console.log(response)
   }
   return (
     <>
@@ -120,7 +142,7 @@ export const BlogCard = ({ blog }) => {
                 <MenuItem onClick={handleClose}>Share</MenuItem>
                 <MenuItem onClick={handleClose}>Bookmark</MenuItem>
 
-                <MenuItem onClick={handleClose}>Report Post</MenuItem>
+                <MenuItem onClick={handleClose}>Report blog</MenuItem>
               </Menu>
             </>
           }
@@ -158,7 +180,7 @@ export const BlogCard = ({ blog }) => {
               <span>
                 <Typography variant="overline">{countVote}</Typography>
               </span>
-              <IconButton>
+              <IconButton onClick={handleExpandClick}>
                 <FontAwesomeIcon icon={faComment} />
               </IconButton>
               <span>
@@ -166,13 +188,11 @@ export const BlogCard = ({ blog }) => {
                   {blog.comments.length}
                 </Typography>
               </span>
-              <IconButton>
+              <IconButton onClick={handleShareBtn}>
                 <FontAwesomeIcon icon={faShare} />
               </IconButton>
               <span>
-                <Typography variant="overline">
-                  {blog.comments.length}
-                </Typography>
+                <Typography variant="overline">{shareCount}</Typography>
               </span>
             </Grid>
             <Grid item>
@@ -186,6 +206,44 @@ export const BlogCard = ({ blog }) => {
             </Grid>
           </Grid>
         </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Grid container direction="column">
+              <Grid item>
+                {blog.comments.map((comment) => {
+                  return (
+                    <span style={{ display: "flex" }} key={comment._id}>
+                      <Typography variant="body2" className="pr-3">
+                        <b>{comment.user.name}</b>
+                      </Typography>
+                      <Typography variant="subtitle2">
+                        {comment.text}
+                      </Typography>
+                    </span>
+                  )
+                })}
+              </Grid>
+              <Grid item>
+                <FormControl fullWidth size="small">
+                  <InputLabel>Add a comment...</InputLabel>
+                  <Input
+                    value={comment}
+                    onChange={(e) => {
+                      setComment(e.target.value)
+                    }}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton type="submit" onClick={handleCommentSend}>
+                          <FontAwesomeIcon icon={faPaperPlane} />
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Collapse>
       </Card>
     </>
   )

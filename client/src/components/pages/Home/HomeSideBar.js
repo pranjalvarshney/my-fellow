@@ -16,7 +16,7 @@ import EventNoteRoundedIcon from "@material-ui/icons/EventNoteRounded"
 import { useHistory } from "react-router-dom"
 
 export const HomeSideBar = () => {
-  const context = useContext(AuthContext)
+  const authContext = useContext(AuthContext)
   const history = useHistory()
   return (
     <div>
@@ -25,14 +25,14 @@ export const HomeSideBar = () => {
           <ListItem
             button
             onClick={() => {
-              history.push("/profile")
+              history.push(`/${authContext.user._id}`)
             }}
           >
             <ListItemIcon>
               <Avatar style={{ height: "50px", width: "50px" }} />
             </ListItemIcon>
             <ListItemText
-              primary={context.user.name}
+              primary={authContext.user.name}
               secondary="Student | School of Information and communicaton Technology"
             />
           </ListItem>

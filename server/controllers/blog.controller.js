@@ -130,6 +130,7 @@ exports.updateBlog = (req, res) => {
 	}
 	const updateObj = { user, title, content, picture };
 
+
 	Blog.findByIdAndUpdate(
 		{ _id: req.blogs._id },
 		{ $set: updateObj },
@@ -222,37 +223,52 @@ exports.downvoteBlog = (req, res) => {
 
 // comment on a blog
 exports.commentBlog = (req, res) => {
-	Blog.findByIdAndUpdate(
-		{ _id: req.blogs._id },
-		{
-			$push: {
-				comments: { user: req.profile._id, text: req.body.text },
-			},
-		},
-		{
-			new: true,
-		}
-	).exec((err, result) => {
-		if (err) {
-			return res
-				.status(400)
-				.json({ error: "An error occured, try again later" });
-		} else {
-			res.status(200).json(result);
-		}
-	});
-};
+  Blog.findByIdAndUpdate(
+    { _id: req.blogs._id },
+    {
+      $push: {
+        comments: { user: req.profile._id, text: req.body.text },
+      },
+    },
+    {
+      new: true,
+    }
+  ).exec((err, result) => {
+    if (err) {
+      return res
+        .status(400)
+        .json({ errorMsg: "An error occured, try again later" })
+    } else {
+      res.status(200).json(result)
+    }
+  })
+}
 
 exports.countShareBlog = (req, res) => {
-	Blog.findById({ _id: req.blogs._id }).exec((err, blog) => {
-		if (err) {
-			return res
-				.status(400)
-				.json({ error: "An error occured, try again later" });
-		}
+  Blog.findById({ _id: req.blogs._id }).exec((err, blog) => {
+    if (err) {
+      return res
+        .status(400)
+        .json({ errorMsg: "An error occured, try again later" })
+    }
 
-		blog.shareCount++;
-		blog.save();
-		res.json(blog._id);
-	});
-};
+    blog.shareCount++
+    blog.save()
+    res.json(blog)
+  })
+}
+
+exports.getAllBlogByUser = (req, res) => {
+  Blog.find({ user: req.profile._id })
+    .populate("user upvotes.user comments.user")
+    .sort({ updatedAt: -1 })
+    .exec((err, blogs) => {
+      if (err) {
+        return res
+          .json(400)
+          .json({ errorMsg: "An error occured, try again later" })
+      }
+      res.status(200).json(blogs)
+    })
+}
+
