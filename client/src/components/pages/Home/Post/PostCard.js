@@ -36,8 +36,10 @@ import {
   faBookmark as faBookmarkSolid,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons"
+import { useHistory } from "react-router-dom"
 
 export const PostCard = ({ post }) => {
+  const history = useHistory()
   const authContext = useContext(AuthContext)
   const postContext = useContext(PostContext)
   const [bookmarkStatus, setBookmarkStatus] = useState(false)
@@ -133,7 +135,15 @@ export const PostCard = ({ post }) => {
             </Menu>
           </>
         }
-        title={post.user.name}
+        title={
+          <b
+            onClick={() => {
+              history.push(`/${post.user._id}`)
+            }}
+          >
+            {post.user.name}
+          </b>
+        }
         subheader={<Moment fromNow>{post.createdAt}</Moment>}
       />
 
