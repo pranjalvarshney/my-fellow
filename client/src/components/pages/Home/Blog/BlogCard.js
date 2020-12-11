@@ -34,8 +34,10 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
 import { AuthContext } from "../../../../context/authContext/authContext"
 import { BlogContext } from "../../../../context/blogContext/BlogContext"
 import { BlogModal } from "../../Modals/BlogModal"
+import { useHistory } from "react-router-dom"
 
 export const BlogCard = ({ blog }) => {
+  const history = useHistory()
   const authContext = useContext(AuthContext)
   const blogContext = useContext(BlogContext)
   const [vote, setVote] = useState(false)
@@ -146,7 +148,15 @@ export const BlogCard = ({ blog }) => {
               </Menu>
             </>
           }
-          title={blog.user.name}
+          title={
+            <b
+              onClick={() => {
+                history.push(`/${blog.user._id}`)
+              }}
+            >
+              {blog.user.name}
+            </b>
+          }
           subheader={<Moment fromNow>{blog.createdAt}</Moment>}
         />
 
