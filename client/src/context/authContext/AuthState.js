@@ -111,14 +111,13 @@ export const AuthState = ({ children }) => {
 
   const signoutUser = async () => {
     try {
-      await axios.get(`${API}/signout`)
+      const response = await axios.get(`${API}/signout`)
       localStorage.removeItem("_data")
       dispatch({
         type: SIGNOUT_USER,
+        payload: response.data.msg,
       })
-    } catch (error) {
-      console.log(error.response.data.errorMsg)
-    }
+    } catch (error) {}
   }
 
   return (
