@@ -40,7 +40,7 @@ export const BlogState = ({ children }) => {
     } catch (error) {
       dispatch({
         type: BLOG_ERROR,
-        payload: error.response,
+        payload: error.response.data.errorMsg,
       })
     }
   }
@@ -75,7 +75,7 @@ export const BlogState = ({ children }) => {
       // console.log(error.response)
       dispatch({
         type: BLOG_ERROR,
-        payload: error.response,
+        payload: error.response.data.errorMsg,
       })
     }
   }
@@ -102,7 +102,7 @@ export const BlogState = ({ children }) => {
     } catch (error) {
       dispatch({
         type: BLOG_ERROR,
-        payload: error.response,
+        payload: error.response.data.errorMsg,
       })
     }
   }
@@ -130,7 +130,7 @@ export const BlogState = ({ children }) => {
     } catch (error) {
       dispatch({
         type: BLOG_ERROR,
-        payload: error.response,
+        payload: error.response.data.errorMsg,
       })
     }
   }
