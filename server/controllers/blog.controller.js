@@ -80,7 +80,7 @@ exports.createBlog = (req, res) => {
 exports.allblogs = (req, res) => {
 	Blog.find()
 		.populate("user upvotes.user comments.user")
-		.sort({ updatedAt: -1 })
+		.sort({ createdAt: -1 })
 		.exec((err, blogs) => {
 			if (err) {
 				res.status(400).json({
@@ -111,17 +111,19 @@ exports.getBlog = (req, res) => {
 // update blog
 exports.updateBlog = (req, res) => {
 	Blog.findById({ _id: req.blogs._id }).exec((err, blog) => {
-		let path = blog.picture;
-		fs.readdir(path, (err, files) => {
-			if (path) {
-				fs.unlink(path, (err) => {
-					if (err) {
-						console.error(err);
-						return;
-					}
-				});
-			}
-		});
+		if (blog.picture) {
+			let path = blog.picture;
+			fs.readdir(path, (err, files) => {
+				if (path) {
+					fs.unlink(path, (err) => {
+						if (err) {
+							console.error(err);
+							return;
+						}
+					});
+				}
+			});
+		}
 	});
 	const { user, title, content } = req.body;
 	var picture;
@@ -129,7 +131,6 @@ exports.updateBlog = (req, res) => {
 		picture = req.file.path;
 	}
 	const updateObj = { user, title, content, picture };
-
 
 	Blog.findByIdAndUpdate(
 		{ _id: req.blogs._id },
@@ -223,52 +224,51 @@ exports.downvoteBlog = (req, res) => {
 
 // comment on a blog
 exports.commentBlog = (req, res) => {
-  Blog.findByIdAndUpdate(
-    { _id: req.blogs._id },
-    {
-      $push: {
-        comments: { user: req.profile._id, text: req.body.text },
-      },
-    },
-    {
-      new: true,
-    }
-  ).exec((err, result) => {
-    if (err) {
-      return res
-        .status(400)
-        .json({ errorMsg: "An error occured, try again later" })
-    } else {
-      res.status(200).json(result)
-    }
-  })
-}
+	Blog.findByIdAndUpdate(
+		{ _id: req.blogs._id },
+		{
+			$push: {
+				comments: { user: req.profile._id, text: req.body.text },
+			},
+		},
+		{
+			new: true,
+		}
+	).exec((err, result) => {
+		if (err) {
+			return res
+				.status(400)
+				.json({ errorMsg: "An error occured, try again later" });
+		} else {
+			res.status(200).json(result);
+		}
+	});
+};
 
 exports.countShareBlog = (req, res) => {
-  Blog.findById({ _id: req.blogs._id }).exec((err, blog) => {
-    if (err) {
-      return res
-        .status(400)
-        .json({ errorMsg: "An error occured, try again later" })
-    }
+	Blog.findById({ _id: req.blogs._id }).exec((err, blog) => {
+		if (err) {
+			return res
+				.status(400)
+				.json({ errorMsg: "An error occured, try again later" });
+		}
 
-    blog.shareCount++
-    blog.save()
-    res.json(blog)
-  })
-}
+		blog.shareCount++;
+		blog.save();
+		res.json(blog);
+	});
+};
 
 exports.getAllBlogByUser = (req, res) => {
-  Blog.find({ user: req.profile._id })
-    .populate("user upvotes.user comments.user")
-    .sort({ updatedAt: -1 })
-    .exec((err, blogs) => {
-      if (err) {
-        return res
-          .json(400)
-          .json({ errorMsg: "An error occured, try again later" })
-      }
-      res.status(200).json(blogs)
-    })
-}
-
+	Blog.find({ user: req.profile._id })
+		.populate("user upvotes.user comments.user")
+		.sort({ createdAt: -1 })
+		.exec((err, blogs) => {
+			if (err) {
+				return res
+					.json(400)
+					.json({ errorMsg: "An error occured, try again later" });
+			}
+			res.status(200).json(blogs);
+		});
+};
