@@ -14,11 +14,13 @@ import { JobsAndPlacements } from "../pages/Home/JobsAndPlacements/JobsAndPlacem
 import { Ads } from "../pages/Home/Ads/Ads"
 import { PostContext } from "../../context/postContext/postContext"
 import { BlogContext } from "../../context/blogContext/BlogContext"
+import { UserContext } from "../../context/userContext/UserContext"
 
 export const Routing = () => {
   const authContext = useContext(AuthContext)
   const postContext = useContext(PostContext)
   const blogContext = useContext(BlogContext)
+  const userContext = useContext(UserContext)
 
   const [responseMsg, setResponseMsg] = useState({
     successStatus: false,
@@ -80,6 +82,13 @@ export const Routing = () => {
         color: "#ff7961",
       })
     }
+    if (userContext.error) {
+      setResponseMsg({
+        errorStatus: true,
+        msg: userContext.error,
+        color: "#ff7961",
+      })
+    }
     if (authContext.success) {
       setResponseMsg({
         successStatus: true,
@@ -101,7 +110,7 @@ export const Routing = () => {
         color: "#58D68D",
       })
     }
-  }, [authContext, postContext, blogContext])
+  }, [authContext, postContext, blogContext, userContext])
 
   return (
     <>
@@ -120,10 +129,10 @@ export const Routing = () => {
           />
           <PrivateRoute exact path="/ads" component={Ads} />
           <PrivateRoute exact path="/blogs" component={Blog} />
-          {/* <PrivateRoute exact path="/profile" component={Profile} /> */}
           <PrivateRoute exact path="/:userId" component={Profile} />
           <SimpleRoute exact path="/signup" component={Signup} />
           <SimpleRoute exact path="/signin" component={Login} />
+          <SimpleRoute path="/" />
         </Switch>
       </BrowserRouter>
     </>

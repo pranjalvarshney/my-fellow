@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@material-ui/core"
 import React, { useContext, useEffect, useState } from "react"
-import { AuthContext } from "../../../context/authContext/authContext"
+import { Redirect } from "react-router-dom"
 import { BlogContext } from "../../../context/blogContext/BlogContext"
 import { PostContext } from "../../../context/postContext/postContext"
 import { UserContext } from "../../../context/userContext/UserContext"
@@ -21,8 +21,6 @@ import "./Profile.css"
 export const Profile = ({ match }) => {
   const [data, setData] = useState([])
   const [type, setType] = useState("post")
-  const [userDetails, setUserDetails] = useState(null)
-  const authContext = useContext(AuthContext)
   const postContext = useContext(PostContext)
   const blogContext = useContext(BlogContext)
   const userContext = useContext(UserContext)
@@ -48,10 +46,13 @@ export const Profile = ({ match }) => {
   }, [match.params.userId])
 
   const handleClick = async (funcName, typeOf) => {
-    const response = await funcName(userDetails._id)
+    const response = await funcName(userContext.user._id)
     setType(typeOf)
     console.log(response)
     // setData(response)
+  }
+  if (userContext.user === null) {
+    return <Redirect to="/" />
   }
   return (
     <div className="profile container">
