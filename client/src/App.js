@@ -3,6 +3,7 @@ import "./App.css"
 import { Routing } from "./components/common/Routing"
 import { AuthState } from "./context/authContext/AuthState"
 import { BlogState } from "./context/blogContext/BlogState"
+import { NoticeState } from "./context/noticeContext/NoticeState"
 import { PostState } from "./context/postContext/PostState"
 import { UserState } from "./context/userContext/UserState"
 
@@ -12,7 +13,9 @@ export const App = () => {
       <UserState>
         <PostState>
           <BlogState>
-            <Routing />
+            <NoticeState>
+              <Routing />
+            </NoticeState>
           </BlogState>
         </PostState>
       </UserState>
