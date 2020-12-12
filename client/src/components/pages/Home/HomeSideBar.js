@@ -14,6 +14,7 @@ import SupervisedUserCircleRoundedIcon from "@material-ui/icons/SupervisedUserCi
 import BookmarksRoundedIcon from "@material-ui/icons/BookmarksRounded"
 import EventNoteRoundedIcon from "@material-ui/icons/EventNoteRounded"
 import { useHistory } from "react-router-dom"
+import { Notice } from "./Notice/Notice"
 
 export const HomeSideBar = () => {
   const authContext = useContext(AuthContext)
@@ -74,6 +75,7 @@ export const HomeSideBar = () => {
           </ListItem>
         </List>
       </Paper>
+      <Notice />
     </div>
   )
 }
