@@ -27,3 +27,8 @@ export const BLOG_GET_ALL = "blogs_get_all"
 export const BLOG_CREATE = "blogs_create"
 export const BLOG_ERROR = "blogs_error"
 export const BLOG_SUCCESS = "blogs_success"
+
+//NOTICES
+export const NOTICE_LOADING = "notice_loading"
+export const NOTICE_ERROR = "notice_error"
+export const NOTICE_GET = "notice_get"
