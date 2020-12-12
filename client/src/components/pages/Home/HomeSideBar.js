@@ -37,7 +37,12 @@ export const HomeSideBar = () => {
             />
           </ListItem>
           <Divider />
-          <ListItem button>
+          <ListItem
+            button
+            onClick={() => {
+              history.push("friends")
+            }}
+          >
             <ListItemIcon>
               <PeopleAltRoundedIcon />
             </ListItemIcon>
