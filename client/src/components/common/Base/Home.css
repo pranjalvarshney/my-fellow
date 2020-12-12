@@ -26,3 +26,10 @@
 #home-center-wrapper::-webkit-scrollbar {
   display: none;
 }
+.friends-tab {
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+.friends-tab::-webkit-scrollbar {
+  display: none;
+}

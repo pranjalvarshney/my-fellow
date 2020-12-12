@@ -69,7 +69,7 @@ export const Profile = ({ match }) => {
     return <Redirect to="/" />
   }
   return (
-    <div className="home">
+    <div className="home" style={{ overflowY: "auto" }}>
       <Header />
       <div className="container">
         <Grid container justify="center">
