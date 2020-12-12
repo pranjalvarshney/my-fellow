@@ -8,14 +8,14 @@ import "./Home.css"
 
 export const Home = ({ children }) => {
   return (
-    <div>
+    <div className="home">
       <Header />
-      <div className="home">
-        <Grid container spacing={3} justify="center" direction="row">
+      <div className="container">
+        <Grid container spacing={3} direction="row">
           <Grid item md={3}>
             <HomeSideBar />
           </Grid>
-          <Grid item md={5}>
+          <Grid item md={6}>
             <div id="home-center-wrapper">
               <InputBox />
               {children}

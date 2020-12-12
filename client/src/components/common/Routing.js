@@ -15,6 +15,7 @@ import { Ads } from "../pages/Home/Ads/Ads"
 import { PostContext } from "../../context/postContext/postContext"
 import { BlogContext } from "../../context/blogContext/BlogContext"
 import { UserContext } from "../../context/userContext/UserContext"
+import { Friends } from "../pages/Friends/Friends"
 
 export const Routing = () => {
   const authContext = useContext(AuthContext)
@@ -130,6 +131,7 @@ export const Routing = () => {
           <PrivateRoute exact path="/ads" component={Ads} />
           <PrivateRoute exact path="/blogs" component={Blog} />
           <PrivateRoute exact path="/profile/:userId" component={Profile} />
+          <PrivateRoute exact path="/friends" component={Friends} />
           <SimpleRoute exact path="/signup" component={Signup} />
           <SimpleRoute exact path="/signin" component={Login} />
         </Switch>
