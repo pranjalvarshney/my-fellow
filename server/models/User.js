@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const crypto = require("crypto");
-const uuid = require("uuid");
-const { StringDecoder } = require("string_decoder");
+const mongoose = require("mongoose")
+const crypto = require("crypto")
+const uuid = require("uuid")
+const { StringDecoder } = require("string_decoder")
 
 const userSchema = new mongoose.Schema(
   {
@@ -79,18 +79,14 @@ const userSchema = new mongoose.Schema(
     },
     sentReqs: [
       {
-        userId: {
-          type: mongoose.Schema.ObjectId,
-          ref: "User",
-        },
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
       },
     ],
     receivedReqs: [
       {
-        userId: {
-          type: mongoose.Schema.ObjectId,
-          ref: "User",
-        },
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
       },
     ],
     friendList: [
@@ -103,31 +99,31 @@ const userSchema = new mongoose.Schema(
     ],
   },
   { timestamps: true }
-);
+)
 
 userSchema.virtual("password").set(function (password) {
-  this.password;
-  this.salt = uuid.v1();
-  this.encryptedpassword = this.securePassword(password);
-});
+  this.password
+  this.salt = uuid.v1()
+  this.encryptedpassword = this.securePassword(password)
+})
 
 userSchema.methods = {
   authenticate: function (plainPassword) {
-    return this.securePassword(plainPassword) === this.encryptedpassword;
+    return this.securePassword(plainPassword) === this.encryptedpassword
   },
   securePassword: function (plainPassword) {
     if (!plainPassword) {
-      return "";
+      return ""
     }
     try {
       return crypto
         .createHmac("sha256", this.salt)
         .update(plainPassword)
-        .digest("hex");
+        .digest("hex")
     } catch (error) {
-      return "";
+      return ""
     }
   },
-};
+}
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema)
