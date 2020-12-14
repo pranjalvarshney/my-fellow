@@ -166,3 +166,34 @@ exports.acceptReq = (req, res) => {
 		}
 	);
 };
+
+exports.rejectReq = (req, res) => {
+	User.findByIdAndUpdate(
+		{ _id: req.profile._id },
+		{
+			$pull: { receivedReqs: req.body.friendId },
+		},
+		(err, result) => {
+			if (err) {
+				return res
+					.json(400)
+					.json({ errorMsg: "An error occured, try again later" });
+			}
+			// res.status(200).json(result);
+		}
+	);
+	User.findByIdAndUpdate(
+		{ _id: req.body.friendId },
+		{
+			$pull: { sentReqs: req.profile._id },
+		},
+		(err, result) => {
+			if (err) {
+				return res
+					.json(400)
+					.json({ errorMsg: "An error occured, try again later" });
+			}
+			res.status(200).json(result);
+		}
+	);
+};

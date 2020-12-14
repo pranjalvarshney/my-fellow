@@ -12,6 +12,7 @@ const {
 	getAllBookmarks,
 	addFriend,
 	acceptReq,
+	rejectReq,
 } = require("../controllers/user.controller");
 const router = express.Router();
 
@@ -25,5 +26,6 @@ router.get("/bookmarks/user/:userId", getAllBookmarks);
 
 router.put("/addFriend/:userId", isSignedIn, isAuthenticated, addFriend);
 router.put("/acceptRequest/:userId", isSignedIn, isAuthenticated, acceptReq);
+router.put("/rejectRequest/:userId", isSignedIn, isAuthenticated, rejectReq);
 
 module.exports = router;
