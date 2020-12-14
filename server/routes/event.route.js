@@ -10,6 +10,7 @@ const {
 	allEvents,
 	getEvent,
 	updateEvent,
+	deleteEvent,
 } = require("../controllers/event.controller");
 const { getUserById } = require("../controllers/user.controller");
 const router = express.Router();
@@ -40,6 +41,14 @@ router.put(
 	isAuthenticated,
 	upload.single("picture"),
 	updateEvent
+);
+
+// delete event
+router.delete(
+	"/delete/event/:userId/:eventId",
+	isSignedIn,
+	isAuthenticated,
+	deleteEvent
 );
 
 module.exports = router;

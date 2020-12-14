@@ -131,3 +131,34 @@ exports.updateEvent = (req, res) => {
 		}
 	);
 };
+
+// delete event
+exports.deleteEvent = (req, res) => {
+	Event.findById({ _id: req.event._id }).exec((err, event) => {
+		if (event.picture) {
+			let path = event.picture;
+			fs.readdir(path, (err, files) => {
+				if (path) {
+					fs.unlink(path, (err) => {
+						if (err) {
+							console.error(err);
+							return;
+						}
+					});
+				}
+			});
+		}
+	});
+	Event.findByIdAndRemove(
+		{ _id: req.event._id },
+		{ useFindAndModify: false, new: true },
+		(err, event) => {
+			if (err || !event) {
+				return res.status(400).json({
+					error: "An error occured,  try again later",
+				});
+			}
+			return res.status(200).json({ message: "Event has been deleted" });
+		}
+	);
+};
