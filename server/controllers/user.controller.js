@@ -3,133 +3,166 @@ const fs = require("fs");
 const async = require("async");
 
 exports.getUserById = (req, res, next, Id) => {
-  User.findById(Id).exec((err, user) => {
-    if (err) {
-      return res.status(400).json({
-        errorMsg: "An error occured",
-      });
-    }
-    if (!user) {
-      return res.status(400).json({
-        errorMsg: "User not found",
-      });
-    }
-    req.profile = user;
-    next();
-  });
+	User.findById(Id).exec((err, user) => {
+		if (err) {
+			return res.status(400).json({
+				errorMsg: "An error occured",
+			});
+		}
+		if (!user) {
+			return res.status(400).json({
+				errorMsg: "User not found",
+			});
+		}
+		req.profile = user;
+		next();
+	});
 };
 
 exports.getUser = (req, res) => {
-  //TODO: get back here for password
-  req.profile.encryptedpassword = undefined;
-  req.profile.salt = undefined;
-  return res.json(req.profile);
+	//TODO: get back here for password
+	req.profile.encryptedpassword = undefined;
+	req.profile.salt = undefined;
+	return res.json(req.profile);
 };
 
 exports.updateUser = (req, res) => {
-  User.findByIdAndUpdate(
-    { _id: req.profile._id },
-    { $set: req.body },
-    { useFindAndModify: false, new: true },
-    (err, user) => {
-      if (err || !user) {
-        return res.status(400).json({
-          error: "An error occured,  try again later",
-        });
-      }
-      user.encryptedpassword = undefined;
-      user.salt = undefined;
-      return res.json(user);
-    }
-  );
+	User.findByIdAndUpdate(
+		{ _id: req.profile._id },
+		{ $set: req.body },
+		{ useFindAndModify: false, new: true },
+		(err, user) => {
+			if (err || !user) {
+				return res.status(400).json({
+					error: "An error occured,  try again later",
+				});
+			}
+			user.encryptedpassword = undefined;
+			user.salt = undefined;
+			return res.json(user);
+		}
+	);
 };
 
 exports.getAllUsers = (req, res) => {
-  User.find().exec((err, users) => {
-    if (err) {
-      return res.status(400).json({
-        errorMsg: "An error occured",
-      });
-    }
-    if (!users) {
-      return res.status(400).json({
-        errorMsg: "User not found",
-      });
-    }
-    return res.json(users);
-  });
+	User.find().exec((err, users) => {
+		if (err) {
+			return res.status(400).json({
+				errorMsg: "An error occured",
+			});
+		}
+		if (!users) {
+			return res.status(400).json({
+				errorMsg: "User not found",
+			});
+		}
+		return res.json(users);
+	});
 };
 exports.getAllBookmarks = (req, res) => {
-  User.find({ _id: req.profile._id })
-    .populate("bookmark.blog bookmark.post bookmark.ads bookmark.job ")
-    .exec((err, bookmarks) => {
-      if (err) {
-        return res.status(400).json({
-          errorMsg: "An error occured",
-        });
-      }
-      res.json(bookmarks);
-    });
+	User.find({ _id: req.profile._id })
+		.populate("bookmark.blog bookmark.post bookmark.ads bookmark.job ")
+		.exec((err, bookmarks) => {
+			if (err) {
+				return res.status(400).json({
+					errorMsg: "An error occured",
+				});
+			}
+			res.json(bookmarks);
+		});
 };
 exports.bookmark = (req, res) => {
-  const { type } = req.body;
+	const { type } = req.body;
 
-  User.findByIdAndUpdate(
-    { _id: req.profile._id, [`${type}`]: type },
-    {
-      $push: { [`bookmark.${type}`]: req.body.typeId },
-    },
-    { new: true, useFindAndModify: false }
-  ).exec((err, user) => {
-    if (err) {
-      return res
-        .status(400)
-        .json({ err, errorMsg: "An error occured, try again later" });
-    }
-    user.salt = undefined;
-    user.encryptedpassword = undefined;
-    res.status(200).json(user);
-  });
+	User.findByIdAndUpdate(
+		{ _id: req.profile._id, [`${type}`]: type },
+		{
+			$push: { [`bookmark.${type}`]: req.body.typeId },
+		},
+		{ new: true, useFindAndModify: false }
+	).exec((err, user) => {
+		if (err) {
+			return res
+				.status(400)
+				.json({ err, errorMsg: "An error occured, try again later" });
+		}
+		user.salt = undefined;
+		user.encryptedpassword = undefined;
+		res.status(200).json(user);
+	});
 };
 
 exports.addFriend = (req, res) => {
-  if (req.body.friendId == req.profile._id) {
-    return;
-  }
-  User.findByIdAndUpdate(
-    { _id: req.profile._id },
-    {
-      $push: { sentReqs: req.body.friendId },
-    },
-    {
-      new: true,
-      useFindAndModify: false,
-    },
-    (err, result) => {
-      if (err) {
-        return res
-          .json(400)
-          .json({ errorMsg: "An error occured, try again later" });
-      }
-      // res.status(200).json(result);
-    }
-  );
-  User.findByIdAndUpdate(
-    { _id: req.body.friendId },
-    {
-      $push: { receivedReqs: req.profile._id },
-    },
-    {
-      new: true,
-      useFindAndModify: false,
-    },
-    (err, result) => {
-      if (err) {
-        return res
-          .json(400)
-          .json({ errorMsg: "An error occured, try again later" });
-      }
-      res.status(200).json(result);
-    }
-  );
+	if (req.body.friendId == req.profile._id) {
+		return;
+	}
+	User.findByIdAndUpdate(
+		{ _id: req.profile._id },
+		{
+			$push: { sentReqs: req.body.friendId },
+		},
+		{
+			new: true,
+			useFindAndModify: false,
+		},
+		(err, result) => {
+			if (err) {
+				return res
+					.json(400)
+					.json({ errorMsg: "An error occured, try again later" });
+			}
+			// res.status(200).json(result);
+		}
+	);
+	User.findByIdAndUpdate(
+		{ _id: req.body.friendId },
+		{
+			$push: { receivedReqs: req.profile._id },
+		},
+		{
+			new: true,
+			useFindAndModify: false,
+		},
+		(err, result) => {
+			if (err) {
+				return res
+					.json(400)
+					.json({ errorMsg: "An error occured, try again later" });
+			}
+			res.status(200).json(result);
+		}
+	);
+};
+
+exports.acceptReq = (req, res) => {
+	User.findByIdAndUpdate(
+		{ _id: req.profile._id },
+		{
+			$pull: { receivedReqs: req.body.friendId },
+			$push: { friendList: req.body.friendId },
+		},
+		(err, result) => {
+			if (err) {
+				return res
+					.json(400)
+					.json({ errorMsg: "An error occured, try again later" });
+			}
+			// res.status(200).json(result);
+		}
+	);
+	User.findByIdAndUpdate(
+		{ _id: req.body.friendId },
+		{
+			$pull: { sentReqs: req.profile._id },
+			$push: { friendList: req.profile._id },
+		},
+		(err, result) => {
+			if (err) {
+				return res
+					.json(400)
+					.json({ errorMsg: "An error occured, try again later" });
+			}
+			res.status(200).json(result);
+		}
+	);
 };
