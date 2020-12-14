@@ -92,3 +92,42 @@ exports.allEvents = (req, res) => {
 exports.getEvent = (req, res) => {
 	return res.json(req.event);
 };
+
+// update event
+exports.updateEvent = (req, res) => {
+	Event.findById({ _id: req.event._id }).exec((err, event) => {
+		if (event.picture) {
+			let path = event.picture;
+			fs.readdir(path, (err, files) => {
+				if (path) {
+					fs.unlink(path, (err) => {
+						if (err) {
+							console.error(err);
+							return;
+						}
+					});
+				}
+			});
+		}
+	});
+	const { title, description, date, venue } = req.body;
+	var picture;
+	if (req.file) {
+		picture = req.file.path;
+	}
+	const updateObj = { title, description, date, venue, picture };
+
+	Event.findByIdAndUpdate(
+		{ _id: req.event._id },
+		{ $set: updateObj },
+		{ useFindAndModify: false, new: true },
+		(err, event) => {
+			if (err || !event) {
+				return res.status(400).json({
+					error: "An error occured,  try again later",
+				});
+			}
+			return res.status(200).json(event);
+		}
+	);
+};
