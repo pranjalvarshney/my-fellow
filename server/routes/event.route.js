@@ -2,6 +2,7 @@ const express = require("express");
 const {
 	isSignedIn,
 	isAuthenticated,
+	isAdmin,
 } = require("../controllers/auth.controller");
 const {
 	getEventById,
@@ -24,6 +25,7 @@ router.post(
 	"/create/event/:userId",
 	isSignedIn,
 	isAuthenticated,
+	isAdmin,
 	upload.single("picture"),
 	createEvent
 );
@@ -39,6 +41,7 @@ router.put(
 	"/update/event/:userId/:eventId",
 	isSignedIn,
 	isAuthenticated,
+	isAdmin,
 	upload.single("picture"),
 	updateEvent
 );
@@ -48,6 +51,7 @@ router.delete(
 	"/delete/event/:userId/:eventId",
 	isSignedIn,
 	isAuthenticated,
+	isAdmin,
 	deleteEvent
 );
 
