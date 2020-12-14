@@ -35,3 +35,60 @@ exports.createPoll = (req, res) => {
     return res.status(200).json(poll);
   });
 };
+
+// Agree with the poll
+exports.pollYes = (req, res) => {
+  Poll.findByIdAndUpdate(
+    { _id: req.body.pollId },
+    { $push: { yes: req.profile._id } },
+    {
+      new: true,
+      useFindAndModify: false,
+    }
+  ).exec((err, poll) => {
+    if (err) {
+      return res
+        .json(400)
+        .json({ errorMsg: "An error occured, try again later" });
+    }
+    res.status(200).json(poll);
+  });
+};
+
+// Disagree with the poll
+exports.pollNo = (req, res) => {
+  Poll.findByIdAndUpdate(
+    { _id: req.body.pollId },
+    { $push: { no: req.profile._id } },
+    {
+      new: true,
+      useFindAndModify: false,
+    }
+  ).exec((err, poll) => {
+    if (err) {
+      return res
+        .json(400)
+        .json({ errorMsg: "An error occured, try again later" });
+    }
+    res.status(200).json(poll);
+  });
+};
+
+// Skip the poll
+exports.skipPoll = (req, res) => {
+  Poll.findByIdAndUpdate(
+    { _id: req.body.pollId },
+    { $push: { skip: req.profile._id } },
+    {
+      new: true,
+      useFindAndModify: false,
+    }
+  ).exec((err, poll) => {
+    if (err) {
+      return res
+        .json(400)
+        .json({ errorMsg: "An error occured, try again later" });
+    }
+    res.status(200).json(poll);
+  });
+};
