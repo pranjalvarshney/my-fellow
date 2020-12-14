@@ -1,9 +1,13 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const pollSchema = new mongoose.Schema({
-  author: {
+  user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
+    required: true,
+  },
+  title: {
+    type: String,
     required: true,
   },
   poll: {
@@ -28,6 +32,6 @@ const pollSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
-})
+});
 
-module.exports = mongoose.model("Poll", pollSchema)
+module.exports = mongoose.model("Poll", pollSchema);
