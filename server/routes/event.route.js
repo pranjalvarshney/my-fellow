@@ -3,10 +3,12 @@ const {
 	isSignedIn,
 	isAuthenticated,
 } = require("../controllers/auth.controller");
-const { upload } = require("../controllers/event.controller");
 const {
 	getEventById,
 	createEvent,
+	upload,
+	allEvents,
+	getEvent,
 } = require("../controllers/event.controller");
 const { getUserById } = require("../controllers/user.controller");
 const router = express.Router();
@@ -23,5 +25,11 @@ router.post(
 	upload.single("picture"),
 	createEvent
 );
+
+// all events
+router.get("/events", isSignedIn, allEvents);
+
+//get a particular event
+router.get("/events/:eventId", isSignedIn, getEvent);
 
 module.exports = router;

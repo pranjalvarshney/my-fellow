@@ -72,3 +72,23 @@ exports.createEvent = (req, res) => {
 		return res.status(200).json(event);
 	});
 };
+
+// Get all Events
+
+exports.allEvents = (req, res) => {
+	Event.find()
+		.sort({ createdAt: -1 })
+		.exec((err, events) => {
+			if (err) {
+				res.status(400).json({
+					errorMsg: "An error occured",
+				});
+			}
+			return res.json(events);
+		});
+};
+
+//Read a particular event
+exports.getEvent = (req, res) => {
+	return res.json(req.event);
+};
