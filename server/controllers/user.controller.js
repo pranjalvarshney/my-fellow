@@ -104,16 +104,15 @@ exports.addFriend = (req, res) => {
 		{
 			new: true,
 			useFindAndModify: false,
-		},
-		(err, result) => {
-			if (err) {
-				return res
-					.json(400)
-					.json({ errorMsg: "An error occured, try again later" });
-			}
-			// res.status(200).json(result);
 		}
-	);
+	).exec((err, user) => {
+		if (err) {
+			return res
+				.json(400)
+				.json({ errorMsg: "An error occured, try again later" });
+		}
+		// res.status(200).json(user);
+	});
 	User.findByIdAndUpdate(
 		{ _id: req.body.friendId },
 		{
@@ -122,16 +121,15 @@ exports.addFriend = (req, res) => {
 		{
 			new: true,
 			useFindAndModify: false,
-		},
-		(err, result) => {
-			if (err) {
-				return res
-					.json(400)
-					.json({ errorMsg: "An error occured, try again later" });
-			}
-			res.status(200).json(result);
 		}
-	);
+	).exec((err, user) => {
+		if (err) {
+			return res
+				.json(400)
+				.json({ errorMsg: "An error occured, try again later" });
+		}
+		res.status(200).json(user);
+	});
 };
 
 exports.acceptReq = (req, res) => {
@@ -141,28 +139,108 @@ exports.acceptReq = (req, res) => {
 			$pull: { receivedReqs: req.body.friendId },
 			$push: { friendList: req.body.friendId },
 		},
-		(err, result) => {
-			if (err) {
-				return res
-					.json(400)
-					.json({ errorMsg: "An error occured, try again later" });
-			}
-			// res.status(200).json(result);
+		{
+			new: true,
+			useFindAndModify: false,
 		}
-	);
+	).exec((err, user) => {
+		if (err) {
+			return res
+				.json(400)
+				.json({ errorMsg: "An error occured, try again later" });
+		}
+		// res.status(200).json(user);
+	});
 	User.findByIdAndUpdate(
 		{ _id: req.body.friendId },
 		{
 			$pull: { sentReqs: req.profile._id },
 			$push: { friendList: req.profile._id },
 		},
-		(err, result) => {
-			if (err) {
-				return res
-					.json(400)
-					.json({ errorMsg: "An error occured, try again later" });
-			}
-			res.status(200).json(result);
+		{
+			new: true,
+			useFindAndModify: false,
 		}
-	);
+	).exec((err, user) => {
+		if (err) {
+			return res
+				.json(400)
+				.json({ errorMsg: "An error occured, try again later" });
+		}
+		res.status(200).json(user);
+	});
+};
+
+exports.rejectReq = (req, res) => {
+	User.findByIdAndUpdate(
+		{ _id: req.profile._id },
+		{
+			$pull: { receivedReqs: req.body.friendId },
+		},
+		{
+			new: true,
+			useFindAndModify: false,
+		}
+	).exec((err, user) => {
+		if (err) {
+			return res
+				.json(400)
+				.json({ errorMsg: "An error occured, try again later" });
+		}
+		// res.status(200).json(user);
+	});
+	User.findByIdAndUpdate(
+		{ _id: req.body.friendId },
+		{
+			$pull: { sentReqs: req.profile._id },
+		},
+		{
+			new: true,
+			useFindAndModify: false,
+		}
+	).exec((err, user) => {
+		if (err) {
+			return res
+				.json(400)
+				.json({ errorMsg: "An error occured, try again later" });
+		}
+		res.status(200).json(user);
+	});
+};
+
+exports.unfriend = (req, res) => {
+	User.findByIdAndUpdate(
+		{ _id: req.profile._id },
+		{
+			$pull: { friendList: req.body.friendId },
+		},
+		{
+			new: true,
+			useFindAndModify: false,
+		}
+	).exec((err, user) => {
+		if (err) {
+			return res
+				.json(400)
+				.json({ errorMsg: "An error occured, try again later" });
+		}
+		// res.status(200).json(user);
+	});
+	User.findByIdAndUpdate(
+		{ _id: req.body.friendId },
+		{
+			$pull: { friendList: req.profile._id },
+		},
+		{
+			new: true,
+			useFindAndModify: false,
+		}
+	).exec((err, user) => {
+		if (err) {
+			return res
+				.json(400)
+				.json({ errorMsg: "An error occured, try again later" });
+		}
+		res.status(200).json(user);
+	});
 };
