@@ -2,24 +2,20 @@ const Poll = require("../models/Poll");
 const { getUserById } = require("../controllers/user.controller");
 
 exports.getPollById = (req, res, next, Id) => {
-  Poll.findById(Id)
-    // .populate("user upvotes.user comments.user")
-    .exec((err, poll) => {
-      if (err) {
-        return res.status(400).json({
-          errorMsg: "An error occured",
-        });
-      }
-      if (!poll) {
-        return res.status(400).json({
-          errorMsg: "Poll not found",
-        });
-      }
-      // blog.user.salt = undefined;
-      // blog.user.encryptedpassword = undefined;
-      req.poll = poll;
-      next();
-    });
+  Poll.findById(Id).exec((err, poll) => {
+    if (err) {
+      return res.status(400).json({
+        errorMsg: "An error occured",
+      });
+    }
+    if (!poll) {
+      return res.status(400).json({
+        errorMsg: "Poll not found",
+      });
+    }
+    req.poll = poll;
+    next();
+  });
 };
 
 // create poll
@@ -91,4 +87,54 @@ exports.skipPoll = (req, res) => {
     }
     res.status(200).json(poll);
   });
+};
+
+// get all polls
+exports.allpolls = (req, res) => {
+  Poll.find().exec((err, polls) => {
+    if (err) {
+      res.status(400).json({
+        errorMsg: "An error occured",
+      });
+    }
+    return res.json(polls);
+  });
+};
+
+//Read a particular poll
+exports.getPoll = (req, res) => {
+  return res.json(req.poll);
+};
+
+// Update poll
+exports.updatePoll = (req, res) => {
+  Poll.findByIdAndUpdate(
+    { _id: req.poll._id },
+    { $set: req.body },
+    { useFindAndModify: false, new: true },
+    (err, poll) => {
+      if (err || !poll) {
+        return res.status(400).json({
+          error: "An error occured,  try again later",
+        });
+      }
+      return res.status(200).json(poll);
+    }
+  );
+};
+
+// Delete polls
+exports.deletePoll = (req, res) => {
+  Poll.findByIdAndRemove(
+    { _id: req.poll._id },
+    { useFindAndModify: false, new: true },
+    (err, poll) => {
+      if (err || !poll) {
+        return res.status(400).json({
+          error: "An error occured,  try again later",
+        });
+      }
+      return res.status(200).json({ message: "Poll has been removed" });
+    }
+  );
 };
