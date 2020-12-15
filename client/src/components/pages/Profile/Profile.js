@@ -75,7 +75,12 @@ export const Profile = ({ match }) => {
         <Grid container justify="center">
           <Grid item xs={10}>
             <Card variant="outlined">
-              <Grid container justify="space-between">
+              <Grid
+                container
+                justify="center"
+                alignItems="flex-start"
+                className="p-3 "
+              >
                 <Grid item xs={12} md={4}>
                   <Grid container justify="center" alignContent="center">
                     <CardMedia
@@ -111,7 +116,7 @@ export const Profile = ({ match }) => {
                       </Grid>
                       <Typography
                         variant="body2"
-                        color="textSecondary"
+                        color="secondary"
                         component="p"
                       >
                         {userContext.user.bio}
@@ -120,9 +125,11 @@ export const Profile = ({ match }) => {
                   </Grid>
                 </Grid>
                 <Grid item xs={12} md={1}>
-                  <Button variant="text" size="small" color="primary">
-                    Edit
-                  </Button>
+                  <Grid container justify="center">
+                    <Button variant="text" size="small" color="primary">
+                      Edit
+                    </Button>
+                  </Grid>
                 </Grid>
               </Grid>
             </Card>
@@ -157,7 +164,7 @@ export const Profile = ({ match }) => {
                         <Button
                           variant="text"
                           fullWidth
-                          color={`${type === "post" ? "primary" : ""}`}
+                          color={`${type === "post" ? "primary" : "default"}`}
                           onClick={() => {
                             setData(null)
                             handleClick("post")
@@ -170,7 +177,7 @@ export const Profile = ({ match }) => {
                         <Button
                           variant="text"
                           fullWidth
-                          color={`${type === "blog" ? "primary" : ""}`}
+                          color={`${type === "blog" ? "primary" : "default"}`}
                           onClick={() => {
                             setData(null)
                             handleClick("blog")
