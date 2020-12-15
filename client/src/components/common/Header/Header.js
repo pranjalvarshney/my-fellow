@@ -122,10 +122,34 @@ const Header = ({ history }) => {
               TransitionComponent={Fade}
             >
               <MenuItem onClick={handleClose}>View Profile</MenuItem>
-              <MenuItem onClick={handleClose}>About University</MenuItem>
-              <MenuItem onClick={handleClose}>Help & Support</MenuItem>
-              <MenuItem onClick={handleClose}>Settings & Privacy</MenuItem>
-              <MenuItem onClick={handleClose}>Give Feedback</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  usehistory.push("/about-university")
+                }}
+              >
+                About University
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  usehistory.push("/help-support")
+                }}
+              >
+                Help & Support
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  usehistory.push("/settings-privacy")
+                }}
+              >
+                Settings & Privacy
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  usehistory.push("/feedback")
+                }}
+              >
+                Give Feedback
+              </MenuItem>
               <MenuItem
                 onClick={() => {
                   context.signoutUser()
