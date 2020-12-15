@@ -34,7 +34,7 @@ export const UserState = ({ children }) => {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
         },
       })
-      // console.log(response.data)
+      console.log(response.data)
       dispatch({
         type: USER_SUCCESS,
         payload: response.data,
@@ -160,6 +160,7 @@ export const UserState = ({ children }) => {
     <UserContext.Provider
       value={{
         user: state.user,
+        friends: state.friends,
         loading: state.loading,
         error: state.error,
         success: state.success,

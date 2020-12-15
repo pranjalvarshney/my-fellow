@@ -110,7 +110,7 @@ export const Profile = ({ match }) => {
                         </Grid>
                         <Grid item>
                           <h6>
-                            <b>{"27"} </b>Friends
+                            <b>{userContext.user.friendList.length}</b>Friends
                           </h6>
                         </Grid>
                       </Grid>

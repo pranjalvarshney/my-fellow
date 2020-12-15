@@ -1,22 +1,23 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
-  Avatar,
   Button,
   Container,
   Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
   Paper,
   TextField,
   Typography,
 } from "@material-ui/core"
-import React from "react"
+import React, { useState } from "react"
+import { useContext } from "react"
+import { UserContext } from "../../../../context/userContext/UserContext"
+import { FriendCard } from "./FriendCard"
+import { FriendsLoading } from "./FriendsLoading"
 
 export const FriendsTab = () => {
+  const [tab, setTab] = useState(false)
+  const userContext = useContext(UserContext)
+
   return (
     <div className="friends-tab">
       <Paper variant="outlined" className="py-3">
@@ -45,43 +46,21 @@ export const FriendsTab = () => {
           </Grid>
           <Grid container justify="space-between">
             <Grid item xs={6}>
-              <Button fullWidth>My Friends</Button>
+              <Button fullWidth>Friend requests</Button>
             </Grid>
             <Grid item xs={6}>
-              <Button fullWidth>Friend requests</Button>
+              <Button fullWidth>My Friends</Button>
             </Grid>
           </Grid>
           <Grid container>
             <Grid item xs={12}>
-              <List>
-                <ListItem button>
-                  <ListItemAvatar>
-                    <IconButton>
-                      <Avatar />
-                    </IconButton>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={
-                      <Typography variant="h6">
-                        <b>Friend name</b>
-                      </Typography>
-                    }
-                    secondary={
-                      <Typography variant="subtitle2" className="">
-                        Student - Computer Science
-                      </Typography>
-                    }
-                  />
-                  <Button
-                    onClick={(e) => {
-                      e.preventDefault()
-                    }}
-                  >
-                    Accept
-                  </Button>
-                  <Button>Delete</Button>
-                </ListItem>
-              </List>
+              {userContext.friends === null ? (
+                <FriendsLoading />
+              ) : tab ? null : (
+                userContext.friends.map((friend) => {
+                  return <FriendCard friend={friend} />
+                })
+              )}
             </Grid>
           </Grid>
         </Container>
