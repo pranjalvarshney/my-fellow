@@ -57,12 +57,12 @@ exports.upload = multer({ storage: storage, fileFilter: fileFilter });
 
 // Create an Event
 exports.createEvent = (req, res) => {
-	const { title, description, date, venue } = req.body;
+	const { title, description, date, venue, link } = req.body;
 	var picture;
 	if (req.file) {
 		picture = req.file.path;
 	}
-	const newEvent = Event({ title, description, date, venue, picture });
+	const newEvent = Event({ title, description, date, venue, link, picture });
 	newEvent.save((err, event) => {
 		if (err) {
 			res.status(400).json({
@@ -110,12 +110,12 @@ exports.updateEvent = (req, res) => {
 			});
 		}
 	});
-	const { title, description, date, venue } = req.body;
+	const { title, description, date, venue, link } = req.body;
 	var picture;
 	if (req.file) {
 		picture = req.file.path;
 	}
-	const updateObj = { title, description, date, venue, picture };
+	const updateObj = { title, description, date, venue, link, picture };
 
 	Event.findByIdAndUpdate(
 		{ _id: req.event._id },
