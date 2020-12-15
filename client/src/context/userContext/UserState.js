@@ -1,13 +1,22 @@
 import axios from "axios"
 import React, { useReducer } from "react"
 import { API } from "../../utils/proxy"
-import { USER_ERROR, USER_LOADING, USER_SUCCESS } from "../types"
+import {
+  USER_ERROR,
+  USER_LOADING,
+  USER_SUCCESS,
+  ADD_FRIEND_REQUEST,
+  UN_FRIEND_REQUEST,
+  FRIEND_REQUEST_ACCEPT,
+  FRIEND_REQUEST_DELETE,
+} from "../types"
 import { UserContext } from "./UserContext"
 import UserReducer from "./UserReducer"
 
 export const UserState = ({ children }) => {
   const initialState = {
     user: null,
+    friends: null,
     error: "",
     success: "",
     loading: true,
@@ -40,6 +49,113 @@ export const UserState = ({ children }) => {
     }
   }
 
+  const sendFriendRequest = async (userId, friendId) => {
+    try {
+      dispatch({
+        type: USER_LOADING,
+        payload: true,
+      })
+      const response = await axios.get(`${API}/addfriend/${userId}`, friendId, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
+        },
+      })
+      console.log(response.data)
+      dispatch({
+        type: ADD_FRIEND_REQUEST,
+        payload: response.data,
+      })
+    } catch (error) {
+      dispatch({
+        type: USER_ERROR,
+        payload: error.response.data.errorMsg,
+      })
+    }
+  }
+
+  const unFriend = async (userId, friendId) => {
+    try {
+      dispatch({
+        type: USER_LOADING,
+        payload: true,
+      })
+      const response = await axios.get(`${API}/unfriend/${userId}`, friendId, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
+        },
+      })
+      console.log(response.data)
+      dispatch({
+        type: UN_FRIEND_REQUEST,
+        payload: response.data,
+      })
+    } catch (error) {
+      dispatch({
+        type: USER_ERROR,
+        payload: error.response.data.errorMsg,
+      })
+    }
+  }
+
+  const acceptFriendRequest = async (userId, friendId) => {
+    try {
+      dispatch({
+        type: USER_LOADING,
+        payload: true,
+      })
+      const response = await axios.get(
+        `${API}/acceptrequest/${userId}`,
+        friendId,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("_token")
+            )}`,
+          },
+        }
+      )
+      console.log(response.data)
+      dispatch({
+        type: FRIEND_REQUEST_ACCEPT,
+        payload: response.data,
+      })
+    } catch (error) {
+      dispatch({
+        type: USER_ERROR,
+        payload: error.response.data.errorMsg,
+      })
+    }
+  }
+  const rejectFriendRequest = async (userId, friendId) => {
+    try {
+      dispatch({
+        type: USER_LOADING,
+        payload: true,
+      })
+      const response = await axios.get(
+        `${API}/rejectrequest/${userId}`,
+        friendId,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("_token")
+            )}`,
+          },
+        }
+      )
+      console.log(response.data)
+      dispatch({
+        type: FRIEND_REQUEST_DELETE,
+        payload: response.data,
+      })
+    } catch (error) {
+      dispatch({
+        type: USER_ERROR,
+        payload: error.response.data.errorMsg,
+      })
+    }
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -48,6 +164,10 @@ export const UserState = ({ children }) => {
         error: state.error,
         success: state.success,
         getUserById,
+        sendFriendRequest,
+        unFriend,
+        acceptFriendRequest,
+        rejectFriendRequest,
       }}
     >
       {children}

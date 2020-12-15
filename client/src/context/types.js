@@ -13,6 +13,10 @@ export const AUTH_ERROR = "auth_error"
 export const USER_LOADING = "user_loading"
 export const USER_SUCCESS = "user_success"
 export const USER_ERROR = "user_error"
+export const ADD_FRIEND_REQUEST = "add_friend_request"
+export const FRIEND_REQUEST_ACCEPT = "friend_request_accept"
+export const FRIEND_REQUEST_DELETE = "friend_request_delete"
+export const UN_FRIEND_REQUEST = "un_friend_request"
 
 //POST
 export const POSTS_LOADING = "posts_loading"
