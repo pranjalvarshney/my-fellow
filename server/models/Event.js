@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require("mongoose-type-url");
 
 const eventSchema = new mongoose.Schema(
 	{
@@ -20,6 +21,9 @@ const eventSchema = new mongoose.Schema(
 		venue: {
 			type: String,
 			required: true,
+		},
+		link: {
+			type: mongoose.SchemaTypes.Url,
 		},
 	},
 	{ timestamps: true }
