@@ -29,22 +29,23 @@ export const FriendsTab = () => {
   }
 
   useEffect(() => {
-    const fetchAllUsers = async () => {
-      const response = await userContext.getAllUsers()
-      if (response) {
-        let arr = []
-        if (!userContext.loading) {
-          userContext.user.friendList.map((u) => arr.push(u))
-          userContext.user.sentReqs.filter((u) => arr.push(u))
-          userContext.user.receivedReqs.filter((u) => arr.push(u))
-          arr.push(userContext.user)
-        }
-        const res = response.filter(comparer(arr))
+    const fetchAll = () => {
+      userContext.getAllUsers()
+      let arr = []
+      if (userContext.user !== null) {
+        userContext.user.friendList.map((u) => arr.push(u))
+        userContext.user.sentReqs.filter((u) => arr.push(u))
+        userContext.user.receivedReqs.filter((u) => arr.push(u))
+        arr.push(userContext.user)
+        const a = userContext.all
+        console.log(null)
+        let res = a.filter(comparer(arr))
         setAllUsers(res)
       }
     }
-    fetchAllUsers()
-  }, [userContext])
+    fetchAll()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const showReqsTab = () => {
     setTab(true)
   }

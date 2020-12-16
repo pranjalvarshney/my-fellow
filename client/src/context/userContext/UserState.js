@@ -9,6 +9,7 @@ import {
   UN_FRIEND_REQUEST,
   FRIEND_REQUEST_ACCEPT,
   FRIEND_REQUEST_DELETE,
+  ALL_USERS,
 } from "../types"
 import { UserContext } from "./UserContext"
 import UserReducer from "./UserReducer"
@@ -16,6 +17,7 @@ import UserReducer from "./UserReducer"
 export const UserState = ({ children }) => {
   const initialState = {
     user: null,
+    all: [],
     friends: null,
     error: "",
     success: "",
@@ -25,13 +27,20 @@ export const UserState = ({ children }) => {
 
   const getAllUsers = async () => {
     try {
+      dispatch({
+        type: USER_LOADING,
+        payload: true,
+      })
       const response = await axios.get(`${API}/users`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
         },
       })
-      const { data } = response
-      return data
+      // console.log(response.data)
+      dispatch({
+        type: ALL_USERS,
+        payload: response.data,
+      })
     } catch (error) {
       dispatch({
         type: USER_ERROR,
@@ -102,11 +111,17 @@ export const UserState = ({ children }) => {
         type: USER_LOADING,
         payload: true,
       })
-      const response = await axios.put(`${API}/unfriend/${userId}`, friendId, {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
-        },
-      })
+      const response = await axios.put(
+        `${API}/unfriend/${userId}`,
+        { friendId },
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("_token")
+            )}`,
+          },
+        }
+      )
       console.log(response.data)
       dispatch({
         type: UN_FRIEND_REQUEST,
@@ -128,7 +143,7 @@ export const UserState = ({ children }) => {
       })
       const response = await axios.put(
         `${API}/acceptrequest/${userId}`,
-        friendId,
+        { friendId },
         {
           headers: {
             Authorization: `Bearer ${JSON.parse(
@@ -157,7 +172,7 @@ export const UserState = ({ children }) => {
       })
       const response = await axios.put(
         `${API}/rejectrequest/${userId}`,
-        friendId,
+        { friendId },
         {
           headers: {
             Authorization: `Bearer ${JSON.parse(
@@ -183,6 +198,7 @@ export const UserState = ({ children }) => {
     <UserContext.Provider
       value={{
         user: state.user,
+        all: state.all,
         friends: state.friends,
         loading: state.loading,
         error: state.error,
