@@ -11,7 +11,7 @@ export const Home = ({ children }) => {
     <div className="home">
       <Header />
       <div className="container">
-        <Grid container spacing={3} direction="row">
+        <Grid container spacing={3} justify="center">
           <Grid item md={3}>
             <HomeSideBar />
           </Grid>

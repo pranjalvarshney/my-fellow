@@ -15,8 +15,16 @@ import { FriendCard } from "./FriendCard"
 import { FriendsLoading } from "./FriendsLoading"
 
 export const FriendsTab = () => {
-  const [tab, setTab] = useState(false)
+  const [tab, setTab] = useState(true)
   const userContext = useContext(UserContext)
+
+  const showReqsTab = () => {
+    setTab(true)
+  }
+
+  const showFriendsTab = () => {
+    setTab(false)
+  }
 
   return (
     <div className="friends-tab">
@@ -46,17 +54,35 @@ export const FriendsTab = () => {
           </Grid>
           <Grid container justify="space-between">
             <Grid item xs={6}>
-              <Button fullWidth>Friend requests</Button>
+              <Button
+                fullWidth
+                onClick={showReqsTab}
+                color={`${tab ? "primary" : "default"}`}
+                style={tab ? { fontWeight: "bold" } : { fontWeight: "normal" }}
+              >
+                Friend requests
+              </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button fullWidth>My Friends</Button>
+              <Button
+                fullWidth
+                onClick={showFriendsTab}
+                color={`${!tab ? "primary" : "default"}`}
+                style={!tab ? { fontWeight: "bold" } : { fontWeight: "normal" }}
+              >
+                My Friends
+              </Button>
             </Grid>
           </Grid>
           <Grid container>
             <Grid item xs={12}>
               {userContext.friends === null ? (
                 <FriendsLoading />
-              ) : tab ? null : (
+              ) : tab ? (
+                userContext.user.receivedReqs.map((freq) => {
+                  return <FriendCard friend={freq} />
+                })
+              ) : (
                 userContext.friends.map((friend) => {
                   return <FriendCard friend={friend} />
                 })

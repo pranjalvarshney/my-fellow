@@ -1,5 +1,5 @@
 import { Grid } from "@material-ui/core"
-import React, { useState } from "react"
+import React from "react"
 import Header from "../../common/Header/Header"
 import { HomeSideBar } from "../Home/HomeSideBar"
 import { HomeRightBar } from "../Home/HomeRightBar"
@@ -9,18 +9,19 @@ import { useContext } from "react"
 import { useEffect } from "react"
 import { UserContext } from "../../../context/userContext/UserContext"
 
-export const Friends = () => {
+export const Friends = ({ friend }) => {
   const authContext = useContext(AuthContext)
   const userContext = useContext(UserContext)
   useEffect(() => {
     userContext.getUserById(authContext.user._id)
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authContext.user._id])
   console.log(userContext)
   return (
     <div className="home">
       <Header />
       <div className="container">
-        <Grid container spacing={3}>
+        <Grid container spacing={3} justify="center">
           <Grid item xs={10} md={3}>
             <HomeSideBar />
           </Grid>
