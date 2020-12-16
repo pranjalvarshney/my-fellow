@@ -1,22 +1,31 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
-  Avatar,
   Button,
   Container,
   Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
   Paper,
   TextField,
   Typography,
 } from "@material-ui/core"
-import React from "react"
+import React, { useState } from "react"
+import { useContext } from "react"
+import { UserContext } from "../../../../context/userContext/UserContext"
+import { FriendCard } from "./FriendCard"
+import { FriendsLoading } from "./FriendsLoading"
 
 export const FriendsTab = () => {
+  const [tab, setTab] = useState(true)
+  const userContext = useContext(UserContext)
+
+  const showReqsTab = () => {
+    setTab(true)
+  }
+
+  const showFriendsTab = () => {
+    setTab(false)
+  }
+
   return (
     <div className="friends-tab">
       <Paper variant="outlined" className="py-3">
@@ -45,270 +54,39 @@ export const FriendsTab = () => {
           </Grid>
           <Grid container justify="space-between">
             <Grid item xs={6}>
-              <Button fullWidth>My Friends</Button>
+              <Button
+                fullWidth
+                onClick={showReqsTab}
+                color={`${tab ? "primary" : "default"}`}
+                style={tab ? { fontWeight: "bold" } : { fontWeight: "normal" }}
+              >
+                Friend requests
+              </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button fullWidth>Friend requests</Button>
+              <Button
+                fullWidth
+                onClick={showFriendsTab}
+                color={`${!tab ? "primary" : "default"}`}
+                style={!tab ? { fontWeight: "bold" } : { fontWeight: "normal" }}
+              >
+                My Friends
+              </Button>
             </Grid>
           </Grid>
           <Grid container>
             <Grid item xs={12}>
-              <List>
-                <ListItem button>
-                  <ListItemAvatar>
-                    <IconButton>
-                      <Avatar />
-                    </IconButton>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={
-                      <Typography variant="h6">
-                        <b>Friend name</b>
-                      </Typography>
-                    }
-                    secondary={
-                      <Grid
-                        container
-                        direction="row"
-                        spacing={1}
-                        alignItems="center"
-                        justify="space-between  "
-                      >
-                        <Grid item xs={6}>
-                          Student
-                          <br />
-                          Computer Science
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Grid container>
-                            <Grid item xs={6}>
-                              <Button>Accept</Button>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Button>Delete</Button>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    }
-                  />
-                </ListItem>
-              </List>
-            </Grid>
-            <Grid item xs={12}>
-              <List>
-                <ListItem button>
-                  <ListItemAvatar>
-                    <IconButton>
-                      <Avatar />
-                    </IconButton>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={
-                      <Typography variant="h6">
-                        <b>Friend name</b>
-                      </Typography>
-                    }
-                    secondary={
-                      <Grid
-                        container
-                        direction="row"
-                        spacing={1}
-                        alignItems="center"
-                        justify="space-between  "
-                      >
-                        <Grid item xs={6}>
-                          Student
-                          <br />
-                          Computer Science
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Grid container>
-                            <Grid item xs={6}>
-                              <Button>Accept</Button>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Button>Delete</Button>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    }
-                  />
-                </ListItem>
-              </List>
-            </Grid>
-            <Grid item xs={12}>
-              <List>
-                <ListItem button>
-                  <ListItemAvatar>
-                    <IconButton>
-                      <Avatar />
-                    </IconButton>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={
-                      <Typography variant="h6">
-                        <b>Friend name</b>
-                      </Typography>
-                    }
-                    secondary={
-                      <Grid
-                        container
-                        direction="row"
-                        spacing={1}
-                        alignItems="center"
-                        justify="space-between  "
-                      >
-                        <Grid item xs={6}>
-                          Student
-                          <br />
-                          Computer Science
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Grid container>
-                            <Grid item xs={6}>
-                              <Button>Accept</Button>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Button>Delete</Button>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    }
-                  />
-                </ListItem>
-              </List>
-            </Grid>
-            <Grid item xs={12}>
-              <List>
-                <ListItem button>
-                  <ListItemAvatar>
-                    <IconButton>
-                      <Avatar />
-                    </IconButton>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={
-                      <Typography variant="h6">
-                        <b>Friend name</b>
-                      </Typography>
-                    }
-                    secondary={
-                      <Grid
-                        container
-                        direction="row"
-                        spacing={1}
-                        alignItems="center"
-                        justify="space-between  "
-                      >
-                        <Grid item xs={6}>
-                          Student
-                          <br />
-                          Computer Science
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Grid container>
-                            <Grid item xs={6}>
-                              <Button>Accept</Button>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Button>Delete</Button>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    }
-                  />
-                </ListItem>
-              </List>
-            </Grid>
-            <Grid item xs={12}>
-              <List>
-                <ListItem button>
-                  <ListItemAvatar>
-                    <IconButton>
-                      <Avatar />
-                    </IconButton>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={
-                      <Typography variant="h6">
-                        <b>Friend name</b>
-                      </Typography>
-                    }
-                    secondary={
-                      <Grid
-                        container
-                        direction="row"
-                        spacing={1}
-                        alignItems="center"
-                        justify="space-between  "
-                      >
-                        <Grid item xs={6}>
-                          Student
-                          <br />
-                          Computer Science
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Grid container>
-                            <Grid item xs={6}>
-                              <Button>Accept</Button>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Button>Delete</Button>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    }
-                  />
-                </ListItem>
-              </List>
-            </Grid>
-            <Grid item xs={12}>
-              <List>
-                <ListItem button>
-                  <ListItemAvatar>
-                    <IconButton>
-                      <Avatar />
-                    </IconButton>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={
-                      <Typography variant="h6">
-                        <b>Friend name</b>
-                      </Typography>
-                    }
-                    secondary={
-                      <Grid
-                        container
-                        direction="row"
-                        spacing={1}
-                        alignItems="center"
-                        justify="space-between  "
-                      >
-                        <Grid item xs={6}>
-                          Student
-                          <br />
-                          Computer Science
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Grid container>
-                            <Grid item xs={6}>
-                              <Button>Accept</Button>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Button>Delete</Button>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    }
-                  />
-                </ListItem>
-              </List>
+              {userContext.friends === null ? (
+                <FriendsLoading />
+              ) : tab ? (
+                userContext.user.receivedReqs.map((freq) => {
+                  return <FriendCard friend={freq} />
+                })
+              ) : (
+                userContext.friends.map((friend) => {
+                  return <FriendCard friend={friend} />
+                })
+              )}
             </Grid>
           </Grid>
         </Container>

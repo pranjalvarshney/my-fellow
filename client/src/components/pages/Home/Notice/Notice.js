@@ -19,9 +19,9 @@ export const Notice = () => {
           {noticeContext.loading ? (
             <div>loading</div>
           ) : (
-            noticeContext.notice.map((not) => {
+            noticeContext.notice.map((not, index) => {
               return (
-                <Carousel.Item>
+                <Carousel.Item key={index}>
                   <Grid
                     container
                     className="mt-3"

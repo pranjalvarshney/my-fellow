@@ -7,6 +7,7 @@ export default (state, action) => {
       return {
         ...state,
         user: action.payload,
+        friends: action.payload.friendList,
         loading: false,
         error: "",
       }
