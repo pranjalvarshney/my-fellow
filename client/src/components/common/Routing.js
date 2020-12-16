@@ -17,9 +17,9 @@ import { BlogContext } from "../../context/blogContext/BlogContext"
 import { UserContext } from "../../context/userContext/UserContext"
 import { Friends } from "../pages/Friends/Friends"
 import { AboutUniversity } from "../pages/AboutUniversity/AboutUniversity"
-import Feedback from "react-bootstrap/esm/Feedback"
 import { SettingsPrivacy } from "../pages/Setting-Privacy/SettingsPrivacy"
 import { HelpSupport } from "../pages/Help-Support/HelpSupport"
+// import { Feedback } from "../pages/Feedback/Feedback"
 
 export const Routing = () => {
   const authContext = useContext(AuthContext)
@@ -141,7 +141,7 @@ export const Routing = () => {
             path="/about-university"
             component={AboutUniversity}
           />
-          <PrivateRoute exact path="/feedback" component={Feedback} />
+          {/* <PrivateRoute exact path="/feedback" component={Feedback} /> */}
           <PrivateRoute
             exact
             path="/settings-privacy"

@@ -114,7 +114,7 @@ exports.addFriend = (req, res) => {
   ).exec((err, user) => {
     if (err) {
       return res
-        .json(400)
+        .status(400)
         .json({ errorMsg: "An error occured, try again later" })
     }
     User.findByIdAndUpdate(
@@ -129,10 +129,10 @@ exports.addFriend = (req, res) => {
     ).exec((err, userFriend) => {
       if (err) {
         return res
-          .json(400)
+          .status(400)
           .json({ errorMsg: "An error occured, try again later" })
       }
-      res.status(200).json(user, userFriend)
+      res.status(200).json(userFriend)
     })
   })
 }
@@ -151,7 +151,7 @@ exports.acceptReq = (req, res) => {
   ).exec((err, user) => {
     if (err) {
       return res
-        .json(400)
+        .status(400)
         .json({ errorMsg: "An error occured, try again later" })
     }
     User.findByIdAndUpdate(
@@ -167,10 +167,10 @@ exports.acceptReq = (req, res) => {
     ).exec((err, userFriend) => {
       if (err) {
         return res
-          .json(400)
+          .status(400)
           .json({ errorMsg: "An error occured, try again later" })
       }
-      res.status(200).json(user, userFriend)
+      res.status(200).json(userFriend)
     })
   })
 }
@@ -188,26 +188,26 @@ exports.rejectReq = (req, res) => {
   ).exec((err, user) => {
     if (err) {
       return res
-        .json(400)
+        .status(400)
         .json({ errorMsg: "An error occured, try again later" })
     }
-  })
-  User.findByIdAndUpdate(
-    { _id: req.body.friendId },
-    {
-      $pull: { sentReqs: req.profile._id },
-    },
-    {
-      new: true,
-      useFindAndModify: false,
-    }
-  ).exec((err, userFriend) => {
-    if (err) {
-      return res
-        .json(400)
-        .json({ errorMsg: "An error occured, try again later" })
-    }
-    res.status(200).json(user, userFriend)
+    User.findByIdAndUpdate(
+      { _id: req.body.friendId },
+      {
+        $pull: { sentReqs: req.profile._id },
+      },
+      {
+        new: true,
+        useFindAndModify: false,
+      }
+    ).exec((err, userFriend) => {
+      if (err) {
+        return res
+          .status(400)
+          .json({ errorMsg: "An error occured, try again later" })
+      }
+      res.status(200).json(userFriend)
+    })
   })
 }
 
@@ -224,7 +224,7 @@ exports.unfriend = (req, res) => {
   ).exec((err, user) => {
     if (err) {
       return res
-        .json(400)
+        .status(400)
         .json({ errorMsg: "An error occured, try again later" })
     }
     User.findByIdAndUpdate(
@@ -239,7 +239,7 @@ exports.unfriend = (req, res) => {
     ).exec((err, userFriend) => {
       if (err) {
         return res
-          .json(400)
+          .status(400)
           .json({ errorMsg: "An error occured, try again later" })
       }
       res.status(200).json(userFriend)
