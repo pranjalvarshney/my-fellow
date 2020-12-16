@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useContext } from "react"
 import { UserContext } from "../../../../context/userContext/UserContext"
 import { FriendCard } from "./FriendCard"
@@ -17,7 +17,34 @@ import { FriendsLoading } from "./FriendsLoading"
 export const FriendsTab = () => {
   const [tab, setTab] = useState(true)
   const userContext = useContext(UserContext)
+  const [allUsers, setAllUsers] = useState([])
+  function comparer(otherArray) {
+    return function (current) {
+      return (
+        otherArray.filter(function (other) {
+          return other._id === current._id
+        }).length === 0
+      )
+    }
+  }
 
+  useEffect(() => {
+    const fetchAllUsers = async () => {
+      const response = await userContext.getAllUsers()
+      if (response) {
+        let arr = []
+        if (!userContext.loading) {
+          userContext.user.friendList.map((u) => arr.push(u))
+          userContext.user.sentReqs.filter((u) => arr.push(u))
+          userContext.user.receivedReqs.filter((u) => arr.push(u))
+          arr.push(userContext.user)
+        }
+        const res = response.filter(comparer(arr))
+        setAllUsers(res)
+      }
+    }
+    fetchAllUsers()
+  }, [userContext])
   const showReqsTab = () => {
     setTab(true)
   }
@@ -79,14 +106,22 @@ export const FriendsTab = () => {
               {userContext.friends === null ? (
                 <FriendsLoading />
               ) : tab ? (
-                userContext.user.receivedReqs.map((freq) => {
-                  return <FriendCard friend={freq} />
+                userContext.user.receivedReqs.map((freq, i) => {
+                  return <FriendCard friend={freq} type="request" key={i} />
                 })
               ) : (
-                userContext.friends.map((friend) => {
-                  return <FriendCard friend={friend} />
+                userContext.friends.map((friend, i) => {
+                  return <FriendCard friend={friend} type="friend" key={i} />
                 })
               )}
+            </Grid>
+            <Button disabled>People you may also know</Button>
+            <Grid item xs={12}>
+              {allUsers.map((user, index) => {
+                return (
+                  <FriendCard friend={user} type="not-friend" key={index} />
+                )
+              })}
             </Grid>
           </Grid>
         </Container>
