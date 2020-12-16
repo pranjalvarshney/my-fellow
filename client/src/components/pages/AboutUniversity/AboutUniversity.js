@@ -6,7 +6,6 @@ import {
 	CardMedia,
 	Container,
 	Grid,
-	Paper,
 	Typography,
 } from "@material-ui/core";
 import "./AboutUniversity.css";
@@ -52,7 +51,8 @@ export const AboutUniversity = () => {
 												variant="subtitle1">
 												<a
 													href="http://www.gbu.ac.in/"
-													target="_blank">
+													target="_blank"
+													rel="noreferrer noopener">
 													{
 														"Official University Website"
 													}
