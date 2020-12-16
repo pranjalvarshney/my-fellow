@@ -72,11 +72,17 @@ export const UserState = ({ children }) => {
         type: USER_LOADING,
         payload: true,
       })
-      const response = await axios.get(`${API}/addfriend/${userId}`, friendId, {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
-        },
-      })
+      const response = await axios.put(
+        `${API}/addfriend/${userId}`,
+        { friendId },
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("_token")
+            )}`,
+          },
+        }
+      )
       console.log(response.data)
       dispatch({
         type: ADD_FRIEND_REQUEST,
@@ -96,7 +102,7 @@ export const UserState = ({ children }) => {
         type: USER_LOADING,
         payload: true,
       })
-      const response = await axios.get(`${API}/unfriend/${userId}`, friendId, {
+      const response = await axios.put(`${API}/unfriend/${userId}`, friendId, {
         headers: {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
         },
@@ -120,7 +126,7 @@ export const UserState = ({ children }) => {
         type: USER_LOADING,
         payload: true,
       })
-      const response = await axios.get(
+      const response = await axios.put(
         `${API}/acceptrequest/${userId}`,
         friendId,
         {
@@ -149,7 +155,7 @@ export const UserState = ({ children }) => {
         type: USER_LOADING,
         payload: true,
       })
-      const response = await axios.get(
+      const response = await axios.put(
         `${API}/rejectrequest/${userId}`,
         friendId,
         {

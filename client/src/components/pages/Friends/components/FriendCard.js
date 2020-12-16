@@ -8,9 +8,13 @@ import {
   ListItemText,
   Typography,
 } from "@material-ui/core"
-import React from "react"
+import React, { useContext } from "react"
+import { UserContext } from "../../../../context/userContext/UserContext"
+import { AuthContext } from "../../../../context/authContext/authContext"
 
 export const FriendCard = ({ friend, type }) => {
+  const userContext = useContext(UserContext)
+  const authContext = useContext(AuthContext)
   return (
     <List>
       <ListItem button>
@@ -45,7 +49,13 @@ export const FriendCard = ({ friend, type }) => {
 
         {type === "not-friend" && (
           <>
-            <Button>Add friend</Button>
+            <Button
+              onClick={() => {
+                userContext.sendFriendRequest(authContext.user._id, friend._id)
+              }}
+            >
+              Add friend
+            </Button>
           </>
         )}
       </ListItem>

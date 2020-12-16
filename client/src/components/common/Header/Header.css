@@ -25,3 +25,14 @@
   justify-content: center;
   align-items: center;
 }
+.modal-feedback {
+  background-color: rgba(0, 0, 0, 0.555);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+}
+.modal-feedback-wrapper {
+}

@@ -22,6 +22,7 @@ import {
   faBookReader,
   faHandsHelping,
 } from "@fortawesome/free-solid-svg-icons"
+import { FeedbackModal } from "../../pages/Modals/FeedbackModal"
 
 const currentTab = (history, path) => {
   if (history.location.pathname === path) {
@@ -33,6 +34,7 @@ const currentTab = (history, path) => {
 const Header = ({ history }) => {
   const usehistory = useHistory()
   const context = useContext(AuthContext)
+  const [showFeedback, setShowFeedback] = useState(false)
   const [moreOption, setMoreOption] = useState(null)
   const handleMoreOption = (e) => {
     setMoreOption(e.currentTarget)
@@ -42,8 +44,15 @@ const Header = ({ history }) => {
     setMoreOption(null)
   }
 
+  const handleFeedback = () => {
+    setShowFeedback(!showFeedback)
+  }
+
   return (
     <div className="header">
+      {showFeedback ? (
+        <FeedbackModal show={showFeedback} onhide={handleFeedback} />
+      ) : null}
       <AppBar style={{ background: "white" }} elevation={3}>
         <Toolbar className="header">
           <div className="header-part-1">
@@ -145,7 +154,8 @@ const Header = ({ history }) => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  usehistory.push("/feedback")
+                  handleFeedback()
+                  handleClose()
                 }}
               >
                 Give Feedback
