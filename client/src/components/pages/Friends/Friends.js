@@ -16,7 +16,8 @@ export const Friends = ({ friend }) => {
     userContext.getUserById(authContext.user._id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authContext.user._id])
-  console.log(userContext)
+
+  // console.log(userContext)
   return (
     <div className="home">
       <Header />

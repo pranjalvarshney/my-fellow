@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core"
 import React from "react"
 
-export const FriendCard = () => {
+export const FriendCard = ({ friend, type }) => {
   return (
     <List>
       <ListItem button>
@@ -22,23 +22,32 @@ export const FriendCard = () => {
         <ListItemText
           primary={
             <Typography variant="h6">
-              <b>Friend name</b>
+              <b>{friend.name}</b>
             </Typography>
           }
           secondary={
             <Typography variant="subtitle2" className="">
-              Student - Computer Science
+              {friend.bio}
             </Typography>
           }
         />
-        <Button
-          onClick={(e) => {
-            e.preventDefault()
-          }}
-        >
-          Accept
-        </Button>
-        <Button>Delete</Button>
+        {type === "request" && (
+          <>
+            <Button>Accept</Button>
+            <Button>Delete</Button>
+          </>
+        )}
+        {type === "friend" && (
+          <>
+            <Button>Unfriend</Button>
+          </>
+        )}
+
+        {type === "not-friend" && (
+          <>
+            <Button>Add friend</Button>
+          </>
+        )}
       </ListItem>
     </List>
   )

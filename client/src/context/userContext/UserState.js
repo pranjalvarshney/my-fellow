@@ -23,6 +23,23 @@ export const UserState = ({ children }) => {
   }
   const [state, dispatch] = useReducer(UserReducer, initialState)
 
+  const getAllUsers = async () => {
+    try {
+      const response = await axios.get(`${API}/users`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
+        },
+      })
+      const { data } = response
+      return data
+    } catch (error) {
+      dispatch({
+        type: USER_ERROR,
+        payload: error.response.data.errorMsg,
+      })
+    }
+  }
+
   const getUserById = async (userId) => {
     try {
       dispatch({
@@ -34,7 +51,7 @@ export const UserState = ({ children }) => {
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
         },
       })
-      console.log(response.data)
+      // console.log(response.data)
       dispatch({
         type: USER_SUCCESS,
         payload: response.data,
@@ -169,6 +186,7 @@ export const UserState = ({ children }) => {
         unFriend,
         acceptFriendRequest,
         rejectFriendRequest,
+        getAllUsers,
       }}
     >
       {children}
