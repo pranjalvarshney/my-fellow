@@ -1,6 +1,8 @@
 import axios from "axios"
 import React, { useReducer } from "react"
+import { useContext } from "react"
 import { API } from "../../utils/proxy"
+import { AuthContext } from "../authContext/authContext"
 import {
   USER_ERROR,
   USER_LOADING,
@@ -24,7 +26,7 @@ export const UserState = ({ children }) => {
     loading: true,
   }
   const [state, dispatch] = useReducer(UserReducer, initialState)
-
+  const authContext = useContext(AuthContext)
   const getAllUsers = async () => {
     try {
       dispatch({
@@ -92,11 +94,12 @@ export const UserState = ({ children }) => {
           },
         }
       )
-      console.log(response.data)
+      // console.log(response.data)
       dispatch({
         type: ADD_FRIEND_REQUEST,
         payload: response.data,
       })
+      getUserById(authContext.user._id)
     } catch (error) {
       dispatch({
         type: USER_ERROR,
@@ -127,6 +130,7 @@ export const UserState = ({ children }) => {
         type: UN_FRIEND_REQUEST,
         payload: response.data,
       })
+      getUserById(authContext.user._id)
     } catch (error) {
       dispatch({
         type: USER_ERROR,
@@ -157,6 +161,7 @@ export const UserState = ({ children }) => {
         type: FRIEND_REQUEST_ACCEPT,
         payload: response.data,
       })
+      getUserById(authContext.user._id)
     } catch (error) {
       dispatch({
         type: USER_ERROR,
@@ -186,6 +191,7 @@ export const UserState = ({ children }) => {
         type: FRIEND_REQUEST_DELETE,
         payload: response.data,
       })
+      getUserById(authContext.user._id)
     } catch (error) {
       dispatch({
         type: USER_ERROR,

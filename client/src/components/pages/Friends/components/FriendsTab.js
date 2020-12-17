@@ -1,3 +1,4 @@
+import { faGrinWink } from "@fortawesome/free-regular-svg-icons"
 import { faSearch } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
@@ -8,7 +9,8 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
+import { useEffect } from "react"
 import { useContext } from "react"
 import { UserContext } from "../../../../context/userContext/UserContext"
 import { FriendCard } from "./FriendCard"
@@ -17,6 +19,14 @@ import { FriendsLoading } from "./FriendsLoading"
 export const FriendsTab = () => {
   const [tab, setTab] = useState(true)
   const userContext = useContext(UserContext)
+
+  const showReqsTab = () => {
+    setTab(true)
+  }
+
+  const showFriendsTab = () => {
+    setTab(false)
+  }
   const [allUsers, setAllUsers] = useState([])
   function comparer(otherArray) {
     return function (current) {
@@ -27,32 +37,23 @@ export const FriendsTab = () => {
       )
     }
   }
-
   useEffect(() => {
-    const fetchAll = () => {
-      userContext.getAllUsers()
+    if (userContext.user === null) {
+      return <FriendsLoading />
+    } else {
       let arr = []
-      if (userContext.user !== null) {
-        userContext.user.friendList.map((u) => arr.push(u))
-        userContext.user.sentReqs.filter((u) => arr.push(u))
-        userContext.user.receivedReqs.filter((u) => arr.push(u))
-        arr.push(userContext.user)
-        const a = userContext.all
-        console.log(null)
-        let res = a.filter(comparer(arr))
-        setAllUsers(res)
-      }
-    }
-    fetchAll()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  const showReqsTab = () => {
-    setTab(true)
-  }
 
-  const showFriendsTab = () => {
-    setTab(false)
-  }
+      userContext.user.friendList.map((u) => arr.push(u))
+      userContext.user.sentReqs.map((u) => arr.push(u))
+      userContext.user.receivedReqs.map((u) => arr.push(u))
+      arr.push(userContext.user)
+      const a = userContext.all
+      console.log(userContext.all)
+      console.log(arr)
+      let res = a.filter(comparer(arr))
+      setAllUsers(res)
+    }
+  }, [userContext.all, userContext.loading, userContext.user])
 
   return (
     <div className="friends-tab">
@@ -104,19 +105,35 @@ export const FriendsTab = () => {
           </Grid>
           <Grid container>
             <Grid item xs={12}>
-              {userContext.friends === null ? (
+              {userContext.loading ? (
                 <FriendsLoading />
               ) : tab ? (
                 userContext.user.receivedReqs.map((freq, i) => {
                   return <FriendCard friend={freq} type="request" key={i} />
                 })
               ) : (
+                //  : (
+                //   <Grid
+                //     container
+                //     className="my-5"
+                //     justify="center"
+                //     alignItems="center"
+                //     direction="column"
+                //   >
+                //     <FontAwesomeIcon icon={faGrinWink} size="2x" color="grey" />
+                //     <Typography variant="caption" color="textSecondary">
+                //       No requests out there!
+                //     </Typography>
+                //   </Grid>
+                // )
                 userContext.friends.map((friend, i) => {
                   return <FriendCard friend={friend} type="friend" key={i} />
                 })
               )}
             </Grid>
-            <Button disabled>People you may also know</Button>
+            <Button disabled color="secondary">
+              People you may also know
+            </Button>
             <Grid item xs={12}>
               {allUsers.map((user, index) => {
                 return (
