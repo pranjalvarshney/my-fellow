@@ -9,7 +9,7 @@ import { useContext } from "react"
 import { useEffect } from "react"
 import { UserContext } from "../../../context/userContext/UserContext"
 
-export const Friends = ({ friend }) => {
+export const Friends = () => {
   const authContext = useContext(AuthContext)
   const userContext = useContext(UserContext)
   useEffect(() => {
@@ -17,7 +17,10 @@ export const Friends = ({ friend }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authContext.user._id])
 
-  // console.log(userContext)
+  useEffect(() => {
+    userContext.getAllUsers()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
     <div className="home">
       <Header />

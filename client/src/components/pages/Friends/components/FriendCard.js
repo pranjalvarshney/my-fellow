@@ -8,16 +8,26 @@ import {
   ListItemText,
   Typography,
 } from "@material-ui/core"
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../../../context/userContext/UserContext"
 import { AuthContext } from "../../../../context/authContext/authContext"
+import { ButtonLoading } from "../../../Loading_Backdrop/ButtonLoading"
 
 export const FriendCard = ({ friend, type }) => {
   const userContext = useContext(UserContext)
   const authContext = useContext(AuthContext)
+  const [loading, setLoading] = useState(userContext.loading)
+  const handleClickBtn = async (e, func) => {
+    try {
+      await func(authContext.user._id, friend._id)
+    } catch (error) {}
+  }
+  useEffect(() => {
+    setLoading(userContext.loading)
+  }, [userContext.loading])
   return (
     <List>
-      <ListItem button>
+      <ListItem>
         <ListItemAvatar>
           <IconButton>
             <Avatar />
@@ -37,24 +47,40 @@ export const FriendCard = ({ friend, type }) => {
         />
         {type === "request" && (
           <>
-            <Button>Accept</Button>
-            <Button>Delete</Button>
+            <Button
+              onClick={(e) =>
+                handleClickBtn(e, userContext.acceptFriendRequest)
+              }
+            >
+              {loading ? <ButtonLoading /> : "Accept"}
+              {/* Accept */}
+            </Button>
+            <Button
+              onClick={(e) =>
+                handleClickBtn(e, userContext.rejectFriendRequest)
+              }
+            >
+              {loading ? <ButtonLoading /> : "Delete"}
+              {/* Delete */}
+            </Button>
           </>
         )}
         {type === "friend" && (
           <>
-            <Button>Unfriend</Button>
+            <Button onClick={(e) => handleClickBtn(e, userContext.unFriend)}>
+              {loading ? <ButtonLoading /> : "Remove friend"}
+              {/* Unfriend */}
+            </Button>
           </>
         )}
 
         {type === "not-friend" && (
           <>
             <Button
-              onClick={() => {
-                userContext.sendFriendRequest(authContext.user._id, friend._id)
-              }}
+              onClick={(e) => handleClickBtn(e, userContext.sendFriendRequest)}
             >
-              Add friend
+              {loading ? <ButtonLoading /> : "Add friend"}
+              {/* Add friend */}
             </Button>
           </>
         )}
