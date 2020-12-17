@@ -126,7 +126,7 @@ export const FriendsTab = () => {
                 //     </Typography>
                 //   </Grid>
                 // )
-                userContext.friends.map((friend, i) => {
+                userContext.user.friendList.map((friend, i) => {
                   return <FriendCard friend={friend} type="friend" key={i} />
                 })
               )}
