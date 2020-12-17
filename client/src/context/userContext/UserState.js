@@ -20,7 +20,6 @@ export const UserState = ({ children }) => {
   const initialState = {
     user: null,
     all: [],
-    friends: null,
     error: "",
     success: "",
     loading: true,
@@ -205,7 +204,6 @@ export const UserState = ({ children }) => {
       value={{
         user: state.user,
         all: state.all,
-        friends: state.friends,
         loading: state.loading,
         error: state.error,
         success: state.success,
