@@ -27,27 +27,28 @@ app.use("/api/v1", require("./routes/ad.route"));
 app.use("/api/v1", require("./routes/notice.route"));
 app.use("/api/v1", require("./routes/poll.route"));
 app.use("/api/v1", require("./routes/event.route"));
+app.use("/api/v1", require("./routes/feedback.route"));
 app.get("/", (req, res) => {
-	res.send("this is the home");
+  res.send("this is the home");
 });
 
 // database connectivity
 mongoose.connect(
-	MONGO_URI,
-	{
-		useCreateIndex: true,
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	},
-	(err, response) => {
-		if (err) {
-			console.log(err);
-		}
-		console.log("MongoDB connected successfully");
+  MONGO_URI,
+  {
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  (err, response) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log("MongoDB connected successfully");
 
-		// listen to server
-		app.listen(PORT, () => {
-			console.log(`Server started at ${PORT}`);
-		});
-	}
+    // listen to server
+    app.listen(PORT, () => {
+      console.log(`Server started at ${PORT}`);
+    });
+  }
 );
