@@ -61,15 +61,17 @@ export const PostCard = ({ post }) => {
     setShowPost(!showPost)
   }
   useEffect(() => {
-    post.likes.filter((like) => {
-      if (like === authContext.user._id) {
-        setLikeStatus(true)
-      } else {
-        setLikeStatus(false)
-      }
-
-      return 0
-    })
+    // post.likes.filter((like) => {
+    //   if (like === authContext.user._id) {
+    //     setLikeStatus(true)
+    //   } else {
+    //     setLikeStatus(false)
+    //   }
+    if (post.likes.includes(authContext.user._id)) {
+      setLikeStatus(true)
+    } else {
+      setLikeStatus(false)
+    }
   }, [authContext.user._id, post.likes])
 
   const handleLikeBtn = () => {

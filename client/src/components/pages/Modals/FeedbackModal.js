@@ -1,10 +1,13 @@
-import { Button } from "@material-ui/core";
-import React from "react";
-import { Modal } from "react-bootstrap";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button, Snackbar, SnackbarContent } from "@material-ui/core"
+import React, { useContext, useState } from "react"
+import { Modal } from "react-bootstrap"
+import { makeStyles } from "@material-ui/core/styles"
+import TextField from "@material-ui/core/TextField"
+import { faPaperclip } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import axios from "axios"
+import { API } from "../../../utils/proxy"
+import { AuthContext } from "../../../context/authContext/authContext"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,25 +22,100 @@ const useStyles = makeStyles((theme) => ({
   input: {
     display: "none",
   },
-}));
+}))
 
 export const FeedbackModal = ({ show, onhide }) => {
-  const classes = useStyles();
-  const [value, setValue] = React.useState("Controlled");
-
+  const classes = useStyles()
+  const authContext = useContext(AuthContext)
+  const [value, setValue] = React.useState("")
+  const [preview, setPreview] = useState("")
+  const [picture, setPicture] = useState("")
+  const [color, setColor] = useState(null)
+  const [success, setSuccess] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
   const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+    setValue(event.target.value)
+  }
+
+  const handleSubmit = async () => {
+    const formData = new FormData()
+    formData.append("feedback", value)
+    formData.append("picture", picture)
+
+    try {
+      setLoading(true)
+      setError("")
+      const response = await axios.post(
+        `${API}/create/feedback/${authContext.user._id}`,
+        formData,
+        {
+          headers: {
+            "content-type": "multipart/form-data",
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("_token")
+            )}`,
+          },
+        }
+      )
+      if (response) {
+        setSuccess("Thanks for your feedback!")
+        setLoading(false)
+        setError("")
+        setColor("green")
+        console.log(response)
+      }
+    } catch (error) {
+      setLoading(false)
+      setColor("tomato")
+      setError(error.response.data.errorMsg)
+      // console.log(error.response.data.errorMsg)
+    }
+  }
+  const handleClose = () => {
+    setColor(null)
+    setLoading(false)
+    setSuccess(false)
+    setError("")
+  }
+  const showResponseMsg = () => {
+    return (
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        open={error || success}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
+        <SnackbarContent
+          message={success || error}
+          style={{
+            background: color,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        />
+      </Snackbar>
+    )
+  }
+
   return (
     <div className="modal-feedback">
+      {showResponseMsg()}
       <div className="modal-feedback-wrapper">
         <Modal show={show} onHide={onhide} centered>
           <Modal.Header closeButton>
             <Modal.Title className="ml-auto">Feedback Form</Modal.Title>
           </Modal.Header>
-
           <Modal.Body>
-            <form className={classes.root} noValidate autoComplete="off">
+            <form
+              className={classes.root}
+              noValidate
+              autoComplete="off"
+              onSubmit={handleSubmit}
+            >
               <div className="text-center">
                 <TextField
                   id="filled-multiline-static"
@@ -47,6 +125,8 @@ export const FeedbackModal = ({ show, onhide }) => {
                   rowsMax={6}
                   variant="outlined"
                   className="w-100 mx-auto"
+                  value={value}
+                  onChange={handleChange}
                 />
                 <input
                   accept="image/*, video/*"
@@ -54,29 +134,50 @@ export const FeedbackModal = ({ show, onhide }) => {
                   id="contained-button-file"
                   multiple
                   type="file"
+                  onChange={(e) => {
+                    setPicture(e.target.files[0])
+                    setPreview(URL.createObjectURL(e.target.files[0]))
+                  }}
                 />
                 <label htmlFor="contained-button-file">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    component="span"
-                    className="py-3 my-3">
+                  <Button variant="contained" color="primary" component="span">
                     <FontAwesomeIcon icon={faPaperclip} className="mr-2" />
                     Share a Screenshot or a Video
                   </Button>
                 </label>
               </div>
+              {preview === "" ? null : (
+                <img src={preview} alt="upload preview" width="100%" />
+              )}
             </form>
           </Modal.Body>
 
           <Modal.Footer>
-            <Button variant="secondary" onClick={onhide}>
+            <Button
+              className="mr-3"
+              variant="contained"
+              color="secondary"
+              onClick={onhide}
+            >
               Cancel
             </Button>
-            <Button variant="primary">Submit</Button>
+            <Button
+              type="submit"
+              onClick={handleSubmit}
+              variant="contained"
+              color="primary"
+            >
+              {loading ? (
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden"></span>
+                </div>
+              ) : (
+                "Submit"
+              )}
+            </Button>
           </Modal.Footer>
         </Modal>
       </div>
     </div>
-  );
-};
+  )
+}

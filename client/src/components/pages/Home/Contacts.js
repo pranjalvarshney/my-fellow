@@ -14,6 +14,7 @@ import {
 import SearchIcon from "@material-ui/icons/Search"
 import { UserContext } from "../../../context/userContext/UserContext"
 import { AuthContext } from "../../../context/authContext/authContext"
+import { useHistory } from "react-router-dom"
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // import { faUserFriends } from "@fortawesome/free-solid-svg-icons"
 import { Skeleton } from "@material-ui/lab"
@@ -49,6 +50,7 @@ const ListFriendLoading = () => {
 }
 
 export const Contacts = () => {
+  const history = useHistory()
   const userContext = useContext(UserContext)
   const authContext = useContext(AuthContext)
   useEffect(() => {
@@ -80,7 +82,13 @@ export const Contacts = () => {
         <List component="nav">
           {userContext.user.friendList.map((user, i) => {
             return (
-              <ListItem button key={i}>
+              <ListItem
+                button
+                key={i}
+                onClick={() => {
+                  history.push(`/profile/${user._id}`)
+                }}
+              >
                 <ListItemIcon>
                   <Avatar />
                 </ListItemIcon>
