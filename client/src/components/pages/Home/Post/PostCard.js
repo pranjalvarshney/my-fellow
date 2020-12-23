@@ -65,7 +65,7 @@ export const PostCard = ({ post }) => {
   }
   useEffect(() => {
     if (!userContext.loading) {
-      console.log(userContext.user.bookmark.post)
+      // console.log(userContext.user.bookmark.post)
 
       userContext.user.bookmark.post.map((item) => {
         if (item._id === post._id) {
