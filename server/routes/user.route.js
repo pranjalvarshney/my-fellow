@@ -14,6 +14,7 @@ const {
   acceptReq,
   rejectReq,
   unfriend,
+  unBookmark,
 } = require("../controllers/user.controller")
 const router = express.Router()
 
@@ -23,8 +24,14 @@ router.put("/user/:userId", isSignedIn, isAuthenticated, updateUser)
 router.get("/users", isSignedIn, getAllUsers)
 
 // Bookmarks
-router.put("/bookmark/user/:userId", bookmark)
-router.get("/bookmarks/user/:userId", getAllBookmarks)
+router.put("/bookmark/user/:userId", isSignedIn, isAuthenticated, bookmark)
+router.put("/unbookmark/user/:userId", isSignedIn, isAuthenticated, unBookmark)
+router.get(
+  "/bookmarks/user/:userId",
+  isSignedIn,
+  isAuthenticated,
+  getAllBookmarks
+)
 
 // Friends
 router.put("/addfriend/:userId", isSignedIn, isAuthenticated, addFriend)

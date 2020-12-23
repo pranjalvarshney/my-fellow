@@ -37,13 +37,16 @@ import {
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons"
 import { useHistory } from "react-router-dom"
+import { UserContext } from "../../../../context/userContext/UserContext"
 
 export const PostCard = ({ post }) => {
   const history = useHistory()
   const authContext = useContext(AuthContext)
+  const userContext = useContext(UserContext)
   const postContext = useContext(PostContext)
   const [bookmarkStatus, setBookmarkStatus] = useState(false)
   const [comment, setComment] = useState("")
+  // const [bookmark, setBookmark] = useState("")
   const [likeStatus, setLikeStatus] = useState(false)
   const [likeCount, setLikeCount] = useState(post.likes.length)
   const [moreOption, setMoreOption] = useState(null)
@@ -60,6 +63,20 @@ export const PostCard = ({ post }) => {
     handleClose()
     setShowPost(!showPost)
   }
+  useEffect(() => {
+    if (!userContext.loading) {
+      console.log(userContext.user.bookmark.post)
+
+      userContext.user.bookmark.post.map((item) => {
+        if (item._id === post._id) {
+          setBookmarkStatus(true)
+        } else {
+          setBookmarkStatus(false)
+        }
+        return 0
+      })
+    }
+  }, [post._id, userContext.loading, userContext.user.bookmark.post])
   useEffect(() => {
     // post.likes.filter((like) => {
     //   if (like === authContext.user._id) {
@@ -86,7 +103,17 @@ export const PostCard = ({ post }) => {
     }
   }
   const handleBookmarkBtn = () => {
-    setBookmarkStatus(!bookmarkStatus)
+    const formData = {
+      type: post.objType,
+      typeId: post._id,
+    }
+    if (!bookmarkStatus) {
+      userContext.bookmarkItem(authContext.user._id, formData)
+      setBookmarkStatus(true)
+    } else {
+      userContext.unBookmarkItem(authContext.user._id, formData)
+      setBookmarkStatus(false)
+    }
   }
   const handleCommentSend = async () => {
     await postContext.addComment(post._id, authContext.user._id, comment)

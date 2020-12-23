@@ -198,7 +198,50 @@ export const UserState = ({ children }) => {
       })
     }
   }
-
+  const bookmarkItem = async (userId, typeData) => {
+    try {
+      const response = await axios.put(
+        `${API}/bookmark/user/${userId}`,
+        typeData,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("_token")
+            )}`,
+          },
+        }
+      )
+      console.log(response)
+    } catch (error) {
+      console.log(error.response.data)
+      dispatch({
+        type: USER_ERROR,
+        payload: error.response.data.errorMsg,
+      })
+    }
+  }
+  const unBookmarkItem = async (userId, typeData) => {
+    try {
+      const response = await axios.put(
+        `${API}/unbookmark/user/${userId}`,
+        typeData,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("_token")
+            )}`,
+          },
+        }
+      )
+      console.log(response)
+    } catch (error) {
+      console.log(error.response.data)
+      dispatch({
+        type: USER_ERROR,
+        payload: error.response.data.errorMsg,
+      })
+    }
+  }
   return (
     <UserContext.Provider
       value={{
@@ -213,6 +256,8 @@ export const UserState = ({ children }) => {
         acceptFriendRequest,
         rejectFriendRequest,
         getAllUsers,
+        bookmarkItem,
+        unBookmarkItem,
       }}
     >
       {children}
