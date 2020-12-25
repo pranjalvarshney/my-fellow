@@ -67,7 +67,12 @@ export const HomeSideBar = () => {
             </ListItemIcon>
             <ListItemText primary="Notices" />
           </ListItem>
-          <ListItem button>
+          <ListItem
+            button
+            onClick={() => {
+              history.push(`/bookmarks`)
+            }}
+          >
             <ListItemIcon>
               <BookmarksRoundedIcon />
             </ListItemIcon>

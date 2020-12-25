@@ -19,6 +19,7 @@ import { Friends } from "../pages/Friends/Friends"
 import { AboutUniversity } from "../pages/AboutUniversity/AboutUniversity"
 import { SettingsPrivacy } from "../pages/Setting-Privacy/SettingsPrivacy"
 import { HelpSupport } from "../pages/Help-Support/HelpSupport"
+import { Bookmarks } from "../pages/Home/Bookmarks/Bookmarks"
 // import { Feedback } from "../pages/Feedback/Feedback"
 
 export const Routing = () => {
@@ -127,6 +128,7 @@ export const Routing = () => {
         <Switch>
           <PrivateRoute exact path="/" component={Post} />
           <PrivateRoute exact path="/posts" component={Post} />
+          <PrivateRoute exact path="/bookmarks" component={Bookmarks} />
           <PrivateRoute
             exact
             path="/jobs-and-placements"
