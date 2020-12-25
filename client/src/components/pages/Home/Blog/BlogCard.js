@@ -196,7 +196,7 @@ export const BlogCard = ({ blog }) => {
           </Typography>
         </CardContent>
         {blog.picture && (
-          <img width="100%" src={blog.picture} alt={blog.picture} />
+          <img width="100%" src={`/${blog.picture}`} alt={blog.picture} />
         )}
         <CardActions disableSpacing>
           <Grid container justify="space-between">

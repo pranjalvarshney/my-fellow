@@ -186,7 +186,7 @@ export const PostCard = ({ post }) => {
       />
 
       {post.picture.length > 0 && (
-        <img width="100%" src={`${post.picture[0]}`} alt={post.picture[0]} />
+        <img width="100%" src={`/${post.picture[0]}`} alt={post.picture[0]} />
       )}
       <CardContent className="py-1">
         <Typography variant="body1" component="p">
