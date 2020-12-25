@@ -33,3 +33,6 @@
 .friends-tab::-webkit-scrollbar {
   display: none;
 }
+.bookmark-wrapper::-webkit-scrollbar {
+  display: none;
+}

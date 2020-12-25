@@ -6,6 +6,7 @@ import {
   ListItemIcon,
   ListItemText,
   Paper,
+  Typography,
 } from "@material-ui/core"
 import React, { useContext } from "react"
 import { AuthContext } from "../../../context/authContext/authContext"
@@ -33,7 +34,7 @@ export const HomeSideBar = () => {
               <Avatar style={{ height: "50px", width: "50px" }} />
             </ListItemIcon>
             <ListItemText
-              primary={authContext.user.name}
+              primary={<b>{authContext.user.name}</b>}
               secondary="Student | School of Information and communicaton Technology"
             />
           </ListItem>
@@ -47,25 +48,33 @@ export const HomeSideBar = () => {
             <ListItemIcon>
               <PeopleAltRoundedIcon />
             </ListItemIcon>
-            <ListItemText primary="Friends" />
+            <ListItemText
+              primary={<Typography variant="button">Friends</Typography>}
+            />
           </ListItem>
           <ListItem button>
             <ListItemIcon>
               <SupervisedUserCircleRoundedIcon />
             </ListItemIcon>
-            <ListItemText primary="Groups" />
+            <ListItemText
+              primary={<Typography variant="button">Groups</Typography>}
+            />
           </ListItem>
           <ListItem button>
             <ListItemIcon>
               <EventNoteRoundedIcon />
             </ListItemIcon>
-            <ListItemText primary="Events" />
+            <ListItemText
+              primary={<Typography variant="button">Events</Typography>}
+            />
           </ListItem>
           <ListItem button>
             <ListItemIcon>
               <BookmarksRoundedIcon />
             </ListItemIcon>
-            <ListItemText primary="Notices" />
+            <ListItemText
+              primary={<Typography variant="button">Notices</Typography>}
+            />
           </ListItem>
           <ListItem
             button
@@ -76,7 +85,9 @@ export const HomeSideBar = () => {
             <ListItemIcon>
               <BookmarksRoundedIcon />
             </ListItemIcon>
-            <ListItemText primary="Bookmarks" />
+            <ListItemText
+              primary={<Typography variant="button">Bookmarks</Typography>}
+            />
           </ListItem>
         </List>
       </Paper>

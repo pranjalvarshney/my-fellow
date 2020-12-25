@@ -66,15 +66,24 @@ export const PostCard = ({ post }) => {
   useEffect(() => {
     if (!userContext.loading) {
       // console.log(userContext.user.bookmark.post)
-
-      userContext.user.bookmark.post.map((item) => {
-        if (item._id === post._id) {
+      userContext.user.bookmark.post.forEach((element) => {
+        if (element._id === post._id) {
           setBookmarkStatus(true)
-        } else {
-          setBookmarkStatus(false)
         }
-        return 0
       })
+      // if (userContext.user.bookmark.post.includes(post._id)) {
+      //   setBookmarkStatus(true)
+      // } else {
+      //   setBookmarkStatus(false)
+      // }
+      // userContext.user.bookmark.post.map((item) => {
+      //   if (item._id === post._id) {
+      //     setBookmarkStatus(true)
+      //   } else {
+      //     setBookmarkStatus(false)
+      //   }
+      //   return 0
+      // })
     }
   }, [post._id, userContext.loading, userContext.user.bookmark.post])
   useEffect(() => {
