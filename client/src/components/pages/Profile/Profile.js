@@ -1,3 +1,5 @@
+import { faBoxOpen } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   Button,
   Card,
@@ -5,6 +7,7 @@ import {
   CardContent,
   CardMedia,
   Grid,
+  IconButton,
   Paper,
   Typography,
 } from "@material-ui/core"
@@ -160,6 +163,17 @@ export const Profile = ({ match }) => {
                     <CardActions>
                       <Button size="small">Learn More</Button>
                     </CardActions>
+                  </Card>
+                  <Card variant="outlined" className="mt-3 text-center">
+                    <CardContent>
+                      <IconButton className="w-100">
+                        <FontAwesomeIcon icon={faBoxOpen} />
+                      </IconButton>
+                      <Typography>Joined on</Typography>
+                      <Typography variant="button">
+                        {new Date(userContext.user.createdAt).toDateString()}
+                      </Typography>
+                    </CardContent>
                   </Card>
                 </Grid>
                 <Grid item md={8} xs={12}>
