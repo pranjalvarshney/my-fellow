@@ -50,19 +50,42 @@ export const Bookmarks = () => {
               <Typography variant="body1">Bookmarks</Typography>
               <Grid container justify="center">
                 <Grid>
-                  <Button onClick={() => handleBtnClick("post")}>Posts</Button>
+                  <Button
+                    color={typeOf === "post" ? "primary" : "default"}
+                    onClick={() => handleBtnClick("post")}
+                  >
+                    Posts
+                  </Button>
                 </Grid>
                 <Grid>
-                  <Button onClick={() => handleBtnClick("blog")}>Blogs</Button>
+                  <Button
+                    color={typeOf === "blog" ? "primary" : "default"}
+                    onClick={() => handleBtnClick("blog")}
+                  >
+                    Blogs
+                  </Button>
                 </Grid>
                 <Grid>
-                  <Button onClick={() => handleBtnClick("ads")}>Ads</Button>
+                  <Button
+                    color={typeOf === "ads" ? "primary" : "default"}
+                    onClick={() => handleBtnClick("ads")}
+                  >
+                    Ads
+                  </Button>
                 </Grid>
                 <Grid>
-                  <Button onClick={() => handleBtnClick("job")}>Jobs</Button>
+                  <Button
+                    color={typeOf === "job" ? "primary" : "default"}
+                    onClick={() => handleBtnClick("job")}
+                  >
+                    Jobs
+                  </Button>
                 </Grid>
               </Grid>
-              <Divider className="my-1" />
+              <Divider
+                className="mt-1 mb-3"
+                style={{ background: "#3f51b5" }}
+              />
               {userContext.loading ? (
                 <LoadingPost />
               ) : (

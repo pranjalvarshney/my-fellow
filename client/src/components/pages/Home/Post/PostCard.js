@@ -128,7 +128,7 @@ export const PostCard = ({ post }) => {
     await postContext.addComment(post._id, authContext.user._id, comment)
   }
   return (
-    <Card variant="outlined" className="mb-3">
+    <Card variant="outlined" className="mb-3 m-auto">
       {showPost && (
         <PostModal
           show={showPost}
