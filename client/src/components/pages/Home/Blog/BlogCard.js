@@ -35,8 +35,10 @@ import { AuthContext } from "../../../../context/authContext/authContext"
 import { BlogContext } from "../../../../context/blogContext/BlogContext"
 import { BlogModal } from "../../Modals/BlogModal"
 import { useHistory } from "react-router-dom"
+import { UserContext } from "../../../../context/userContext/UserContext"
 
 export const BlogCard = ({ blog }) => {
+  const userContext = useContext(UserContext)
   const history = useHistory()
   const authContext = useContext(AuthContext)
   const blogContext = useContext(BlogContext)
@@ -71,8 +73,33 @@ export const BlogCard = ({ blog }) => {
       setVote(false)
     }
   }
+  useEffect(() => {
+    if (!userContext.loading) {
+      // console.log(userContext.user.bookmark.blog)
+
+      userContext.user.bookmark.blog.map((item) => {
+        if (item._id === blog._id) {
+          setBookmarkStatus(true)
+        } else {
+          setBookmarkStatus(false)
+        }
+        return 0
+      })
+    }
+  }, [blog._id, userContext.loading, userContext.user.bookmark.blog])
+
   const handleBookmarkBtn = () => {
-    setBookmarkStatus(!bookmarkStatus)
+    const formData = {
+      type: blog.objType,
+      typeId: blog._id,
+    }
+    if (!bookmarkStatus) {
+      userContext.bookmarkItem(authContext.user._id, formData)
+      setBookmarkStatus(true)
+    } else {
+      userContext.unBookmarkItem(authContext.user._id, formData)
+      setBookmarkStatus(false)
+    }
   }
 
   const open = Boolean(moreOption)
@@ -169,7 +196,7 @@ export const BlogCard = ({ blog }) => {
           </Typography>
         </CardContent>
         {blog.picture && (
-          <img width="100%" src={blog.picture} alt={blog.picture} />
+          <img width="100%" src={`/${blog.picture}`} alt={blog.picture} />
         )}
         <CardActions disableSpacing>
           <Grid container justify="space-between">

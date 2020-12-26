@@ -97,7 +97,26 @@ exports.bookmark = (req, res) => {
     res.status(200).json(user)
   })
 }
+exports.unBookmark = (req, res) => {
+  const { type } = req.body
 
+  User.findByIdAndUpdate(
+    { _id: req.profile._id, [`${type}`]: type },
+    {
+      $pull: { [`bookmark.${type}`]: req.body.typeId },
+    },
+    { new: true, useFindAndModify: false }
+  ).exec((err, user) => {
+    if (err) {
+      return res
+        .status(400)
+        .json({ err, errorMsg: "An error occured, try again later" })
+    }
+    user.salt = undefined
+    user.encryptedpassword = undefined
+    res.status(200).json(user)
+  })
+}
 exports.addFriend = (req, res) => {
   if (req.body.friendId == req.profile._id) {
     return

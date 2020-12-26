@@ -22,6 +22,7 @@ export default (state, action) => {
     case USER_ERROR:
       return {
         ...state,
+        user: null,
         error: action.payload,
         loading: false,
       }

@@ -94,10 +94,10 @@ exports.allposts = (req, res) => {
           errorMsg: "An error occured",
         })
       }
-      posts.map((post) => {
-        post.user.salt = undefined
-        post.user.encryptedpassword = undefined
-      })
+      // posts.map((post) => {
+      //   post.user.salt = undefined
+      //   post.user.encryptedpassword = undefined
+      // })
       return res.json(posts)
     })
 }

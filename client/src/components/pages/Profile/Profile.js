@@ -9,7 +9,8 @@ import {
   Typography,
 } from "@material-ui/core"
 import React, { useContext, useEffect, useState } from "react"
-import { Redirect } from "react-router-dom"
+import { Redirect, useHistory } from "react-router-dom"
+import { AuthContext } from "../../../context/authContext/authContext"
 import { BlogContext } from "../../../context/blogContext/BlogContext"
 import { PostContext } from "../../../context/postContext/postContext"
 import { UserContext } from "../../../context/userContext/UserContext"
@@ -18,6 +19,7 @@ import { InputBox } from "../Home/InputBox"
 import { HomeTab } from "./components/HomeTab"
 
 export const Profile = ({ match }) => {
+  const history = useHistory()
   const [data, setData] = useState(null)
   const [dataPost, setDataPost] = useState([])
   const [dataBlog, setDataBlog] = useState([])
@@ -25,6 +27,7 @@ export const Profile = ({ match }) => {
   const postContext = useContext(PostContext)
   const blogContext = useContext(BlogContext)
   const userContext = useContext(UserContext)
+  const authContext = useContext(AuthContext)
 
   useEffect(() => {
     const fetchUserDetails = async (userId) => {
@@ -62,6 +65,9 @@ export const Profile = ({ match }) => {
     if (typeOf === "blog") {
       setData(dataBlog)
       setType(typeOf)
+    }
+    if (typeOf === "bookmark") {
+      history.push(`/bookmarks`)
     }
     // setData(response)
   }
@@ -190,20 +196,32 @@ export const Profile = ({ match }) => {
                         <Button
                           variant="text"
                           fullWidth
-                          onClick={() => handleClick()}
+                          color={`${type === "ads" ? "primary" : "default"}`}
+                          onClick={() => {
+                            setData(null)
+                            handleClick("ads")
+                          }}
                         >
                           Ads
                         </Button>
                       </Grid>
-                      <Grid item xs={3}>
-                        <Button
-                          variant="text"
-                          fullWidth
-                          onClick={() => handleClick()}
-                        >
-                          Bookmark
-                        </Button>
-                      </Grid>
+                      {userContext.user._id === authContext.user._id && (
+                        <Grid item xs={3}>
+                          <Button
+                            variant="text"
+                            fullWidth
+                            color={`${
+                              type === "bookmark" ? "primary" : "default"
+                            }`}
+                            onClick={() => {
+                              setData(null)
+                              handleClick("bookmark")
+                            }}
+                          >
+                            Bookmarks
+                          </Button>
+                        </Grid>
+                      )}
                     </Grid>
                   </Paper>
                   {data ? (

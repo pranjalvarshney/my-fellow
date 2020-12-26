@@ -5,9 +5,11 @@ import { PostCard } from "./PostCard"
 import CameraIcon from "@material-ui/icons/Camera"
 import { LoadingPost } from "./LoadingPost"
 import { Grid } from "@material-ui/core"
+import { UserContext } from "../../../../context/userContext/UserContext"
 
 export const Post = () => {
   const postContext = useContext(PostContext)
+  const userContext = useContext(UserContext)
   useEffect(() => {
     postContext.getAllPost()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -15,7 +17,7 @@ export const Post = () => {
   return (
     <Home>
       <div className="px-2">
-        {postContext.loading ? (
+        {postContext.loading || userContext.loading ? (
           <LoadingPost />
         ) : postContext.post.length > 0 ? (
           postContext.post.map((post) => {
