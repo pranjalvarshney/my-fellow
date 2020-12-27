@@ -19,6 +19,7 @@ import { PostContext } from "../../../context/postContext/postContext"
 import { UserContext } from "../../../context/userContext/UserContext"
 import Header from "../../common/Header/Header"
 import { InputBox } from "../Home/InputBox"
+import { EditProfileModal } from "../Modals/EditProfileModal"
 import { HomeTab } from "./components/HomeTab"
 
 export const Profile = ({ match }) => {
@@ -31,7 +32,7 @@ export const Profile = ({ match }) => {
   const blogContext = useContext(BlogContext)
   const userContext = useContext(UserContext)
   const authContext = useContext(AuthContext)
-
+  const [editStatus, setEditStatus] = useState(false)
   useEffect(() => {
     const fetchUserDetails = async (userId) => {
       try {
@@ -77,9 +78,14 @@ export const Profile = ({ match }) => {
   if (userContext.user === null) {
     return <Redirect to="/" />
   }
+  const handleEditBtn = () => {
+    setEditStatus(!editStatus)
+  }
+
   return (
     <div className="home" style={{ overflowY: "auto" }}>
       <Header />
+      {<EditProfileModal show={editStatus} onHide={handleEditBtn} />}
       <div className="container">
         <Grid container justify="center">
           <Grid item xs={10}>
@@ -135,7 +141,12 @@ export const Profile = ({ match }) => {
                 </Grid>
                 <Grid item xs={12} md={1}>
                   <Grid container justify="center">
-                    <Button variant="text" size="small" color="primary">
+                    <Button
+                      variant="text"
+                      size="small"
+                      color="primary"
+                      onClick={handleEditBtn}
+                    >
                       Edit
                     </Button>
                   </Grid>
