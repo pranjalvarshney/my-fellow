@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema(
       data: Buffer,
       contentType: String,
     },
+    intro: {
+      type: String,
+      max: 100,
+    },
     bio: {
       type: String,
       max: 50,
