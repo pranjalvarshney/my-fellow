@@ -134,7 +134,7 @@ export const Profile = ({ match }) => {
                         color="secondary"
                         component="p"
                       >
-                        {userContext.user.bio}
+                        {userContext.user.intro}
                       </Typography>
                     </CardContent>
                   </Grid>
@@ -158,21 +158,38 @@ export const Profile = ({ match }) => {
                 <Grid item xs={12} md={4}>
                   <Card variant="outlined">
                     <CardContent>
-                      <Typography color="textSecondary" gutterBottom>
-                        Word of the Day
+                      {userContext.user.role === 0 && (
+                        <Typography
+                          variant="button"
+                          color="primary"
+                          gutterBottom
+                        >
+                          Student
+                        </Typography>
+                      )}
+                      {userContext.user.role === 1 && (
+                        <Typography
+                          variant="button"
+                          color="primary"
+                          gutterBottom
+                        >
+                          Faculty
+                        </Typography>
+                      )}
+                      <Typography variant="caption">
+                        {userContext.user.branch}
                       </Typography>
-                      <Typography variant="h5" component="h2">
-                        benevolent
-                      </Typography>
-                      <Typography color="textSecondary">adjective</Typography>
-                      <Typography variant="body2" component="p">
-                        well meaning and kindly.
-                        <br />
-                        {'"a benevolent smile"'}
+
+                      <Typography variant="body2">
+                        Gautam Buddha University
                       </Typography>
                     </CardContent>
-                    <CardActions>
-                      <Button size="small">Learn More</Button>
+                    <CardActions disableSpacing>
+                      <Grid container justify="flex-end" alignItems="center">
+                        <Button onClick={handleEditBtn} size="small">
+                          Edit
+                        </Button>
+                      </Grid>
                     </CardActions>
                   </Card>
                   <Card variant="outlined" className="mt-3 text-center">

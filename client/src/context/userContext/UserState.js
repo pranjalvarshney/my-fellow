@@ -78,9 +78,10 @@ export const UserState = ({ children }) => {
 
   const updateUserProfileDetails = async (userId, formData) => {
     try {
+      console.log(formData)
       const response = await axios.put(
         `${API}/user/${userId}`,
-        { formData },
+        JSON.stringify(formData),
         {
           headers: {
             Authorization: `Bearer ${JSON.parse(

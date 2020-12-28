@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       max: 100,
     },
-    bio: {
+    branch: {
       type: String,
       max: 50,
     },
