@@ -16,6 +16,7 @@ import BookmarksRoundedIcon from "@material-ui/icons/BookmarksRounded"
 import EventNoteRoundedIcon from "@material-ui/icons/EventNoteRounded"
 import { useHistory } from "react-router-dom"
 import { Notice } from "./Notice/Notice"
+import { API } from "../../../utils/proxy"
 
 export const HomeSideBar = () => {
   const authContext = useContext(AuthContext)
@@ -31,11 +32,21 @@ export const HomeSideBar = () => {
             }}
           >
             <ListItemIcon>
-              <Avatar style={{ height: "50px", width: "50px" }} />
+              <Avatar
+                alt={authContext.user.name}
+                src={`${API}/pic/user/${authContext.user._id}`}
+                style={{ height: "50px", width: "50px" }}
+              />
             </ListItemIcon>
             <ListItemText
               primary={<b>{authContext.user.name}</b>}
-              secondary="Student | School of Information and communicaton Technology"
+              secondary={
+                <Typography variant="subtitle2" color="textSecondary">
+                  {authContext.user.role === 0 && "Student"}
+                  {authContext.user.role === 1 && "Faculty"}
+                  {authContext.user.role === 2 && "Admin"}
+                </Typography>
+              }
             />
           </ListItem>
           <Divider />

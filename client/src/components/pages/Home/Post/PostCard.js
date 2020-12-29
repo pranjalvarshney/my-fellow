@@ -38,6 +38,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { useHistory } from "react-router-dom"
 import { UserContext } from "../../../../context/userContext/UserContext"
+import { API } from "../../../../utils/proxy"
 
 export const PostCard = ({ post }) => {
   const history = useHistory()
@@ -139,7 +140,12 @@ export const PostCard = ({ post }) => {
         />
       )}
       <CardHeader
-        avatar={<Avatar aria-label="recipe">R</Avatar>}
+        avatar={
+          <Avatar
+            alt={post.user.name}
+            src={`${API}/pic/user/${post.user._id}`}
+          />
+        }
         action={
           <>
             <IconButton aria-label="settings" onClick={handleMoreOption}>

@@ -36,6 +36,7 @@ import { BlogContext } from "../../../../context/blogContext/BlogContext"
 import { BlogModal } from "../../Modals/BlogModal"
 import { useHistory } from "react-router-dom"
 import { UserContext } from "../../../../context/userContext/UserContext"
+import { API } from "../../../../utils/proxy"
 
 export const BlogCard = ({ blog }) => {
   const userContext = useContext(UserContext)
@@ -141,7 +142,12 @@ export const BlogCard = ({ blog }) => {
       <Card variant="outlined" className="mb-3">
         <CardHeader
           className="pt-3 pb-0"
-          avatar={<Avatar aria-label="recipe">R</Avatar>}
+          avatar={
+            <Avatar
+              alt={blog.user.name}
+              src={`${API}/pic/user/${blog.user._id}`}
+            />
+          }
           action={
             <>
               <IconButton aria-label="settings" onClick={handleMoreOption}>

@@ -12,6 +12,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../../../context/userContext/UserContext"
 import { AuthContext } from "../../../../context/authContext/authContext"
 import { ButtonLoading } from "../../../Loading_Backdrop/ButtonLoading"
+import { API } from "../../../../utils/proxy"
 
 export const FriendCard = ({ friend, type }) => {
   const userContext = useContext(UserContext)
@@ -30,7 +31,7 @@ export const FriendCard = ({ friend, type }) => {
       <ListItem>
         <ListItemAvatar>
           <IconButton>
-            <Avatar />
+            <Avatar alt={friend.name} src={`${API}/pic/user/${friend._id}`} />
           </IconButton>
         </ListItemAvatar>
         <ListItemText
@@ -41,7 +42,9 @@ export const FriendCard = ({ friend, type }) => {
           }
           secondary={
             <Typography variant="subtitle2" className="">
-              {friend.bio}
+              {authContext.user.role === 0 && "Student"}
+              {authContext.user.role === 1 && "Faculty"}
+              {authContext.user.role === 2 && "Admin"}
             </Typography>
           }
         />

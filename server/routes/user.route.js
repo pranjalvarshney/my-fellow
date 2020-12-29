@@ -23,8 +23,8 @@ const router = express.Router()
 router.param("userId", getUserById)
 router.get("/user/:userId", isSignedIn, getUser)
 router.put("/user/:userId", isSignedIn, isAuthenticated, updateUser)
-router.put("/pic/user/:userId", isSignedIn, updateProfileImg)
-router.get("/pic/user/:userId", isSignedIn, getProfilePic)
+router.put("/pic/user/:userId", isSignedIn, isAuthenticated, updateProfileImg)
+router.get("/pic/user/:userId", getProfilePic)
 router.get("/users", isSignedIn, getAllUsers)
 
 // Bookmarks
