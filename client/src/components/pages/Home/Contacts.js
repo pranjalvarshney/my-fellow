@@ -18,6 +18,7 @@ import { useHistory } from "react-router-dom"
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // import { faUserFriends } from "@fortawesome/free-solid-svg-icons"
 import { Skeleton } from "@material-ui/lab"
+import { API } from "../../../utils/proxy"
 
 const ListFriendLoading = () => {
   return (
@@ -90,7 +91,7 @@ export const Contacts = () => {
                 }}
               >
                 <ListItemIcon>
-                  <Avatar />
+                  <Avatar alt={user.name} src={`${API}/pic/user/${user._id}`} />
                 </ListItemIcon>
                 <ListItemText
                   primary={

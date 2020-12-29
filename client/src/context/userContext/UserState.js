@@ -258,6 +258,19 @@ export const UserState = ({ children }) => {
       })
     }
   }
+  const updateProfilePicture = async (userId, formData) => {
+    try {
+      const response = await axios.put(`${API}/pic/user/${userId}`, formData, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
+        },
+      })
+      console.log(response)
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  }
   return (
     <UserContext.Provider
       value={{
