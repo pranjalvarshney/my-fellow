@@ -1,4 +1,4 @@
-import { Avatar, Button, Grid, makeStyles } from "@material-ui/core"
+import { Avatar, Button, Grid, makeStyles, Typography } from "@material-ui/core"
 import React, { useEffect, useState } from "react"
 import { Modal } from "react-bootstrap"
 import { API } from "../../../utils/proxy"
@@ -21,13 +21,20 @@ export const ProfilePictureModal = ({ show, onHide, userContext }) => {
   const classes = useStyles()
   const [avatarSrc, setAvatarSrc] = useState("")
   const [avatarAlt, setAvatarAlt] = useState("")
+  const [uploadFile, setUploadFile] = useState(null)
 
   useEffect(() => {
     setAvatarAlt(userContext.user.name)
     setAvatarSrc(`${API}/pic/user/${userContext.user._id}`)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const handleSelectBtn = () => {}
+  const handleSubmitBtn = () => {
+    const formData = new FormData()
+    formData.append("pic", uploadFile)
+    userContext.updateProfilePicture(userContext.user._id, formData)
+    onHide()
+    window.location.reload()
+  }
   return (
     <Modal show={show} onHide={onHide} size="lg" centered backdrop="static">
       <Modal.Header closeButton>
@@ -49,7 +56,7 @@ export const ProfilePictureModal = ({ show, onHide, userContext }) => {
               id="contained-button-file"
               type="file"
               onChange={(e) => {
-                // (e.target.files[0])
+                setUploadFile(e.target.files[0])
                 setAvatarSrc(URL.createObjectURL(e.target.files[0]))
               }}
             />
@@ -60,6 +67,11 @@ export const ProfilePictureModal = ({ show, onHide, userContext }) => {
               <Button disabled>Select</Button>
             </label>
           </Grid>
+        </Grid>
+        <Grid container justify="center">
+          <Typography className="text-center" variant="caption">
+            Size should be less than 2 mb
+          </Typography>
         </Grid>
       </Modal.Body>
       <Modal.Footer>
@@ -73,7 +85,7 @@ export const ProfilePictureModal = ({ show, onHide, userContext }) => {
         </Button>
         <Button
           type="submit"
-          // onClick={handleSubmit}
+          onClick={handleSubmitBtn}
           variant="contained"
           color="primary"
         >

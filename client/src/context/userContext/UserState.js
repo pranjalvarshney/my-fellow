@@ -288,6 +288,7 @@ export const UserState = ({ children }) => {
         bookmarkItem,
         unBookmarkItem,
         updateUserProfileDetails,
+        updateProfilePicture,
       }}
     >
       {children}
