@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@material-ui/core"
 import React, { useContext, useEffect, useState } from "react"
-import { Redirect, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import { AuthContext } from "../../../context/authContext/authContext"
 import { BlogContext } from "../../../context/blogContext/BlogContext"
 import { PostContext } from "../../../context/postContext/postContext"
@@ -21,6 +21,7 @@ import Header from "../../common/Header/Header"
 import { InputBox } from "../Home/InputBox"
 import { EditProfileModal } from "../Modals/EditProfileModal"
 import { HomeTab } from "./components/HomeTab"
+import { Loading } from "../../Loading_Backdrop/Loading"
 
 export const Profile = ({ match }) => {
   const history = useHistory()
@@ -76,7 +77,7 @@ export const Profile = ({ match }) => {
     // setData(response)
   }
   if (userContext.user === null) {
-    return <Redirect to="/" />
+    return <Loading />
   }
   const handleEditBtn = () => {
     setEditStatus(!editStatus)
@@ -125,13 +126,13 @@ export const Profile = ({ match }) => {
                         </Grid>
                         <Grid item>
                           <h6>
-                            <b>{userContext.user.friendList.length}</b>Friends
+                            <b>{userContext.user.friendList.length} </b>Friends
                           </h6>
                         </Grid>
                       </Grid>
                       <Typography
                         variant="body2"
-                        color="secondary"
+                        color="textSecondary"
                         component="p"
                       >
                         {userContext.user.intro}
@@ -158,25 +159,38 @@ export const Profile = ({ match }) => {
                 <Grid item xs={12} md={4}>
                   <Card variant="outlined">
                     <CardContent>
-                      {userContext.user.role === 0 && (
-                        <Typography
-                          variant="button"
-                          color="primary"
-                          gutterBottom
-                        >
-                          Student
-                        </Typography>
-                      )}
-                      {userContext.user.role === 1 && (
-                        <Typography
-                          variant="button"
-                          color="primary"
-                          gutterBottom
-                        >
-                          Faculty
-                        </Typography>
-                      )}
-                      <Typography variant="caption">
+                      <Grid
+                        container
+                        justify="space-between"
+                        alignItems="center"
+                      >
+                        <Grid item>
+                          {userContext.user.role === 0 && (
+                            <Typography
+                              variant="button"
+                              color="primary"
+                              gutterBottom
+                            >
+                              Student
+                            </Typography>
+                          )}
+                          {userContext.user.role === 1 && (
+                            <Typography
+                              variant="button"
+                              color="primary"
+                              gutterBottom
+                            >
+                              Faculty
+                            </Typography>
+                          )}
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="caption">
+                            Year {userContext.user.year}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Typography variant="body1">
                         {userContext.user.branch}
                       </Typography>
 

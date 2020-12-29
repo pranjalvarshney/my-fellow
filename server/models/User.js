@@ -16,6 +16,11 @@ const userSchema = new mongoose.Schema(
     intro: {
       type: String,
       max: 100,
+      default: "Student",
+    },
+    year: {
+      type: Number,
+      trim: true,
     },
     branch: {
       type: String,

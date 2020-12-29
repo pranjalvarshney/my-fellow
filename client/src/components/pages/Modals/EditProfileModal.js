@@ -1,4 +1,11 @@
-import { Button, Grid, TextField, Typography } from "@material-ui/core"
+import {
+  Button,
+  Grid,
+  Snackbar,
+  SnackbarContent,
+  TextField,
+  Typography,
+} from "@material-ui/core"
 import React, { useContext, useEffect, useState } from "react"
 import { Modal } from "react-bootstrap"
 import { AuthContext } from "../../../context/authContext/authContext"
@@ -7,6 +14,7 @@ export const EditProfileModal = ({ show, onHide }) => {
   const userContext = useContext(UserContext)
   const authContext = useContext(AuthContext)
   const [loading, setLoading] = useState(false)
+  const [color, setColor] = useState(null)
   const [error, setError] = useState("")
   const [userDetails, setUserDetails] = useState({
     name: "",
@@ -16,16 +24,17 @@ export const EditProfileModal = ({ show, onHide }) => {
     rollno: "",
     branch: "",
     intro: "",
+    year: "",
   })
   useEffect(() => {
     setUserDetails({
+      ...userDetails,
       name: userContext.user.name,
-      age: userContext.user.age,
       email: userContext.user.email,
-      dob: userContext.user.dob,
       intro: userContext.user.intro,
       rollno: userContext.user.rollno,
       branch: userContext.user.branch,
+      year: userContext.user.year,
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -35,27 +44,67 @@ export const EditProfileModal = ({ show, onHide }) => {
       [e.target.name]: e.target.value,
     })
   }
+  const formData = {
+    name: userDetails.name,
+    intro: userDetails.intro,
+    branch: userDetails.branch,
+    year: userDetails.year,
+  }
   const handleForm = async (e) => {
     e.preventDefault()
+    console.log(userDetails.year)
     try {
       setLoading(true)
       const response = await userContext.updateUserProfileDetails(
         authContext.user._id,
-        userDetails
+        formData
       )
       if (response) {
         setLoading(false)
+        setError(false)
+        setColor("green")
         onHide()
-        alert("userDetails updated")
+        window.location.reload()
       }
     } catch (error) {
       setLoading(false)
-
-      console.log(error.response.data.errorMsg)
+      setColor("tomato")
+      setError(error.response.data.errorMsg)
+      // console.log(error)
     }
   }
+  const handleClose = () => {
+    setColor("")
+    setLoading(false)
+    setError("")
+  }
+  const showResponseMsg = () => {
+    return (
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        open={error === "" ? false : true}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
+        <SnackbarContent
+          message={error}
+          style={{
+            background: color,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        />
+      </Snackbar>
+    )
+  }
+
   return (
     <Modal show={show} onHide={onHide} size="lg" centered backdrop="static">
+      {showResponseMsg()}
+
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           Edit Profile
@@ -95,7 +144,7 @@ export const EditProfileModal = ({ show, onHide }) => {
               onChange={handleChangeData}
             />
             <Grid container justify="space-between" spacing={3}>
-              <Grid item xs={7}>
+              <Grid item xs={6}>
                 <TextField
                   disabled
                   variant="outlined"
@@ -109,7 +158,7 @@ export const EditProfileModal = ({ show, onHide }) => {
                   className="mt-3"
                 />
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={4}>
                 <TextField
                   disabled
                   variant="outlined"
@@ -121,6 +170,21 @@ export const EditProfileModal = ({ show, onHide }) => {
                   fullWidth
                   label="Roll No."
                   className="mt-3"
+                />
+              </Grid>
+              <Grid item xs={2}>
+                <TextField
+                  variant="outlined"
+                  name="year"
+                  value={userDetails.year}
+                  size="small"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  fullWidth
+                  label="Year"
+                  className="mt-3"
+                  onChange={handleChangeData}
                 />
               </Grid>
             </Grid>
@@ -149,7 +213,7 @@ export const EditProfileModal = ({ show, onHide }) => {
               fullWidth
               multiline
               rows={3}
-              value={userDetails.bio}
+              value={userDetails.intro}
               label="Intro"
             />
           </form>
@@ -164,7 +228,7 @@ export const EditProfileModal = ({ show, onHide }) => {
           className="ml-3"
           variant="outlined"
         >
-          Save
+          {loading ? "..." : "Save"}
         </Button>
       </Modal.Footer>
     </Modal>
