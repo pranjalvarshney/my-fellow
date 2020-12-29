@@ -1,3 +1,5 @@
+import { faBoxOpen } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   Button,
   Card,
@@ -5,18 +7,21 @@ import {
   CardContent,
   CardMedia,
   Grid,
+  IconButton,
   Paper,
   Typography,
 } from "@material-ui/core"
 import React, { useContext, useEffect, useState } from "react"
-import { Redirect, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import { AuthContext } from "../../../context/authContext/authContext"
 import { BlogContext } from "../../../context/blogContext/BlogContext"
 import { PostContext } from "../../../context/postContext/postContext"
 import { UserContext } from "../../../context/userContext/UserContext"
 import Header from "../../common/Header/Header"
 import { InputBox } from "../Home/InputBox"
+import { EditProfileModal } from "../Modals/EditProfileModal"
 import { HomeTab } from "./components/HomeTab"
+import { Loading } from "../../Loading_Backdrop/Loading"
 
 export const Profile = ({ match }) => {
   const history = useHistory()
@@ -28,7 +33,7 @@ export const Profile = ({ match }) => {
   const blogContext = useContext(BlogContext)
   const userContext = useContext(UserContext)
   const authContext = useContext(AuthContext)
-
+  const [editStatus, setEditStatus] = useState(false)
   useEffect(() => {
     const fetchUserDetails = async (userId) => {
       try {
@@ -72,11 +77,16 @@ export const Profile = ({ match }) => {
     // setData(response)
   }
   if (userContext.user === null) {
-    return <Redirect to="/" />
+    return <Loading />
   }
+  const handleEditBtn = () => {
+    setEditStatus(!editStatus)
+  }
+
   return (
     <div className="home" style={{ overflowY: "auto" }}>
       <Header />
+      {<EditProfileModal show={editStatus} onHide={handleEditBtn} />}
       <div className="container">
         <Grid container justify="center">
           <Grid item xs={10}>
@@ -116,23 +126,28 @@ export const Profile = ({ match }) => {
                         </Grid>
                         <Grid item>
                           <h6>
-                            <b>{userContext.user.friendList.length}</b>Friends
+                            <b>{userContext.user.friendList.length} </b>Friends
                           </h6>
                         </Grid>
                       </Grid>
                       <Typography
                         variant="body2"
-                        color="secondary"
+                        color="textSecondary"
                         component="p"
                       >
-                        {userContext.user.bio}
+                        {userContext.user.intro}
                       </Typography>
                     </CardContent>
                   </Grid>
                 </Grid>
                 <Grid item xs={12} md={1}>
                   <Grid container justify="center">
-                    <Button variant="text" size="small" color="primary">
+                    <Button
+                      variant="text"
+                      size="small"
+                      color="primary"
+                      onClick={handleEditBtn}
+                    >
                       Edit
                     </Button>
                   </Grid>
@@ -144,22 +159,63 @@ export const Profile = ({ match }) => {
                 <Grid item xs={12} md={4}>
                   <Card variant="outlined">
                     <CardContent>
-                      <Typography color="textSecondary" gutterBottom>
-                        Word of the Day
+                      <Grid
+                        container
+                        justify="space-between"
+                        alignItems="center"
+                      >
+                        <Grid item>
+                          {userContext.user.role === 0 && (
+                            <Typography
+                              variant="button"
+                              color="primary"
+                              gutterBottom
+                            >
+                              Student
+                            </Typography>
+                          )}
+                          {userContext.user.role === 1 && (
+                            <Typography
+                              variant="button"
+                              color="primary"
+                              gutterBottom
+                            >
+                              Faculty
+                            </Typography>
+                          )}
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="caption">
+                            Year {userContext.user.year}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Typography variant="body1">
+                        {userContext.user.branch}
                       </Typography>
-                      <Typography variant="h5" component="h2">
-                        benevolent
-                      </Typography>
-                      <Typography color="textSecondary">adjective</Typography>
-                      <Typography variant="body2" component="p">
-                        well meaning and kindly.
-                        <br />
-                        {'"a benevolent smile"'}
+
+                      <Typography variant="body2">
+                        Gautam Buddha University
                       </Typography>
                     </CardContent>
-                    <CardActions>
-                      <Button size="small">Learn More</Button>
+                    <CardActions disableSpacing>
+                      <Grid container justify="flex-end" alignItems="center">
+                        <Button onClick={handleEditBtn} size="small">
+                          Edit
+                        </Button>
+                      </Grid>
                     </CardActions>
+                  </Card>
+                  <Card variant="outlined" className="mt-3 text-center">
+                    <CardContent>
+                      <IconButton className="w-100">
+                        <FontAwesomeIcon icon={faBoxOpen} />
+                      </IconButton>
+                      <Typography>Joined on</Typography>
+                      <Typography variant="button">
+                        {new Date(userContext.user.createdAt).toDateString()}
+                      </Typography>
+                    </CardContent>
                   </Card>
                 </Grid>
                 <Grid item md={8} xs={12}>

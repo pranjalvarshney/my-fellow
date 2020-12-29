@@ -33,6 +33,7 @@ export const BookmarksContent = ({ typeOf, data }) => {
           <div
             style={{
               height: "30vh",
+              width: "100%",
               display: "flex",
               justifyContent: "center",
             }}
@@ -87,6 +88,7 @@ export const BookmarksContent = ({ typeOf, data }) => {
             className="m-auto"
             style={{
               height: "30vh",
+              width: "100%",
               display: "flex",
               justifyContent: "center",
             }}

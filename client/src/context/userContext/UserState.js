@@ -76,6 +76,22 @@ export const UserState = ({ children }) => {
     }
   }
 
+  const updateUserProfileDetails = async (userId, formData) => {
+    try {
+      // console.log(formData)
+      const response = await axios.put(`${API}/user/${userId}`, formData, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
+        },
+      })
+      // console.log(response.data)
+      const { data } = response
+      return data
+    } catch (error) {
+      throw error
+    }
+  }
+
   const sendFriendRequest = async (userId, friendId) => {
     try {
       dispatch({
@@ -258,6 +274,7 @@ export const UserState = ({ children }) => {
         getAllUsers,
         bookmarkItem,
         unBookmarkItem,
+        updateUserProfileDetails,
       }}
     >
       {children}
