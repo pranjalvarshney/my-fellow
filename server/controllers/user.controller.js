@@ -1,4 +1,6 @@
 const User = require("../models/User")
+const formidable = require("formidable")
+const fs = require("fs")
 
 exports.getUserById = (req, res, next, Id) => {
   User.findById(Id)
@@ -25,7 +27,17 @@ exports.getUser = (req, res) => {
   //TODO: get back here for password
   req.profile.encryptedpassword = undefined
   req.profile.salt = undefined
+  req.profile.pic = undefined
   return res.json(req.profile)
+}
+
+// middleware for profile pic image for efficiency and performance
+exports.getProfilePic = (req, res, next) => {
+  if (req.profile.pic) {
+    res.set("Content-Type", req.profile.pic.contentType)
+    res.send(req.profile.pic.data)
+  }
+  next()
 }
 
 exports.updateUser = (req, res) => {
@@ -44,6 +56,40 @@ exports.updateUser = (req, res) => {
       return res.json(user)
     }
   )
+}
+
+exports.updateProfileImg = (req, res) => {
+  let form = new formidable.IncomingForm()
+  form.keepExtensions = true
+
+  form.parse(req, (err, fields, file) => {
+    if (err) {
+      return res.status(400).json({
+        err,
+        errormsg: "An error occured! must be a problem with image",
+      })
+    }
+    let newData = req.profile
+    if (file.pic) {
+      if (file.pic.size > 2 * 1024 * 1024) {
+        return res.status(400).json({
+          err,
+          errormsg: "File size is too big",
+        })
+      }
+      newData.pic.data = fs.readFileSync(file.pic.path)
+      newData.pic.contentType = file.pic.type
+    }
+    newData.save((err, profilePic) => {
+      if (err) {
+        return res.status(400).json({
+          err,
+          errormsg: "An error occured! While saving - Failed",
+        })
+      }
+      res.json(profilePic)
+    })
+  })
 }
 
 exports.getAllUsers = (req, res) => {

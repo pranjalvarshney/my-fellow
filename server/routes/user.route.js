@@ -15,12 +15,16 @@ const {
   rejectReq,
   unfriend,
   unBookmark,
+  updateProfileImg,
+  getProfilePic,
 } = require("../controllers/user.controller")
 const router = express.Router()
 
 router.param("userId", getUserById)
 router.get("/user/:userId", isSignedIn, getUser)
 router.put("/user/:userId", isSignedIn, isAuthenticated, updateUser)
+router.put("/pic/user/:userId", isSignedIn, updateProfileImg)
+router.get("/pic/user/:userId", isSignedIn, getProfilePic)
 router.get("/users", isSignedIn, getAllUsers)
 
 // Bookmarks
