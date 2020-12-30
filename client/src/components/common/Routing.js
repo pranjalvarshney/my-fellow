@@ -34,10 +34,12 @@ export const Routing = () => {
     msg: "",
     color: null,
   })
-  useEffect(() => {
-    userContext.getUserById(authContext.user._id)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // useEffect(() => {
+  //   if (authContext.user._id) {
+  //     userContext.getUserById(authContext.user._id)
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
   const handleClose = () => {
     setResponseMsg({
       ...responseMsg,
