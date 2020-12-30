@@ -22,18 +22,31 @@ export const ProfilePictureModal = ({ show, onHide, userContext }) => {
   const [avatarSrc, setAvatarSrc] = useState("")
   const [avatarAlt, setAvatarAlt] = useState("")
   const [uploadFile, setUploadFile] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     setAvatarAlt(userContext.user.name)
     setAvatarSrc(`${API}/pic/user/${userContext.user._id}`)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const handleSubmitBtn = () => {
+  const handleSubmitBtn = async () => {
     const formData = new FormData()
     formData.append("pic", uploadFile)
-    userContext.updateProfilePicture(userContext.user._id, formData)
-    onHide()
-    window.location.reload()
+    try {
+      setLoading(true)
+      const response = await userContext.updateProfilePicture(
+        userContext.user._id,
+        formData
+      )
+      if (response.status === 200) {
+        setLoading(false)
+        onHide()
+        window.location.reload()
+      }
+    } catch (error) {
+      setLoading(false)
+      alert(error.response.data.errorMsg)
+    }
   }
   return (
     <Modal show={show} onHide={onHide} size="lg" centered backdrop="static">
@@ -88,8 +101,9 @@ export const ProfilePictureModal = ({ show, onHide, userContext }) => {
           onClick={handleSubmitBtn}
           variant="contained"
           color="primary"
+          disabled={loading ? true : false}
         >
-          Update
+          {loading ? "Updating..." : "Update"}
         </Button>
       </Modal.Footer>
     </Modal>

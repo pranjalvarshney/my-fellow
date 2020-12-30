@@ -65,16 +65,14 @@ exports.updateProfileImg = (req, res) => {
   form.parse(req, (err, fields, file) => {
     if (err) {
       return res.status(400).json({
-        err,
-        errormsg: "An error occured! must be a problem with image",
+        errorMsg: "An error occured! must be a problem with image",
       })
     }
     let newData = req.profile
     if (file.pic) {
       if (file.pic.size > 2 * 1024 * 1024) {
         return res.status(400).json({
-          err,
-          errormsg: "File size is too big",
+          errorMsg: "File size is too big",
         })
       }
       newData.pic.data = fs.readFileSync(file.pic.path)
@@ -83,8 +81,7 @@ exports.updateProfileImg = (req, res) => {
     newData.save((err, profilePic) => {
       if (err) {
         return res.status(400).json({
-          err,
-          errormsg: "An error occured! While saving - Failed",
+          errorMsg: "An error occured! While saving - Failed",
         })
       }
       res.json(profilePic)
