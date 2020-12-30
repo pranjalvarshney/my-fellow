@@ -181,6 +181,7 @@ export const PostCard = ({ post }) => {
         }
         title={
           <b
+            style={{ cursor: "pointer" }}
             onClick={() => {
               history.push(`/profile/${post.user._id}`)
             }}

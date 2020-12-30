@@ -79,7 +79,10 @@ export const Profile = ({ match }) => {
     }
     // setData(response)
   }
-  if (userContext.user === null) {
+  if (
+    userContext.user === null ||
+    userContext.user._id !== match.params.userId
+  ) {
     return <Loading />
   }
   const handleEditBtn = () => {
@@ -112,7 +115,13 @@ export const Profile = ({ match }) => {
               >
                 <Grid item xs={12} md={4}>
                   <Grid container justify="center" alignContent="center">
-                    <IconButton onClick={handlePicAvatar}>
+                    <IconButton
+                      onClick={
+                        userContext.user._id === authContext.user._id
+                          ? handlePicAvatar
+                          : null
+                      }
+                    >
                       <Avatar
                         style={{ width: "150px", height: "150px" }}
                         alt={userContext.user.name}
@@ -156,14 +165,16 @@ export const Profile = ({ match }) => {
                 </Grid>
                 <Grid item xs={12} md={1}>
                   <Grid container justify="center">
-                    <Button
-                      variant="text"
-                      size="small"
-                      color="primary"
-                      onClick={handleEditBtn}
-                    >
-                      Edit
-                    </Button>
+                    {userContext.user._id === authContext.user._id ? (
+                      <Button
+                        variant="text"
+                        color="primary"
+                        onClick={handleEditBtn}
+                        size="small"
+                      >
+                        Edit
+                      </Button>
+                    ) : null}
                   </Grid>
                 </Grid>
               </Grid>
@@ -214,9 +225,16 @@ export const Profile = ({ match }) => {
                     </CardContent>
                     <CardActions disableSpacing>
                       <Grid container justify="flex-end" alignItems="center">
-                        <Button onClick={handleEditBtn} size="small">
-                          Edit
-                        </Button>
+                        {userContext.user._id === authContext.user._id ? (
+                          <Button
+                            onClick={handleEditBtn}
+                            size="small"
+                            variant="text"
+                            color="primary"
+                          >
+                            Edit
+                          </Button>
+                        ) : null}
                       </Grid>
                     </CardActions>
                   </Card>
@@ -233,7 +251,9 @@ export const Profile = ({ match }) => {
                   </Card>
                 </Grid>
                 <Grid item md={8} xs={12}>
-                  <InputBox />
+                  {userContext.user._id === authContext.user._id ? (
+                    <InputBox />
+                  ) : null}
                   <Paper variant="outlined">
                     <Grid container justify="space-around">
                       <Grid item xs={3}>
