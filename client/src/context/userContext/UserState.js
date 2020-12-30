@@ -266,7 +266,7 @@ export const UserState = ({ children }) => {
         },
       })
       console.log(response)
-      return response.data
+      return response
     } catch (error) {
       throw error
     }

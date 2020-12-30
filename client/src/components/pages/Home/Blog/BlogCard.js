@@ -183,6 +183,7 @@ export const BlogCard = ({ blog }) => {
           }
           title={
             <b
+              style={{ cursor: "pointer" }}
               onClick={() => {
                 history.push(`/profile/${blog.user._id}`)
               }}
