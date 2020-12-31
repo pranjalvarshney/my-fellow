@@ -10,6 +10,7 @@ import {
   AUTH_ERROR,
   AUTH_SIGNUP_ERROR,
   SIGNOUT_USER,
+  CHANGE_THEME,
 } from "../types"
 import { API } from "../../utils/proxy"
 
@@ -29,6 +30,7 @@ export const AuthState = ({ children }) => {
     isLoggedIn: isAuthenticated() ? true : false,
     loading: false,
     error: null,
+    theme: localStorage.getItem("_theme"),
     user: isAuthenticated() ? JSON.parse(localStorage.getItem("_data")) : null,
   }
 
@@ -119,6 +121,22 @@ export const AuthState = ({ children }) => {
       })
     } catch (error) {}
   }
+  const handleTheme = () => {
+    if (localStorage.getItem("_theme") === "light") {
+      dispatch({
+        type: CHANGE_THEME,
+        payload: "dark",
+      })
+      localStorage.setItem("_theme", "dark")
+    } else {
+      dispatch({
+        type: CHANGE_THEME,
+        payload: "light",
+      })
+
+      localStorage.setItem("_theme", "light")
+    }
+  }
 
   return (
     <AuthContext.Provider
@@ -132,6 +150,7 @@ export const AuthState = ({ children }) => {
         signoutUser,
         authenticate,
         isAuthenticated,
+        handleTheme,
       }}
     >
       {children}

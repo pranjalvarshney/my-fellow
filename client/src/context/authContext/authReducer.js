@@ -5,6 +5,7 @@ import {
   AUTH_SIGNIN_ERROR,
   AUTH_SIGNUP,
   AUTH_SIGNUP_ERROR,
+  CHANGE_THEME,
   SIGNOUT_USER,
 } from "../types"
 
@@ -52,7 +53,11 @@ export default (state, action) => {
         error: null,
         loading: false,
       }
-
+    case CHANGE_THEME:
+      return {
+        ...state,
+        theme: action.payload,
+      }
     default:
       return state
   }

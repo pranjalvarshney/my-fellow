@@ -7,9 +7,16 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core"
-import React from "react"
+import React, { useContext, useEffect } from "react"
+import { PollContext } from "../../../context/pollContext/PollContext"
 
 export const PollCard = () => {
+  const pollContext = useContext(PollContext)
+  useEffect(() => {
+    pollContext.getAllPolls()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  console.log(pollContext.polls)
   return (
     <Card variant="outlined">
       <Grid>
