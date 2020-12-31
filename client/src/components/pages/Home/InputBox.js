@@ -9,6 +9,8 @@ import { PostModal } from "../Modals/PostModal"
 import { PostContext } from "../../../context/postContext/postContext"
 import { BlogModal } from "../Modals/BlogModal"
 import { BlogContext } from "../../../context/blogContext/BlogContext"
+import { PollCard } from "./PollCard"
+import { PollModal } from "../Modals/PollModal"
 
 export const InputBox = () => {
   const authContext = useContext(AuthContext)
@@ -16,6 +18,10 @@ export const InputBox = () => {
   const blogContext = useContext(BlogContext)
   const [showPost, setShowPost] = useState(false)
   const [showBlog, setShowBlog] = useState(false)
+  const [showPoll, setShowPoll] = useState(false)
+  const handleModalPoll = () => {
+    setShowPoll(!showPoll)
+  }
   const handleModalPost = () => {
     // console.log(showPost)
     setShowPost(!showPost)
@@ -43,6 +49,13 @@ export const InputBox = () => {
           blogFunction={blogContext.createBlog}
           modalTitle="Write Blog"
           blog={undefined}
+        />
+      )}
+      {showPoll && (
+        <PollModal
+          modalTitle="Create poll"
+          show={showPoll}
+          handleModal={handleModalPoll}
         />
       )}
       <Paper elevation={1} variant="outlined" className="p-3 mb-3">
@@ -94,7 +107,9 @@ export const InputBox = () => {
             <Button startIcon={<BrokenImageIcon />}>Post Ad</Button>
           </Grid>
           <Grid item>
-            <Button startIcon={<PollIcon />}>Poll</Button>
+            <Button onClick={handleModalPoll} startIcon={<PollIcon />}>
+              Poll
+            </Button>
           </Grid>
         </Grid>
       </Paper>
