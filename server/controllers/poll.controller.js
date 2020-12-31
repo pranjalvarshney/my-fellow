@@ -1,36 +1,36 @@
-const Poll = require("../models/Poll");
-const { getUserById } = require("../controllers/user.controller");
+const Poll = require("../models/Poll")
+const { getUserById } = require("../controllers/user.controller")
 
 exports.getPollById = (req, res, next, Id) => {
   Poll.findById(Id).exec((err, poll) => {
     if (err) {
       return res.status(400).json({
         errorMsg: "An error occured",
-      });
+      })
     }
     if (!poll) {
       return res.status(400).json({
         errorMsg: "Poll not found",
-      });
+      })
     }
-    req.poll = poll;
-    next();
-  });
-};
+    req.poll = poll
+    next()
+  })
+}
 
 // create poll
 exports.createPoll = (req, res) => {
-  const { user, title, poll } = req.body;
-  const newPoll = Poll({ user, title, poll });
+  const { user, title, poll } = req.body
+  const newPoll = Poll({ user, title, poll })
   newPoll.save((err, poll) => {
     if (err) {
-      res.status(400).json({
+      return res.status(400).json({
         errorMsg: "An error occured",
-      });
+      })
     }
-    return res.status(200).json(poll);
-  });
-};
+    res.status(200).json(poll)
+  })
+}
 
 // Agree with the poll
 exports.pollYes = (req, res) => {
@@ -45,11 +45,11 @@ exports.pollYes = (req, res) => {
     if (err) {
       return res
         .json(400)
-        .json({ errorMsg: "An error occured, try again later" });
+        .json({ errorMsg: "An error occured, try again later" })
     }
-    res.status(200).json(poll);
-  });
-};
+    res.status(200).json(poll)
+  })
+}
 
 // Disagree with the poll
 exports.pollNo = (req, res) => {
@@ -64,11 +64,11 @@ exports.pollNo = (req, res) => {
     if (err) {
       return res
         .json(400)
-        .json({ errorMsg: "An error occured, try again later" });
+        .json({ errorMsg: "An error occured, try again later" })
     }
-    res.status(200).json(poll);
-  });
-};
+    res.status(200).json(poll)
+  })
+}
 
 // Skip the poll
 exports.skipPoll = (req, res) => {
@@ -83,28 +83,28 @@ exports.skipPoll = (req, res) => {
     if (err) {
       return res
         .json(400)
-        .json({ errorMsg: "An error occured, try again later" });
+        .json({ errorMsg: "An error occured, try again later" })
     }
-    res.status(200).json(poll);
-  });
-};
+    res.status(200).json(poll)
+  })
+}
 
 // get all polls
 exports.allpolls = (req, res) => {
   Poll.find().exec((err, polls) => {
     if (err) {
-      res.status(400).json({
+      return res.status(400).json({
         errorMsg: "An error occured",
-      });
+      })
     }
-    return res.json(polls);
-  });
-};
+    res.json(polls)
+  })
+}
 
 //Read a particular poll
 exports.getPoll = (req, res) => {
-  return res.json(req.poll);
-};
+  return res.json(req.poll)
+}
 
 // Update poll
 exports.updatePoll = (req, res) => {
@@ -116,12 +116,12 @@ exports.updatePoll = (req, res) => {
       if (err || !poll) {
         return res.status(400).json({
           error: "An error occured,  try again later",
-        });
+        })
       }
-      return res.status(200).json(poll);
+      res.status(200).json(poll)
     }
-  );
-};
+  )
+}
 
 // Delete polls
 exports.deletePoll = (req, res) => {
@@ -132,9 +132,9 @@ exports.deletePoll = (req, res) => {
       if (err || !poll) {
         return res.status(400).json({
           error: "An error occured,  try again later",
-        });
+        })
       }
-      return res.status(200).json({ message: "Poll has been removed" });
+      res.status(200).json({ message: "Poll has been removed" })
     }
-  );
-};
+  )
+}

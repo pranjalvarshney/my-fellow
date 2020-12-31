@@ -37,3 +37,8 @@ export const BLOG_SUCCESS = "blogs_success"
 export const NOTICE_LOADING = "notice_loading"
 export const NOTICE_ERROR = "notice_error"
 export const NOTICE_GET = "notice_get"
+
+//POLL LOADING
+export const POLL_LOADING = "poll_loading"
+export const POLL_GET_ALL = "poll_get_all"
+export const POLL_ERROR = "poll_error"
