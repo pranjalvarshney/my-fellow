@@ -40,6 +40,20 @@ export const Routing = () => {
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
+  const [darkTheme, setDarkTheme] = useState(false)
+
+  let themeCheck = localStorage.getItem("_theme")
+  useEffect(() => {
+    if (!themeCheck) {
+      localStorage.setItem("_theme", "light")
+    } else {
+      if (themeCheck === "light") {
+        setDarkTheme(false)
+      } else {
+        setDarkTheme(true)
+      }
+    }
+  }, [themeCheck])
   const handleClose = () => {
     setResponseMsg({
       ...responseMsg,
@@ -125,7 +139,7 @@ export const Routing = () => {
   }, [authContext, postContext, blogContext, userContext])
 
   return (
-    <>
+    <div style={{ background: `${darkTheme ? " black" : "whitesmoke"}` }}>
       {responseMsg.errorStatus || responseMsg.successStatus
         ? showResponseMsg()
         : null}
@@ -155,12 +169,12 @@ export const Routing = () => {
             path="/settings-privacy"
             component={SettingsPrivacy}
           />
-          <PrivateRoute exact path="/help-support" component={HelpSupport} />
+          {/* <PrivateRoute exact path="/help-support" component={HelpSupport} /> */}
 
           <SimpleRoute exact path="/signup" component={Signup} />
           <SimpleRoute exact path="/signin" component={Login} />
         </Switch>
       </BrowserRouter>
-    </>
+    </div>
   )
 }

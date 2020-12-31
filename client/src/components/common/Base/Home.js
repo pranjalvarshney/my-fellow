@@ -1,5 +1,5 @@
 import { Grid } from "@material-ui/core"
-import React from "react"
+import React, { useState } from "react"
 import { useContext } from "react"
 import { useEffect } from "react"
 import { AuthContext } from "../../../context/authContext/authContext"
@@ -17,6 +17,7 @@ export const Home = ({ children }) => {
     userContext.getUserById(authContext.user._id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   return (
     <div className="home">
       <Header />

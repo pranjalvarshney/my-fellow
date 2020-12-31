@@ -138,13 +138,13 @@ const Header = ({ history }) => {
               >
                 About University
               </MenuItem>
-              <MenuItem
+              {/* <MenuItem
                 onClick={() => {
                   usehistory.push("/help-support")
                 }}
               >
                 Help & Support
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem
                 onClick={() => {
                   usehistory.push("/settings-privacy")

@@ -55,6 +55,7 @@ export const InputBox = () => {
         <PollModal
           modalTitle="Create poll"
           show={showPoll}
+          poll={undefined}
           handleModal={handleModalPoll}
         />
       )}

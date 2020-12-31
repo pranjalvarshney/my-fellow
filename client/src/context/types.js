@@ -8,6 +8,7 @@ export const SIGNOUT_USER = "signout_user"
 export const AUTH_SIGNIN_ERROR = "auth_signin_error"
 export const AUTH_SIGNUP_ERROR = "auth_signup_error"
 export const AUTH_ERROR = "auth_error"
+export const CHANGE_THEME = "change_theme"
 
 //USER
 export const USER_LOADING = "user_loading"
