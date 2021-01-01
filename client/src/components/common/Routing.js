@@ -24,12 +24,7 @@ import { Friends } from "../pages/Friends/Friends"
 import { AboutUniversity } from "../pages/AboutUniversity/AboutUniversity"
 import { SettingsPrivacy } from "../pages/Setting-Privacy/SettingsPrivacy"
 import { Bookmarks } from "../pages/Home/Bookmarks/Bookmarks"
-import {
-  deepOrange,
-  deepPurple,
-  lightBlue,
-  orange,
-} from "@material-ui/core/colors"
+import { deepPurple, lightBlue } from "@material-ui/core/colors"
 // import { Feedback } from "../pages/Feedback/Feedback"
 
 export const Routing = () => {
@@ -157,13 +152,14 @@ export const Routing = () => {
     prefersDarkMode === "dark" ? "#03DAC6" : lightBlue[500]
   const mainSecondaryColor =
     prefersDarkMode === "dark" ? "#018786" : deepPurple[500]
+  const paperColor = prefersDarkMode === "dark" ? "#212121" : "#fff"
   const theme = React.useMemo(
     () =>
       createMuiTheme({
         palette: {
           type: prefersDarkMode === "dark" ? "dark" : "light",
           background: {
-            paper: "#212121",
+            paper: paperColor,
           },
           primary: {
             main: mainPrimaryColor,
@@ -171,12 +167,9 @@ export const Routing = () => {
           secondary: {
             main: mainSecondaryColor,
           },
-          drawerPaper: {
-            background: "blue",
-          },
         },
       }),
-    [mainPrimaryColor, mainSecondaryColor, prefersDarkMode]
+    [mainPrimaryColor, mainSecondaryColor, paperColor, prefersDarkMode]
   )
   return (
     <div style={styleTheme}>
