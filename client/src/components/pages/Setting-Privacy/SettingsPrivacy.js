@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import {
   Card,
   CardContent,
@@ -17,7 +18,7 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons"
 import { AuthContext } from "../../../context/authContext/authContext"
 
 export const SettingsPrivacy = () => {
-  //   const [isThemeDark, setIsThemeDark] = useState(false)
+  const [isThemeDark, setIsThemeDark] = useState(false)
   const authContext = useContext(AuthContext)
   //   console.log(isThemeDark)
   const handleTheme = () => {
@@ -33,14 +34,21 @@ export const SettingsPrivacy = () => {
     // }
     authContext.handleTheme()
   }
-
+  // console.log(isThemeDark)
+  useEffect(() => {
+    if (authContext.theme === "dark") {
+      setIsThemeDark(true)
+    } else {
+      setIsThemeDark(false)
+    }
+  }, [authContext.theme])
   return (
     <div className="home">
       <Header />
       <div className="container w-100" id="aboutContainer">
         <Grid container justify="center">
           <Grid item xs={10}>
-            <Card variant="outlined">
+            <Card variant="elevation" elevation={3}>
               <Grid
                 container
                 justify="flex-start"
@@ -126,18 +134,20 @@ export const SettingsPrivacy = () => {
                       component="h2"
                       className="pb-4"
                     >
-                      {"Theme"}
+                      Theme
                     </Typography>
                     <FormControl component="fieldset">
                       <FormGroup aria-label="position" row>
-                        <Typography className="my-auto">
-                          {"Dark Theme"}
-                        </Typography>
+                        <Typography className="my-auto">Dark Theme</Typography>
                         <FormControlLabel
                           className="ml-0 my-auto"
                           value="dark"
                           control={
-                            <Switch color="primary" onChange={handleTheme} />
+                            <Switch
+                              color="primary"
+                              onChange={handleTheme}
+                              checked={isThemeDark}
+                            />
                           }
                         />
                       </FormGroup>

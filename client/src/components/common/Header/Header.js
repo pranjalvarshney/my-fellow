@@ -26,14 +26,14 @@ import { FeedbackModal } from "../../pages/Modals/FeedbackModal"
 
 const currentTab = (history, path) => {
   if (history.location.pathname === path) {
-    return { color: "blue", fontSize: "28px" }
+    return { color: "#03DAC6", fontSize: "28px" }
   } else {
     return { color: "grey", fontSize: "24px" }
   }
 }
 const Header = ({ history }) => {
   const usehistory = useHistory()
-  const context = useContext(AuthContext)
+  const authContext = useContext(AuthContext)
   const [showFeedback, setShowFeedback] = useState(false)
   const [moreOption, setMoreOption] = useState(null)
   const handleMoreOption = (e) => {
@@ -47,13 +47,18 @@ const Header = ({ history }) => {
   const handleFeedback = () => {
     setShowFeedback(!showFeedback)
   }
+  const styleTheme =
+    authContext.theme === "dark"
+      ? { background: "#212121", textColor: "white" }
+      : { background: "white" }
 
+  // console.log(authContext)
   return (
     <div className="header">
       {showFeedback ? (
         <FeedbackModal show={showFeedback} onhide={handleFeedback} />
       ) : null}
-      <AppBar style={{ background: "white" }} elevation={3}>
+      <AppBar style={styleTheme} elevation={9}>
         <Toolbar className="header">
           <div className="header-part-1">
             <Button
@@ -162,7 +167,7 @@ const Header = ({ history }) => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  context.signoutUser()
+                  authContext.signoutUser()
                 }}
               >
                 Signout

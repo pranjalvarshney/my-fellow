@@ -5,7 +5,7 @@ import React from "react"
 export const LoadingBlog = () => {
   return (
     <div>
-      <Card variant="outlined">
+      <Card variant="elevation" elevation={3}>
         <CardHeader
           avatar={
             <Skeleton

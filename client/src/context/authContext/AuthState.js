@@ -145,6 +145,7 @@ export const AuthState = ({ children }) => {
         isLoggedIn: state.isLoggedIn,
         loading: state.loading,
         error: state.error,
+        theme: state.theme,
         signupUser,
         signinUser,
         signoutUser,

@@ -46,7 +46,7 @@ export const Bookmarks = () => {
             <HomeSideBar />
           </Grid>
           <Grid item md={9}>
-            <Paper variant="outlined" className="p-3">
+            <Paper variant="elevation" elevation={3} className="p-3">
               <Typography variant="body1">Bookmarks</Typography>
               <Grid container justify="center">
                 <Grid>
@@ -82,10 +82,7 @@ export const Bookmarks = () => {
                   </Button>
                 </Grid>
               </Grid>
-              <Divider
-                className="mt-1 mb-3"
-                style={{ background: "#3f51b5" }}
-              />
+              <Divider className="mt-1 mb-3" />
               {userContext.loading ? (
                 <LoadingPost />
               ) : (

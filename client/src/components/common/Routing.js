@@ -1,4 +1,9 @@
-import { Snackbar, SnackbarContent } from "@material-ui/core"
+import {
+  createMuiTheme,
+  Snackbar,
+  SnackbarContent,
+  ThemeProvider,
+} from "@material-ui/core"
 import React, { useContext, useEffect, useState } from "react"
 import { BrowserRouter, Switch } from "react-router-dom"
 import { AuthContext } from "../../context/authContext/authContext"
@@ -18,8 +23,8 @@ import { UserContext } from "../../context/userContext/UserContext"
 import { Friends } from "../pages/Friends/Friends"
 import { AboutUniversity } from "../pages/AboutUniversity/AboutUniversity"
 import { SettingsPrivacy } from "../pages/Setting-Privacy/SettingsPrivacy"
-import { HelpSupport } from "../pages/Help-Support/HelpSupport"
 import { Bookmarks } from "../pages/Home/Bookmarks/Bookmarks"
+import { deepPurple, lightBlue } from "@material-ui/core/colors"
 // import { Feedback } from "../pages/Feedback/Feedback"
 
 export const Routing = () => {
@@ -40,20 +45,21 @@ export const Routing = () => {
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
-  const [darkTheme, setDarkTheme] = useState(false)
+  // const [darkTheme, setDarkTheme] = useState(false)
 
-  let themeCheck = localStorage.getItem("_theme")
-  useEffect(() => {
-    if (!themeCheck) {
-      localStorage.setItem("_theme", "light")
-    } else {
-      if (themeCheck === "light") {
-        setDarkTheme(false)
-      } else {
-        setDarkTheme(true)
-      }
-    }
-  }, [themeCheck])
+  // let themeCheck = localStorage.getItem("_theme")
+  // useEffect(() => {
+  //   if (!themeCheck) {
+  //     localStorage.setItem("_theme", "light")
+  //   } else {
+  //     if (themeCheck === "light") {
+  //       setDarkTheme(false)
+  //     } else {
+  //       setDarkTheme(true)
+  //     }
+  //   }
+  // }, [themeCheck])
+
   const handleClose = () => {
     setResponseMsg({
       ...responseMsg,
@@ -137,44 +143,73 @@ export const Routing = () => {
       })
     }
   }, [authContext, postContext, blogContext, userContext])
-
+  const styleTheme =
+    authContext.theme === "dark"
+      ? { background: "black", color: "white" }
+      : { background: "whitesmoke", color: "black" }
+  const prefersDarkMode = authContext.theme
+  const mainPrimaryColor =
+    prefersDarkMode === "dark" ? "#03DAC6" : lightBlue[500]
+  const mainSecondaryColor =
+    prefersDarkMode === "dark" ? "#018786" : deepPurple[500]
+  const paperColor = prefersDarkMode === "dark" ? "#212121" : "#fff"
+  const theme = React.useMemo(
+    () =>
+      createMuiTheme({
+        palette: {
+          type: prefersDarkMode === "dark" ? "dark" : "light",
+          background: {
+            paper: paperColor,
+          },
+          primary: {
+            main: mainPrimaryColor,
+          },
+          secondary: {
+            main: mainSecondaryColor,
+          },
+        },
+      }),
+    [mainPrimaryColor, mainSecondaryColor, paperColor, prefersDarkMode]
+  )
   return (
-    <div style={{ background: `${darkTheme ? " black" : "whitesmoke"}` }}>
+    <div style={styleTheme}>
       {responseMsg.errorStatus || responseMsg.successStatus
         ? showResponseMsg()
         : null}
       {authContext.loading && <Loading />}
-      <BrowserRouter>
-        <Switch>
-          <PrivateRoute exact path="/" component={Post} />
-          <PrivateRoute exact path="/posts" component={Post} />
-          <PrivateRoute exact path="/bookmarks" component={Bookmarks} />
-          <PrivateRoute
-            exact
-            path="/jobs-and-placements"
-            component={JobsAndPlacements}
-          />
-          <PrivateRoute exact path="/ads" component={Ads} />
-          <PrivateRoute exact path="/blogs" component={Blog} />
-          <PrivateRoute exact path="/profile/:userId" component={Profile} />
-          <PrivateRoute exact path="/friends" component={Friends} />
-          <PrivateRoute
-            exact
-            path="/about-university"
-            component={AboutUniversity}
-          />
-          {/* <PrivateRoute exact path="/feedback" component={Feedback} /> */}
-          <PrivateRoute
-            exact
-            path="/settings-privacy"
-            component={SettingsPrivacy}
-          />
-          {/* <PrivateRoute exact path="/help-support" component={HelpSupport} /> */}
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Switch>
+            <PrivateRoute exact path="/" component={Post} />
+            <PrivateRoute exact path="/posts" component={Post} />
+            <PrivateRoute exact path="/bookmarks" component={Bookmarks} />
+            <PrivateRoute
+              exact
+              path="/jobs-and-placements"
+              component={JobsAndPlacements}
+            />
+            <PrivateRoute exact path="/ads" component={Ads} />
+            <PrivateRoute exact path="/blogs" component={Blog} />
+            <PrivateRoute exact path="/profile/:userId" component={Profile} />
+            <PrivateRoute exact path="/friends" component={Friends} />
+            <PrivateRoute
+              exact
+              path="/about-university"
+              component={AboutUniversity}
+            />
+            {/* <PrivateRoute exact path="/feedback" component={Feedback} /> */}
+            <PrivateRoute
+              exact
+              path="/settings-privacy"
+              component={SettingsPrivacy}
+            />
+            {/* <PrivateRoute exact path="/help-support" component={HelpSupport} /> */}
 
-          <SimpleRoute exact path="/signup" component={Signup} />
-          <SimpleRoute exact path="/signin" component={Login} />
-        </Switch>
-      </BrowserRouter>
+            <SimpleRoute exact path="/signup" component={Signup} />
+            <SimpleRoute exact path="/signin" component={Login} />
+          </Switch>
+        </BrowserRouter>
+      </ThemeProvider>
     </div>
   )
 }

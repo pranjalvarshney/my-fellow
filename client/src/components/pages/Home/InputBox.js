@@ -59,7 +59,7 @@ export const InputBox = () => {
           handleModal={handleModalPoll}
         />
       )}
-      <Paper elevation={1} variant="outlined" className="p-3 mb-3">
+      <Paper elevation={3} variant="elevation" className="p-3 mb-3">
         <Grid
           container
           justify="center"

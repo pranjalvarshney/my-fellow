@@ -14,7 +14,7 @@ export const Notice = () => {
       <h6>
         <b>Updates</b>
       </h6>
-      <Paper variant="outlined">
+      <Paper variant="elevation" elevation={3}>
         <Carousel style={{ height: "150px", margin: "auto" }}>
           {noticeContext.loading ? (
             <div>loading</div>

@@ -18,7 +18,7 @@ export const PollCard = () => {
   }, [])
   console.log(pollContext.polls)
   return (
-    <Card variant="outlined">
+    <Card variant="elevation" elevation={3}>
       <Grid>
         <Grid item direction="row" container justify="space-between">
           <Grid item>
