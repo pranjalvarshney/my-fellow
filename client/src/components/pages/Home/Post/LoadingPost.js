@@ -4,7 +4,7 @@ import { Skeleton } from "@material-ui/lab"
 
 export const LoadingPost = () => {
   return (
-    <Card variant="outlined">
+    <Card variant="elevation" elevation={3}>
       <CardHeader
         avatar={
           <Skeleton animation="wave" variant="circle" width={40} height={40} />

@@ -68,7 +68,7 @@ export const Contacts = () => {
   }
 
   return (
-    <Card variant="outlined" className="mt-3">
+    <Card variant="elevation" elevation={3} className="mt-3">
       <CardContent>
         <Grid container direction="row" justify="space-between">
           <Grid item>

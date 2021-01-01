@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/authContext/authContext"
 import "./Login.css"
 export const Login = () => {
   const history = useHistory()
-  const context = useContext(AuthContext)
+  const authContext = useContext(AuthContext)
   const [inputValues, setInputValues] = useState({
     email: "",
     password: "",
@@ -26,12 +26,16 @@ export const Login = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault()
 
-    await context.signinUser(formData)
+    await authContext.signinUser(formData)
   }
+  const styleTheme1 =
+    authContext.theme === "dark"
+      ? { background: "black", color: "white" }
+      : { background: "white", color: "black" }
 
   return (
     <>
-      <div className="login">
+      <div className="login" style={styleTheme1}>
         <div className="container">
           <Grid
             container
@@ -135,7 +139,6 @@ export const Login = () => {
           </Grid>
         </div>
       </div>
-      )
     </>
   )
 }

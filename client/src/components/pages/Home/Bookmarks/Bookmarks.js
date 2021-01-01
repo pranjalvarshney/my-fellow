@@ -46,7 +46,7 @@ export const Bookmarks = () => {
             <HomeSideBar />
           </Grid>
           <Grid item md={9}>
-            <Paper variant="outlined" className="p-3">
+            <Paper variant="elevation" elevation={3} className="p-3">
               <Typography variant="body1">Bookmarks</Typography>
               <Grid container justify="center">
                 <Grid>

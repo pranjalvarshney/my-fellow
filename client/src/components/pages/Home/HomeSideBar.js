@@ -23,7 +23,7 @@ export const HomeSideBar = () => {
   const history = useHistory()
   return (
     <div>
-      <Paper variant="outlined">
+      <Paper variant="elevation" elevation={3}>
         <List component="nav">
           <ListItem
             button

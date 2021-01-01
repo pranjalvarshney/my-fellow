@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/authContext/authContext"
 import "./Login.css"
 
 export const Signup = () => {
+  const authContext = useContext(AuthContext)
   const history = useHistory()
   const context = useContext(AuthContext)
   const defaultdob =
@@ -50,8 +51,13 @@ export const Signup = () => {
       history.push("/signin")
     }
   }
+  const styleTheme1 =
+    authContext.theme === "dark"
+      ? { background: "black", color: "white" }
+      : { background: "white", color: "black" }
+
   return (
-    <div className="login">
+    <div className="login" style={styleTheme1}>
       <div className="container">
         <Grid
           container
@@ -63,7 +69,7 @@ export const Signup = () => {
             <h2>My Fellow</h2>
           </Grid>
           <Grid item>
-            <Paper>
+            <Paper elevation={9} variant="elevation">
               <Box py={6} px={3} width="400px">
                 <form onSubmit={handleOnSubmit}>
                   <Grid

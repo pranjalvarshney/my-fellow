@@ -139,7 +139,7 @@ export const BlogCard = ({ blog }) => {
           blog={blog}
         />
       )}
-      <Card variant="outlined" className="mb-3">
+      <Card variant="elevation" elevation={3} className="mb-3">
         <CardHeader
           className="pt-3 pb-0"
           avatar={

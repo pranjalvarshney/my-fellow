@@ -106,7 +106,7 @@ export const Profile = ({ match }) => {
       <div className="container">
         <Grid container justify="center">
           <Grid item xs={10}>
-            <Card variant="outlined">
+            <Card variant="elevation" elevation={3}>
               <Grid
                 container
                 justify="center"
@@ -182,7 +182,7 @@ export const Profile = ({ match }) => {
             <div className="mt-3">
               <Grid container spacing={3} justify="space-around">
                 <Grid item xs={12} md={4}>
-                  <Card variant="outlined">
+                  <Card variant="elevation" elevation={3}>
                     <CardContent>
                       <Grid
                         container
@@ -238,7 +238,11 @@ export const Profile = ({ match }) => {
                       </Grid>
                     </CardActions>
                   </Card>
-                  <Card variant="outlined" className="mt-3 text-center">
+                  <Card
+                    variant="elevation"
+                    elevation={3}
+                    className="mt-3 text-center"
+                  >
                     <CardContent>
                       <IconButton className="w-100">
                         <FontAwesomeIcon icon={faBoxOpen} />
