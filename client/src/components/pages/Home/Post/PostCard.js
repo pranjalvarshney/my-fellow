@@ -210,10 +210,7 @@ export const PostCard = ({ post }) => {
                   style={{ color: "#ed4c56" }}
                 />
               ) : (
-                <FontAwesomeIcon
-                  icon={faHeartRegualar}
-                  style={{ color: "grey" }}
-                />
+                <FontAwesomeIcon icon={faHeartRegualar} />
               )}
             </IconButton>
             <IconButton>

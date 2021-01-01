@@ -24,6 +24,12 @@ import { Friends } from "../pages/Friends/Friends"
 import { AboutUniversity } from "../pages/AboutUniversity/AboutUniversity"
 import { SettingsPrivacy } from "../pages/Setting-Privacy/SettingsPrivacy"
 import { Bookmarks } from "../pages/Home/Bookmarks/Bookmarks"
+import {
+  deepOrange,
+  deepPurple,
+  lightBlue,
+  orange,
+} from "@material-ui/core/colors"
 // import { Feedback } from "../pages/Feedback/Feedback"
 
 export const Routing = () => {
@@ -58,6 +64,7 @@ export const Routing = () => {
   //     }
   //   }
   // }, [themeCheck])
+
   const handleClose = () => {
     setResponseMsg({
       ...responseMsg,
@@ -146,14 +153,30 @@ export const Routing = () => {
       ? { background: "black", color: "white" }
       : { background: "whitesmoke", color: "black" }
   const prefersDarkMode = authContext.theme
+  const mainPrimaryColor =
+    prefersDarkMode === "dark" ? "#03DAC6" : lightBlue[500]
+  const mainSecondaryColor =
+    prefersDarkMode === "dark" ? "#018786" : deepPurple[500]
   const theme = React.useMemo(
     () =>
       createMuiTheme({
         palette: {
           type: prefersDarkMode === "dark" ? "dark" : "light",
+          background: {
+            paper: "#212121",
+          },
+          primary: {
+            main: mainPrimaryColor,
+          },
+          secondary: {
+            main: mainSecondaryColor,
+          },
+          drawerPaper: {
+            background: "blue",
+          },
         },
       }),
-    [prefersDarkMode]
+    [mainPrimaryColor, mainSecondaryColor, prefersDarkMode]
   )
   return (
     <div style={styleTheme}>

@@ -26,7 +26,7 @@ import { FeedbackModal } from "../../pages/Modals/FeedbackModal"
 
 const currentTab = (history, path) => {
   if (history.location.pathname === path) {
-    return { color: "blue", fontSize: "28px" }
+    return { color: "#03DAC6", fontSize: "28px" }
   } else {
     return { color: "grey", fontSize: "24px" }
   }

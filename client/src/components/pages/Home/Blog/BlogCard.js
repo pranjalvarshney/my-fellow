@@ -212,13 +212,10 @@ export const BlogCard = ({ blog }) => {
                 {vote ? (
                   <FontAwesomeIcon
                     icon={faArrowAltCircleUpSolid}
-                    style={{ color: `blue` }}
+                    color="#03DAC6"
                   />
                 ) : (
-                  <FontAwesomeIcon
-                    icon={faArrowAltCircleUpRegular}
-                    style={{ color: `grey` }}
-                  />
+                  <FontAwesomeIcon icon={faArrowAltCircleUpRegular} />
                 )}
               </IconButton>
               <span>

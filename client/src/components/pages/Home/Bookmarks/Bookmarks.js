@@ -82,10 +82,7 @@ export const Bookmarks = () => {
                   </Button>
                 </Grid>
               </Grid>
-              <Divider
-                className="mt-1 mb-3"
-                style={{ background: "#3f51b5" }}
-              />
+              <Divider className="mt-1 mb-3" />
               {userContext.loading ? (
                 <LoadingPost />
               ) : (
