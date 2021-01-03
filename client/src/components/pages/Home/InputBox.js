@@ -11,6 +11,7 @@ import { BlogModal } from "../Modals/BlogModal"
 import { BlogContext } from "../../../context/blogContext/BlogContext"
 import { PollCard } from "./PollCard"
 import { PollModal } from "../Modals/PollModal"
+import { API } from "../../../utils/proxy"
 
 export const InputBox = () => {
   const authContext = useContext(AuthContext)
@@ -68,7 +69,10 @@ export const InputBox = () => {
           alignItems="center"
         >
           <Grid item xs={1}>
-            <Avatar />
+            <Avatar
+              alt={authContext.user.name}
+              src={`${API}/pic/user/${authContext.user._id}`}
+            />
           </Grid>
           <Grid item xs={10}>
             <Fab

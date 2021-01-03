@@ -105,7 +105,7 @@ export const FeedbackModal = ({ show, onhide }) => {
     <div className="modal-feedback">
       {showResponseMsg()}
       <div className="modal-feedback-wrapper">
-        <Modal show={show} onHide={onhide} centered>
+        <Modal show={show} onHide={onhide} centered id="input-modal">
           <Modal.Header closeButton>
             <Modal.Title className="ml-auto">Feedback Form</Modal.Title>
           </Modal.Header>

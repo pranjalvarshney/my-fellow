@@ -49,7 +49,14 @@ export const ProfilePictureModal = ({ show, onHide, userContext }) => {
     }
   }
   return (
-    <Modal show={show} onHide={onHide} size="lg" centered backdrop="static">
+    <Modal
+      show={show}
+      onHide={onHide}
+      size="lg"
+      centered
+      backdrop="static"
+      id="input-modal"
+    >
       <Modal.Header closeButton>
         <Modal.Title>Profile Picture</Modal.Title>
       </Modal.Header>

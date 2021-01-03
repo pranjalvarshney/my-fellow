@@ -102,7 +102,14 @@ export const EditProfileModal = ({ show, onHide }) => {
   }
 
   return (
-    <Modal show={show} onHide={onHide} size="lg" centered backdrop="static">
+    <Modal
+      show={show}
+      onHide={onHide}
+      size="lg"
+      centered
+      backdrop="static"
+      id="input-modal"
+    >
       {showResponseMsg()}
 
       <Modal.Header closeButton>

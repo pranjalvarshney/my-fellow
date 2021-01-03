@@ -148,10 +148,8 @@ export const Routing = () => {
       ? { background: "black", color: "white" }
       : { background: "whitesmoke", color: "black" }
   const prefersDarkMode = authContext.theme
-  const mainPrimaryColor =
-    prefersDarkMode === "dark" ? "#03DAC6" : lightBlue[500]
-  const mainSecondaryColor =
-    prefersDarkMode === "dark" ? "#018786" : deepPurple[500]
+  const mainPrimaryColor = prefersDarkMode === "dark" ? "#03DAC6" : "#3551bf"
+  const mainSecondaryColor = prefersDarkMode === "dark" ? "#018786" : "#002984"
   const paperColor = prefersDarkMode === "dark" ? "#212121" : "#fff"
   const theme = React.useMemo(
     () =>
