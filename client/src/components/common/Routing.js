@@ -24,7 +24,6 @@ import { Friends } from "../pages/Friends/Friends"
 import { AboutUniversity } from "../pages/AboutUniversity/AboutUniversity"
 import { SettingsPrivacy } from "../pages/Setting-Privacy/SettingsPrivacy"
 import { Bookmarks } from "../pages/Home/Bookmarks/Bookmarks"
-import { deepPurple, lightBlue } from "@material-ui/core/colors"
 // import { Feedback } from "../pages/Feedback/Feedback"
 
 export const Routing = () => {

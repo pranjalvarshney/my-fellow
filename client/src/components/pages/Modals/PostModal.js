@@ -1,4 +1,4 @@
-import { Grid, Button, TextareaAutosize } from "@material-ui/core"
+import { Grid, Button, TextField } from "@material-ui/core"
 import React, { useContext, useState } from "react"
 import { Modal, Form } from "react-bootstrap"
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate"
@@ -29,21 +29,36 @@ export const PostModal = ({
       : postFunction(formData, authContext.user._id)
     handleModal()
   }
+  const styleTheme =
+    authContext.theme === "dark"
+      ? { background: "#121212", color: "whitesmoke" }
+      : null
+  const styleThemeMain =
+    authContext.theme === "dark" ? { background: "rgb(0 0 0 / 88%)" } : null
 
   return (
-    <Modal show={show} onHide={handleModal} centered id="input-modal">
-      <Modal.Header closeButton>
+    <Modal
+      show={show}
+      onHide={handleModal}
+      size="lg"
+      centered
+      id="input-modal"
+      style={styleThemeMain}
+    >
+      <Modal.Header closeButton style={styleTheme}>
         <Modal.Title>{modalTitle}</Modal.Title>
       </Modal.Header>
 
-      <Modal.Body>
+      <Modal.Body style={styleTheme}>
         <form onSubmit={handleForm}>
-          <Grid container justify="space-between" direction="row">
-            <Grid item container direction="column" md={4}>
+          <Grid container justify="space-between" direction="row" spacing={3}>
+            <Grid item container direction="column" md={6}>
               <Grid item>
-                <TextareaAutosize
-                  style={{ padding: "10px" }}
-                  rowsMin={4}
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  multiline
+                  rows={5}
                   placeholder="Write a caption..."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
@@ -83,7 +98,7 @@ export const PostModal = ({
           </Grid>
         </form>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer style={styleTheme}>
         <Button size="small" onClick={handleModal}>
           Discard
         </Button>

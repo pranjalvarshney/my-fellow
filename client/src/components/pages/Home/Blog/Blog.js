@@ -22,7 +22,7 @@ export const Blog = () => {
           <LoadingBlog />
         ) : blogContext.blog.length > 0 ? (
           blogContext.blog.map((blog) => {
-            console.log(blogContext.blog)
+            // console.log(blogContext.blog)
             return (
               <div key={blog._id}>
                 <BlogCard blog={blog} />
