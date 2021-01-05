@@ -100,17 +100,31 @@ export const EditProfileModal = ({ show, onHide }) => {
       </Snackbar>
     )
   }
+  const styleTheme =
+    authContext.theme === "dark"
+      ? { background: "#121212", color: "whitesmoke" }
+      : null
+  const styleThemeMain =
+    authContext.theme === "dark" ? { background: "rgb(0 0 0 / 88%)" } : null
 
   return (
-    <Modal show={show} onHide={onHide} size="lg" centered backdrop="static">
+    <Modal
+      show={show}
+      onHide={onHide}
+      size="lg"
+      centered
+      backdrop="static"
+      id="input-modal"
+      style={styleThemeMain}
+    >
       {showResponseMsg()}
 
-      <Modal.Header closeButton>
+      <Modal.Header closeButton style={styleTheme}>
         <Modal.Title id="contained-modal-title-vcenter">
           Edit Profile
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body style={styleTheme}>
         <div
           style={{
             height: "300px",
@@ -219,7 +233,7 @@ export const EditProfileModal = ({ show, onHide }) => {
           </form>
         </div>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer style={styleTheme}>
         <Button onClick={onHide}>Close</Button>
         <Button
           type="submit"

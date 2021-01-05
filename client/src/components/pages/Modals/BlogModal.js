@@ -1,4 +1,4 @@
-import { Button, Grid, TextareaAutosize, TextField } from "@material-ui/core"
+import { Button, Grid, TextField } from "@material-ui/core"
 import React, { useContext, useState } from "react"
 import { AuthContext } from "../../../context/authContext/authContext"
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate"
@@ -30,17 +30,30 @@ export const BlogModal = ({
       : blogFunction(formData, authContext.user._id)
     handleModal()
   }
+  const styleTheme =
+    authContext.theme === "dark"
+      ? { background: "#121212", color: "whitesmoke" }
+      : null
+  const styleThemeMain =
+    authContext.theme === "dark" ? { background: "rgb(0 0 0 / 88%)" } : null
 
   return (
-    <Modal show={show} onHide={handleModal} centered id="input-modal">
-      <Modal.Header closeButton>
+    <Modal
+      show={show}
+      onHide={handleModal}
+      centered
+      size="lg"
+      id="input-modal"
+      style={styleThemeMain}
+    >
+      <Modal.Header closeButton style={styleTheme}>
         <Modal.Title>{modalTitle}</Modal.Title>
       </Modal.Header>
 
-      <Modal.Body>
+      <Modal.Body style={styleTheme}>
         <form onSubmit={handleForm}>
-          <Grid container justify="space-between" direction="row">
-            <Grid item container direction="column" md={4}>
+          <Grid container justify="space-between" direction="row" spacing={3}>
+            <Grid item container direction="column" md={6}>
               <Grid item>
                 <TextField
                   className="mb-3"
@@ -48,11 +61,14 @@ export const BlogModal = ({
                   placeholder="title"
                   size="small"
                   value={title}
+                  fullWidth
                   onChange={(e) => setTitle(e.target.value)}
                 />
-                <TextareaAutosize
-                  style={{ padding: "10px" }}
-                  rowsMin={4}
+                <TextField
+                  rows={5}
+                  fullWidth
+                  multiline
+                  variant="outlined"
                   placeholder="Write a caption..."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
@@ -92,7 +108,7 @@ export const BlogModal = ({
           </Grid>
         </form>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer style={styleTheme}>
         <Button size="small" onClick={handleModal}>
           Discard
         </Button>

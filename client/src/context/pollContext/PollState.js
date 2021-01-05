@@ -2,7 +2,7 @@ import React, { useReducer } from "react"
 import { PollContext } from "./PollContext"
 import axios from "axios"
 import { API } from "../../utils/proxy"
-import { POLL_ERROR, POLL_GET_ALL, POLL_LOADING } from "../types"
+import { POLL_CREATE, POLL_ERROR, POLL_GET_ALL, POLL_LOADING } from "../types"
 import Pollreducer from "./Pollreducer"
 
 export const PollState = ({ children }) => {
@@ -28,6 +28,37 @@ export const PollState = ({ children }) => {
         type: POLL_GET_ALL,
         payload: response.data,
       })
+    } catch (error) {
+      // console.log(error)
+      dispatch({
+        type: POLL_ERROR,
+        payload: error.response.data.errorMsg,
+      })
+    }
+  }
+
+  const createPoll = async (userId, pollData) => {
+    try {
+      dispatch({
+        type: POLL_LOADING,
+        payload: true,
+      })
+      const response = await axios.post(
+        `${API}/create/poll/${userId}`,
+        pollData,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("_token")
+            )}`,
+          },
+        }
+      )
+      dispatch({
+        type: POLL_CREATE,
+        payload: "Successfully created!",
+      })
+      console.log(response)
     } catch (error) {
       // console.log(error)
       dispatch({
@@ -125,6 +156,7 @@ export const PollState = ({ children }) => {
         markPollNo,
         markPollYes,
         skipPoll,
+        createPoll,
       }}
     >
       {children}

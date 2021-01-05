@@ -6,9 +6,11 @@ import { BlogCard } from "./BlogCard"
 import { Grid } from "@material-ui/core"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons"
+import { UserContext } from "../../../../context/userContext/UserContext"
 
 export const Blog = () => {
   const blogContext = useContext(BlogContext)
+  const userContext = useContext(UserContext)
   useEffect(() => {
     blogContext.getAllBlogs()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -16,11 +18,11 @@ export const Blog = () => {
   return (
     <Home>
       <div className="px-2">
-        {blogContext.loading ? (
+        {blogContext.loading || userContext.loading ? (
           <LoadingBlog />
         ) : blogContext.blog.length > 0 ? (
           blogContext.blog.map((blog) => {
-            console.log(blogContext.blog)
+            // console.log(blogContext.blog)
             return (
               <div key={blog._id}>
                 <BlogCard blog={blog} />

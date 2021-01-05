@@ -100,16 +100,29 @@ export const FeedbackModal = ({ show, onhide }) => {
       </Snackbar>
     )
   }
+  const styleTheme =
+    authContext.theme === "dark"
+      ? { background: "#121212", color: "whitesmoke" }
+      : null
+  const styleThemeMain =
+    authContext.theme === "dark" ? { background: "rgb(0 0 0 / 88%)" } : null
 
   return (
     <div className="modal-feedback">
       {showResponseMsg()}
       <div className="modal-feedback-wrapper">
-        <Modal show={show} onHide={onhide} centered>
-          <Modal.Header closeButton>
+        <Modal
+          show={show}
+          onHide={onhide}
+          centered
+          size="lg"
+          style={styleThemeMain}
+          id="input-modal"
+        >
+          <Modal.Header closeButton style={styleTheme}>
             <Modal.Title className="ml-auto">Feedback Form</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body style={styleTheme}>
             <form
               className={classes.root}
               noValidate
@@ -152,13 +165,8 @@ export const FeedbackModal = ({ show, onhide }) => {
             </form>
           </Modal.Body>
 
-          <Modal.Footer>
-            <Button
-              className="mr-3"
-              variant="contained"
-              color="secondary"
-              onClick={onhide}
-            >
+          <Modal.Footer style={styleTheme}>
+            <Button className="mr-3" variant="contained" onClick={onhide}>
               Cancel
             </Button>
             <Button

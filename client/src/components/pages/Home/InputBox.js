@@ -9,13 +9,15 @@ import { PostModal } from "../Modals/PostModal"
 import { PostContext } from "../../../context/postContext/postContext"
 import { BlogModal } from "../Modals/BlogModal"
 import { BlogContext } from "../../../context/blogContext/BlogContext"
-import { PollCard } from "./PollCard"
 import { PollModal } from "../Modals/PollModal"
+import { API } from "../../../utils/proxy"
+import { PollContext } from "../../../context/pollContext/PollContext"
 
 export const InputBox = () => {
   const authContext = useContext(AuthContext)
   const postContext = useContext(PostContext)
   const blogContext = useContext(BlogContext)
+  const pollContext = useContext(PollContext)
   const [showPost, setShowPost] = useState(false)
   const [showBlog, setShowBlog] = useState(false)
   const [showPoll, setShowPoll] = useState(false)
@@ -55,6 +57,7 @@ export const InputBox = () => {
         <PollModal
           modalTitle="Create poll"
           show={showPoll}
+          pollFunction={pollContext.createPoll}
           poll={undefined}
           handleModal={handleModalPoll}
         />
@@ -68,7 +71,10 @@ export const InputBox = () => {
           alignItems="center"
         >
           <Grid item xs={1}>
-            <Avatar />
+            <Avatar
+              alt={authContext.user.name}
+              src={`${API}/pic/user/${authContext.user._id}`}
+            />
           </Grid>
           <Grid item xs={10}>
             <Fab
