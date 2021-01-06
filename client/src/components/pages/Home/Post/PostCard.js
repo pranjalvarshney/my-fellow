@@ -58,6 +58,8 @@ export const PostCard = ({ post }) => {
   const handleClose = () => {
     setMoreOption(null)
   }
+  const [sendBtnColor, setSendBtnColor] = useState("grey")
+
   const [showPost, setShowPost] = useState(false)
 
   const handleModalPost = () => {
@@ -129,7 +131,7 @@ export const PostCard = ({ post }) => {
     await postContext.addComment(post._id, authContext.user._id, comment)
   }
   return (
-    <Card variant="elevation" elevation={3} className="mb-3 mx-auto">
+    <Card variant="elevation" elevation={3} className="mb-3">
       {showPost && (
         <PostModal
           show={showPost}
@@ -269,12 +271,23 @@ export const PostCard = ({ post }) => {
                 <Input
                   value={comment}
                   onChange={(e) => {
+                    if (e.target.value === "") {
+                      setSendBtnColor("grey")
+                      console.log(e.target.value)
+                    } else {
+                      setSendBtnColor("white")
+                      console.log(e.target.value)
+                    }
                     setComment(e.target.value)
                   }}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton type="submit" onClick={handleCommentSend}>
-                        <FontAwesomeIcon icon={faPaperPlane} />
+                        <FontAwesomeIcon
+                          color={sendBtnColor}
+                          size="sm"
+                          icon={faPaperPlane}
+                        />
                       </IconButton>
                     </InputAdornment>
                   }

@@ -52,7 +52,7 @@ export const BlogCard = ({ blog }) => {
     setMoreOption(e.currentTarget)
   }
   const [bookmarkStatus, setBookmarkStatus] = useState(false)
-
+  const [sendBtnColor, setSendBtnColor] = useState("grey")
   useEffect(() => {
     blog.upvotes.filter((likeId) => {
       if (likeId === authContext.user._id) {
@@ -120,7 +120,9 @@ export const BlogCard = ({ blog }) => {
   }
 
   const handleCommentSend = async () => {
-    await blogContext.addComment(blog._id, authContext.user._id, comment)
+    if (comment.length > 0) {
+      await blogContext.addComment(blog._id, authContext.user._id, comment)
+    }
   }
 
   const handleShareBtn = async () => {
@@ -270,12 +272,23 @@ export const BlogCard = ({ blog }) => {
                   <Input
                     value={comment}
                     onChange={(e) => {
+                      if (e.target.value === "") {
+                        setSendBtnColor("grey")
+                        console.log(e.target.value)
+                      } else {
+                        setSendBtnColor("white")
+                        console.log(e.target.value)
+                      }
                       setComment(e.target.value)
                     }}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton type="submit" onClick={handleCommentSend}>
-                          <FontAwesomeIcon icon={faPaperPlane} />
+                          <FontAwesomeIcon
+                            color={sendBtnColor}
+                            icon={faPaperPlane}
+                            size="sm"
+                          />
                         </IconButton>
                       </InputAdornment>
                     }

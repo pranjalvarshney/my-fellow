@@ -64,7 +64,12 @@ export const PollCard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   console.log(pollContext.polls)
-
+  const filterPollForUnmarked = () => {}
+  const handlePollClick = (e, typeOf) => {
+    if (typeOf === "yes") {
+      // pollContext.
+    }
+  }
   return (
     <div>
       {pollContext.loading ? (
@@ -85,7 +90,11 @@ export const PollCard = () => {
                       justify="space-between"
                     >
                       <Grid item>
-                        <Button variant="text" size="small">
+                        <Button
+                          variant="text"
+                          size="small"
+                          onClick={(e) => handlePollClick(e, "skip")}
+                        >
                           Skip
                         </Button>
                       </Grid>
@@ -117,8 +126,18 @@ export const PollCard = () => {
                   </CardContent>
                   <CardActions>
                     <ButtonGroup className="p-1" fullWidth variant="outlined">
-                      <Button size="small">Yes</Button>
-                      <Button size="small">No</Button>
+                      <Button
+                        size="small"
+                        onClick={(e) => handlePollClick(e, "yes")}
+                      >
+                        Yes
+                      </Button>
+                      <Button
+                        size="small"
+                        onClick={(e) => handlePollClick(e, "no")}
+                      >
+                        No
+                      </Button>
                     </ButtonGroup>
                   </CardActions>
                 </Carousel.Item>

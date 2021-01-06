@@ -24,6 +24,7 @@ import { Friends } from "../pages/Friends/Friends"
 import { AboutUniversity } from "../pages/AboutUniversity/AboutUniversity"
 import { SettingsPrivacy } from "../pages/Setting-Privacy/SettingsPrivacy"
 import { Bookmarks } from "../pages/Home/Bookmarks/Bookmarks"
+import { CampusSignup } from "../Login/CampusSignup"
 // import { Feedback } from "../pages/Feedback/Feedback"
 
 export const Routing = () => {
@@ -203,6 +204,7 @@ export const Routing = () => {
             {/* <PrivateRoute exact path="/help-support" component={HelpSupport} /> */}
 
             <SimpleRoute exact path="/signup" component={Signup} />
+            <SimpleRoute exact path="/signup-campus" component={CampusSignup} />
             <SimpleRoute exact path="/signin" component={Login} />
           </Switch>
         </BrowserRouter>

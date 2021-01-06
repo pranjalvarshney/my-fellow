@@ -11,7 +11,7 @@ exports.signup = (req, res) => {
       errorMsg: errors.array()[0].msg,
     })
   }
-  const { name, dob, age, email, password } = req.body
+  const { name, dob, email, password, collegeId, rollno } = req.body
   User.findOne({ email }).exec((err, user) => {
     if (err) {
       return res.status(400).json({
@@ -24,7 +24,14 @@ exports.signup = (req, res) => {
       })
     }
     if (!user) {
-      const newUser = new User({ name, email, password, dob, age })
+      const newUser = new User({
+        name,
+        email,
+        password,
+        dob,
+        rollno,
+        collegeId,
+      })
       newUser.save((err, user) => {
         if (err) {
           return res.status(400).json({
@@ -73,7 +80,7 @@ exports.signin = (req, res) => {
       expire: new Date() + 9999,
     })
 
-    const { _id, name, email, role } = user
+    const { _id, name, email, role, collegeId } = user
 
     res.status(200).json({
       token,
@@ -82,6 +89,7 @@ exports.signin = (req, res) => {
         name,
         email,
         role,
+        collegeId,
       },
     })
   })

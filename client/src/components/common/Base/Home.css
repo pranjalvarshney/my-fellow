@@ -8,7 +8,6 @@
 #create-post-inputfield {
   border: 2px solid rgba(0, 0, 0, 0.426);
   padding: 8px 10px;
-  /* background-color: beige; */
   border-radius: 20px;
 }
 .home-right-bar {
@@ -20,7 +19,8 @@
 }
 #home-center-wrapper {
   height: calc(100vh - 100px);
-  overflow-y: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 #home-center-wrapper::-webkit-scrollbar {
   display: none;

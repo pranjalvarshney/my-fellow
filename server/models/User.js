@@ -28,17 +28,21 @@ const userSchema = new mongoose.Schema(
     },
     rollno: {
       type: String,
+      required: true,
     },
     dob: {
       type: String,
       trim: true,
-      required: true,
     },
     email: {
       type: String,
       trim: true,
       required: true,
       unique: true,
+    },
+    collegeId: {
+      type: String,
+      required: true,
     },
     encryptedpassword: {
       type: String,
@@ -54,10 +58,6 @@ const userSchema = new mongoose.Schema(
       // 0 - Student
       // 1 - Faculty
       // 2 - Admin
-    },
-    age: {
-      type: Number,
-      trim: true,
     },
     bookmark: {
       post: [
@@ -104,6 +104,7 @@ const userSchema = new mongoose.Schema(
       },
     ],
   },
+
   { timestamps: true }
 )
 

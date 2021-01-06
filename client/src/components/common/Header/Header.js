@@ -58,7 +58,7 @@ const Header = ({ history }) => {
       {showFeedback ? (
         <FeedbackModal show={showFeedback} onhide={handleFeedback} />
       ) : null}
-      <AppBar style={styleTheme} elevation={9}>
+      <AppBar style={styleTheme} elevation={3}>
         <Toolbar className="header">
           <div className="header-part-1">
             <Button
