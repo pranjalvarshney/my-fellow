@@ -1,7 +1,7 @@
 import { Grid } from "@material-ui/core"
 import React from "react"
 import { Contacts } from "./Contacts"
-import { PollCard } from "./PollCard"
+import { PollCard } from "./Poll/PollCard"
 
 export const HomeRightBar = () => {
   return (
