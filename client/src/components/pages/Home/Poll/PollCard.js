@@ -34,7 +34,7 @@ export const PollCard = () => {
     pollContext.getAllPolls()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  console.log(pollContext.polls)
+  // console.log(pollContext.polls)
 
   const handlePollClick = async (e, typeOf, pollId) => {
     setResponseValue({

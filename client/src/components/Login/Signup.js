@@ -27,6 +27,7 @@ export const Signup = () => {
     password: "",
     dob: defaultdob,
     rollno: "",
+    age: "",
     collegeId: "",
   })
 
@@ -66,7 +67,7 @@ export const Signup = () => {
 
   return (
     <div className="login" style={styleTheme1}>
-      <div className="container">
+      <div className="container text-center">
         <Grid
           container
           alignItems="center"
@@ -74,9 +75,12 @@ export const Signup = () => {
           direction="row"
         >
           <Grid item>
-            <h2>My Fellow</h2>
+            <img src="logo1.png" alt="logo" />
           </Grid>
           <Grid item>
+            <h1 id="header-name" style={{ fontSize: "40px" }}>
+              My Fellow
+            </h1>
             <Paper elevation={9} variant="elevation">
               <Box pt={5} pb={3} px={3} width="400px">
                 <form onSubmit={handleOnSubmit}>
@@ -212,12 +216,13 @@ export const Signup = () => {
                   >
                     <Grid item>
                       <Button
+                        disabled
                         variant="text"
                         style={{
                           textTransform: "none",
                         }}
                       >
-                        Forgot password
+                        Already have an account!
                       </Button>
                     </Grid>
                     <Grid item>

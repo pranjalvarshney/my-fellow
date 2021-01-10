@@ -1,6 +1,6 @@
-import { Button, Grid, Modal, TextField } from "@material-ui/core"
+import { Button, Grid, TextField } from "@material-ui/core"
 import React, { useContext, useState } from "react"
-import { Form } from "react-bootstrap"
+import { Form, Modal } from "react-bootstrap"
 import { AuthContext } from "../../../context/authContext/authContext"
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate"
 
@@ -67,7 +67,18 @@ export const AdsModal = ({
                   onChange={(e) => setTitle(e.target.value)}
                 />
                 <TextField
+                  className="mb-3"
+                  size="small"
+                  fullWidth
+                  variant="outlined"
+                  placeholder="Write a caption..."
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                />
+                <TextField
+                  size="small"
                   rows={5}
+                  className="mb-3"
                   fullWidth
                   multiline
                   variant="outlined"

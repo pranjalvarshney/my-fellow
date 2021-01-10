@@ -81,6 +81,7 @@ exports.updateProfileImg = (req, res) => {
     }
     newData.save((err, profilePic) => {
       if (err) {
+        console.log(err)
         return res.status(400).json({
           errorMsg: "An error occured! While saving - Failed",
         })

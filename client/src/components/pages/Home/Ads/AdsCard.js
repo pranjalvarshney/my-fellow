@@ -16,14 +16,14 @@ import Moment from "react-moment"
 import { useHistory } from "react-router-dom"
 import { AdsContext } from "../../../../context/adsContext/AdsContext"
 import { AuthContext } from "../../../../context/authContext/authContext"
-import { UserContext } from "../../../../context/userContext/UserContext"
+// import { UserContext } from "../../../../context/userContext/UserContext"
 import { API } from "../../../../utils/proxy"
 import { AdsModal } from "../../Modals/AdsModal"
 
 export const AdsCard = ({ ads }) => {
   const history = useHistory()
   const authContext = useContext(AuthContext)
-  const userContext = useContext(UserContext)
+  // const userContext = useContext(UserContext)
   const adsContext = useContext(AdsContext)
   const [moreOption, setMoreOption] = useState(null)
   const handleMoreOption = (e) => {
