@@ -28,10 +28,7 @@ export const Login = () => {
 
     await authContext.signinUser(formData)
   }
-  const styleTheme1 =
-    authContext.theme === "dark"
-      ? { background: "black", color: "white" }
-      : { background: "white", color: "black" }
+  const styleTheme1 = { background: "black", color: "white" }
 
   return (
     <>
@@ -44,15 +41,23 @@ export const Login = () => {
             direction="row"
           >
             <Grid item>
-              <Grid item>
-                <h1>My Fellow</h1>
-              </Grid>
-              <Grid item>
-                <h6>connect, share and poll</h6>
+              <Grid
+                container
+                justify="center"
+                alignItems="center"
+                direction="column"
+              >
+                <Grid item>
+                  <img src="logo1.png" alt="logo" />
+                </Grid>
               </Grid>
             </Grid>
-            <Grid item>
-              <Paper>
+            <Grid item className="text-center">
+              <h1 id="header-name" style={{ fontSize: "40px" }}>
+                My Fellow
+              </h1>
+              {/* <h6>connect, share and poll</h6> */}
+              <Paper elevation={3}>
                 <Box py={6} px={3} width="400px">
                   <form onSubmit={handleFormSubmit}>
                     <Grid
@@ -124,8 +129,8 @@ export const Login = () => {
                           }}
                           variant="contained"
                           style={{
-                            color: "white",
-                            background: "#1712c5",
+                            color: "#fff",
+                            background: "rgb(35 75 167)",
                           }}
                         >
                           Create Account

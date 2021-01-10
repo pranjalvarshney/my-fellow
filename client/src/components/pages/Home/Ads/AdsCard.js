@@ -105,7 +105,13 @@ export const AdsCard = ({ ads }) => {
       )}
       <CardContent className="py-1">
         <Typography variant="body1" component="p">
+          {ads.title}
+        </Typography>
+        <Typography variant="body2" component="p">
           {ads.content}
+        </Typography>
+        <Typography variant="subtitle1" component="p">
+          {ads.contact}
         </Typography>
       </CardContent>
     </Card>

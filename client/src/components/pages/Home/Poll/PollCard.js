@@ -80,158 +80,165 @@ export const PollCard = () => {
       {pollContext.loading ? (
         LoadingPoll()
       ) : (
-        <Card variant="elevation" elevation={3}>
-          <Carousel
-            indicators={false}
-            controls={false}
-            interval={null}
-            activeIndex={index}
-          >
-            {pollContext.polls.map((poll, index) => {
-              return (
-                <Carousel.Item key={index}>
-                  <Grid>
-                    <Grid
-                      item
-                      direction="row"
-                      className="py-1 pr-3"
-                      container
-                      alignItems="center"
-                      justify="space-between"
-                    >
-                      <Grid item>
-                        {!showResult ? (
-                          <Button
-                            variant="text"
-                            size="small"
-                            onClick={(e) =>
-                              handlePollClick(e, "skip", poll._id)
-                            }
-                          >
-                            Skip
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="text"
-                            size="small"
-                            onClick={() => {
-                              if (index < pollContext.polls.length) {
-                                setIndex(index + 1)
+        <>
+          <h6>
+            <b>Polls</b>
+          </h6>
+          <Card variant="elevation" elevation={3} className="pb-1">
+            <Carousel
+              indicators={false}
+              controls={false}
+              interval={null}
+              activeIndex={index}
+            >
+              {pollContext.polls.map((poll, index) => {
+                return (
+                  <Carousel.Item key={index}>
+                    <Grid>
+                      <Grid
+                        item
+                        direction="row"
+                        className="py-1 pr-3"
+                        container
+                        alignItems="center"
+                        justify="space-between"
+                      >
+                        <Grid item>
+                          {!showResult ? (
+                            <Button
+                              variant="text"
+                              size="small"
+                              onClick={(e) =>
+                                handlePollClick(e, "skip", poll._id)
                               }
-                              setShowResult(false)
-                            }}
-                          >
-                            Next
-                          </Button>
-                        )}
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="button" color="textSecondary">
-                          Poll
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <IconButton size="small">
-                          <MoreHorizIcon />
-                        </IconButton>
+                            >
+                              Skip
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="text"
+                              size="small"
+                              onClick={() => {
+                                if (index < pollContext.polls.length) {
+                                  setIndex(index + 1)
+                                }
+                                setShowResult(false)
+                              }}
+                            >
+                              Next
+                            </Button>
+                          )}
+                        </Grid>
+
+                        <Grid item>
+                          <IconButton size="small">
+                            <MoreHorizIcon />
+                          </IconButton>
+                        </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
-                  <CardContent
-                    style={{ paddingTop: "0px", paddingBottom: "0" }}
-                  >
-                    <Typography variant="body1" style={{ padding: "0" }}>
-                      {poll.title}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      style={{ paddingTop: "0px" }}
+                    <CardContent
+                      style={{ paddingTop: "0px", paddingBottom: "0" }}
                     >
-                      {poll.poll}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    {responseValue.loading && (
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        fullWidth
-                        disabled
+                      <Typography variant="body1" style={{ padding: "0" }}>
+                        {poll.title}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        style={{ paddingTop: "0px" }}
                       >
-                        Loading
-                      </Button>
-                    )}
-                    {responseValue.loading ? null : !showResult ? (
-                      <ButtonGroup className="p-1" fullWidth variant="outlined">
+                        {poll.poll}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      {responseValue.loading && (
                         <Button
+                          variant="outlined"
                           size="small"
-                          onClick={(e) => handlePollClick(e, "yes", poll._id)}
+                          fullWidth
+                          disabled
                         >
-                          Yes
+                          Loading
                         </Button>
-                        <Button
-                          size="small"
-                          onClick={(e) => handlePollClick(e, "no", poll._id)}
+                      )}
+                      {responseValue.loading ? null : !showResult ? (
+                        <ButtonGroup
+                          className="p-1"
+                          fullWidth
+                          variant="outlined"
                         >
-                          No
-                        </Button>
-                      </ButtonGroup>
-                    ) : (
-                      <div
-                        className="px-1"
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          width: "100%",
-                          textAlign: "center",
-                        }}
-                      >
+                          <Button
+                            size="small"
+                            onClick={(e) => handlePollClick(e, "yes", poll._id)}
+                          >
+                            Yes
+                          </Button>
+                          <Button
+                            size="small"
+                            onClick={(e) => handlePollClick(e, "no", poll._id)}
+                          >
+                            No
+                          </Button>
+                        </ButtonGroup>
+                      ) : (
                         <div
+                          className="px-1"
                           style={{
-                            background: "green",
-                            width: `${
+                            display: "flex",
+                            flexDirection: "row",
+                            width: "100%",
+                            textAlign: "center",
+                          }}
+                        >
+                          <div
+                            style={{
+                              background: "green",
+                              width: `${
+                                (pollResult.yes * 100) / pollResult.total
+                              }%`,
+                            }}
+                          >
+                            {Math.round(
                               (pollResult.yes * 100) / pollResult.total
-                            }%`,
-                          }}
-                        >
-                          {Math.round(
-                            (pollResult.yes * 100) / pollResult.total
-                          )}
-                          %
-                        </div>
-                        <div
-                          style={{
-                            background: "grey",
-                            width: `${
+                            )}
+                            %
+                          </div>
+                          <div
+                            style={{
+                              background: "grey",
+                              width: `${
+                                (pollResult.skip * 100) / pollResult.total
+                              }%`,
+                            }}
+                          >
+                            {Math.round(
                               (pollResult.skip * 100) / pollResult.total
-                            }%`,
-                          }}
-                        >
-                          {Math.round(
-                            (pollResult.skip * 100) / pollResult.total
-                          )}
-                          %
-                        </div>
-                        <div
-                          style={{
-                            background: "tomato",
-                            width: `${
+                            )}
+                            %
+                          </div>
+                          <div
+                            style={{
+                              background: "tomato",
+                              width: `${
+                                (pollResult.no * 100) / pollResult.total
+                              }%`,
+                            }}
+                          >
+                            {Math.round(
                               (pollResult.no * 100) / pollResult.total
-                            }%`,
-                          }}
-                        >
-                          {Math.round((pollResult.no * 100) / pollResult.total)}
-                          %
+                            )}
+                            %
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </CardActions>
-                </Carousel.Item>
-              )
-            })}
-          </Carousel>
-        </Card>
+                      )}
+                    </CardActions>
+                  </Carousel.Item>
+                )
+              })}
+            </Carousel>
+          </Card>
+        </>
       )}
     </div>
   )

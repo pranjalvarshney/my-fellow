@@ -12,15 +12,19 @@ import { BlogContext } from "../../../context/blogContext/BlogContext"
 import { PollModal } from "../Modals/PollModal"
 import { API } from "../../../utils/proxy"
 import { PollContext } from "../../../context/pollContext/PollContext"
+import { AdsContext } from "../../../context/adsContext/AdsContext"
+import { AdsModal } from "../Modals/AdsModal"
 
 export const InputBox = () => {
   const authContext = useContext(AuthContext)
   const postContext = useContext(PostContext)
   const blogContext = useContext(BlogContext)
   const pollContext = useContext(PollContext)
+  const adsContext = useContext(AdsContext)
   const [showPost, setShowPost] = useState(false)
   const [showBlog, setShowBlog] = useState(false)
   const [showPoll, setShowPoll] = useState(false)
+  const [showAds, setShowAds] = useState(false)
   const handleModalPoll = () => {
     setShowPoll(!showPoll)
   }
@@ -31,6 +35,10 @@ export const InputBox = () => {
   const handleModalBlog = () => {
     // console.log(showBlog)
     setShowBlog(!showBlog)
+  }
+  const handleModalAds = () => {
+    // console.log(showBlog)
+    setShowAds(!showAds)
   }
 
   return (
@@ -51,6 +59,15 @@ export const InputBox = () => {
           blogFunction={blogContext.createBlog}
           modalTitle="Write Blog"
           blog={undefined}
+        />
+      )}
+      {showAds && (
+        <AdsModal
+          modalTitle="Create ads"
+          show={showAds}
+          adsFunction={adsContext.createAds}
+          ads={undefined}
+          handleModal={handleModalAds}
         />
       )}
       {showPoll && (
@@ -111,7 +128,9 @@ export const InputBox = () => {
             </Button>
           </Grid>
           <Grid item>
-            <Button startIcon={<BrokenImageIcon />}>Post Ad</Button>
+            <Button onClick={handleModalAds} startIcon={<BrokenImageIcon />}>
+              Post Ad
+            </Button>
           </Grid>
           <Grid item>
             <Button onClick={handleModalPoll} startIcon={<PollIcon />}>

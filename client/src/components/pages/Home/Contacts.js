@@ -59,53 +59,68 @@ export const Contacts = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authContext.user._id])
 
-  if (userContext.loading) {
-    return (
-      <Grid container>
-        <ListFriendLoading />
-      </Grid>
-    )
-  }
+  // if (userContext.loading) {
+  //   return (
+  // <Grid container>
+  //   <ListFriendLoading />
+  // </Grid>
+  //   )
+  // }
 
   return (
-    <Card variant="elevation" elevation={3} className="mt-3">
-      <CardContent>
-        <Grid container direction="row" justify="space-between">
-          <Grid item>
-            <Typography variant="h6">Contacts</Typography>
-          </Grid>
-          <Grid>
-            <IconButton size="small">
-              <SearchIcon />
-            </IconButton>
-          </Grid>
+    <div className="mt-3">
+      <h6>
+        <b>Contacts</b>
+      </h6>
+
+      {userContext.loading ? (
+        <Grid container>
+          <ListFriendLoading />
         </Grid>
-        <List component="nav">
-          {userContext.user.friendList.map((user, i) => {
-            return (
-              <ListItem
-                button
-                key={i}
-                onClick={() => {
-                  history.push(`/profile/${user._id}`)
-                }}
-              >
-                <ListItemIcon>
-                  <Avatar alt={user.name} src={`${API}/pic/user/${user._id}`} />
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography variant="body1">
-                      <b>{user.name}</b>
-                    </Typography>
-                  }
-                />
-              </ListItem>
-            )
-          })}
-        </List>
-      </CardContent>
-    </Card>
+      ) : (
+        <Card variant="elevation" elevation={3}>
+          <CardContent>
+            <Grid container direction="row" justify="space-between">
+              <Grid item>
+                <Typography variant="h6">Friends</Typography>
+              </Grid>
+              <Grid>
+                <IconButton size="small">
+                  <SearchIcon />
+                </IconButton>
+              </Grid>
+            </Grid>
+            <List component="nav">
+              {userContext.user.friendList.map((user, i) => {
+                return (
+                  <ListItem
+                    button
+                    key={i}
+                    onClick={() => {
+                      history.push(`/profile/${user._id}`)
+                    }}
+                  >
+                    <ListItemIcon>
+                      <Avatar
+                        alt={user.name}
+                        src={`${API}/pic/user/${user._id}`}
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography variant="body1">
+                          <b>{user.name}</b>
+                        </Typography>
+                      }
+                    />
+                  </ListItem>
+                )
+              })}
+            </List>
+          </CardContent>
+        </Card>
+      )}
+    </div>
   )
 }
 
