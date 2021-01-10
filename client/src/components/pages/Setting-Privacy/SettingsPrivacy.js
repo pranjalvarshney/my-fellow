@@ -73,7 +73,7 @@ export const SettingsPrivacy = () => {
                           </Grid>
                           <Grid item xs={9}>
                             <Typography variant="subtitle2">
-                              Devesh Kumar Singh
+                              {authContext.user.name}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -86,7 +86,7 @@ export const SettingsPrivacy = () => {
                           </Grid>
                           <Grid item xs={9}>
                             <Typography variant="subtitle2">
-                              17/ICS/274
+                              {authContext.user.rollno}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -99,7 +99,7 @@ export const SettingsPrivacy = () => {
                           </Grid>
                           <Grid item xs={9}>
                             <Typography variant="subtitle2">
-                              devesh28@mail.mail
+                              {authContext.user.email}
                             </Typography>
                           </Grid>
                         </Grid>

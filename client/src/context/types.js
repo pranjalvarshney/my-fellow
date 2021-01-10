@@ -39,8 +39,13 @@ export const NOTICE_LOADING = "notice_loading"
 export const NOTICE_ERROR = "notice_error"
 export const NOTICE_GET = "notice_get"
 
-//POLL LOADING
+//POLL
 export const POLL_LOADING = "poll_loading"
 export const POLL_GET_ALL = "poll_get_all"
 export const POLL_ERROR = "poll_error"
 export const POLL_CREATE = "poll_create"
+
+//Ads
+export const ADS_LOADING = "ads_loading"
+export const ADS_GET_ALL = "ads_get_all"
+export const ADS_ERROR = "ads_error"

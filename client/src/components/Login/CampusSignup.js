@@ -9,25 +9,16 @@ import {
 import React, { useContext, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { AuthContext } from "../../context/authContext/authContext"
-import "./Login.css"
 
-export const Signup = () => {
+export const CampusSignup = () => {
   const authContext = useContext(AuthContext)
   const history = useHistory()
-  const defaultdob =
-    new Date().getFullYear() +
-    "-" +
-    new Date().getMonth() +
-    "-" +
-    new Date().getDate()
 
   const [inputValues, setInputValues] = useState({
     name: "",
     email: "",
     password: "",
-    dob: defaultdob,
     rollno: "",
-    age: "",
     collegeId: "",
   })
 
@@ -38,16 +29,12 @@ export const Signup = () => {
     setInputValues({
       ...inputValues,
       [name]: value,
-      age:
-        parseInt(new Date().getFullYear()) -
-        parseInt(inputValues.dob.slice(0, 4)),
     })
   }
 
   const formData = {
     name: inputValues.name,
     email: inputValues.email,
-    dob: inputValues.dob,
     password: inputValues.password,
     rollno: inputValues.rollno,
     collegeId: inputValues.collegeId,
@@ -78,9 +65,7 @@ export const Signup = () => {
             <img src="logo1.png" alt="logo" />
           </Grid>
           <Grid item>
-            <h1 id="header-name" style={{ fontSize: "40px" }}>
-              My Fellow
-            </h1>
+            <h1 id="header-name">My Fellow</h1>
             <Paper elevation={9} variant="elevation">
               <Box pt={5} pb={3} px={3} width="400px">
                 <form onSubmit={handleOnSubmit}>
@@ -100,7 +85,7 @@ export const Signup = () => {
                         size="small"
                         value={inputValues.name}
                         onChange={handleChange}
-                        label="Name"
+                        label="Institution Name"
                       />
                     </Grid>
                     <Grid item container>
@@ -127,7 +112,7 @@ export const Signup = () => {
                         <TextField
                           name="rollno"
                           variant="outlined"
-                          label="Roll no"
+                          label="Registration No"
                           size="small"
                           value={inputValues.rollno}
                           onChange={handleChange}
@@ -146,41 +131,6 @@ export const Signup = () => {
                       </Grid>
                     </Grid>
 
-                    <Grid
-                      item
-                      container
-                      direction="row"
-                      alignItems="center"
-                      justify="space-between"
-                    >
-                      <Grid item xs={6}>
-                        <TextField
-                          name="dob"
-                          variant="outlined"
-                          label="Birthday"
-                          size="small"
-                          value={inputValues.dob}
-                          onChange={handleChange}
-                          type="date"
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                        />
-                      </Grid>
-                      <Grid item xs={3}>
-                        <TextField
-                          age="age"
-                          label="Age"
-                          disabled
-                          type="number"
-                          variant="outlined"
-                          size="small"
-                          value={inputValues.age}
-                          onChange={handleChange}
-                          style={{ width: "auto" }}
-                        />
-                      </Grid>
-                    </Grid>
                     <Grid item container>
                       <TextField
                         fullWidth
@@ -222,7 +172,7 @@ export const Signup = () => {
                           textTransform: "none",
                         }}
                       >
-                        Already have an account!
+                        Already have an account!{" "}
                       </Button>
                     </Grid>
                     <Grid item>
@@ -247,13 +197,13 @@ export const Signup = () => {
               <Button
                 size="small"
                 onClick={() => {
-                  history.push("/signup-campus")
+                  history.push("/signup")
                 }}
               >
                 <Typography variant="button" color="textSecondary">
                   Signup as{" "}
                   <Typography variant="button" color="textPrimary">
-                    Campus Admin
+                    Student
                   </Typography>
                 </Typography>
               </Button>

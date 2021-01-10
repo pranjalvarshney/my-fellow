@@ -1,6 +1,7 @@
 const User = require("../models/User")
 const formidable = require("formidable")
 const fs = require("fs")
+const Post = require("../models/Post")
 
 exports.getUserById = (req, res, next, Id) => {
   User.findById(Id)
@@ -80,6 +81,7 @@ exports.updateProfileImg = (req, res) => {
     }
     newData.save((err, profilePic) => {
       if (err) {
+        console.log(err)
         return res.status(400).json({
           errorMsg: "An error occured! While saving - Failed",
         })
@@ -90,6 +92,21 @@ exports.updateProfileImg = (req, res) => {
 }
 
 exports.getAllUsers = (req, res) => {
+  // Post.aggregate([
+  //   {
+  //     $lookup: {
+  //       from: "User",
+  //       localField: "user",
+  //       foreignField: "_id",
+  //       as: "allData",
+  //     },
+  //   },
+  // ]).exec((err, result) => {
+  //   if (err) {
+  //     return res.json("err", err)
+  //   }
+  //   res.json(result)
+  // })
   User.find()
     .populate(
       "bookmark.blog bookmark.ads bookmark.post bookmark.job receivedReqs sentReqs friendList"

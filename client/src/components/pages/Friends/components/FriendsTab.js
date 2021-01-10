@@ -62,7 +62,7 @@ export const FriendsTab = () => {
           <Grid container justify="space-between">
             <Grid item xs={6}>
               <Typography variant="h5" gutterBottom>
-                <b>Friends</b>
+                <b>Fellows</b>
               </Typography>
             </Grid>
             <Grid item xs={6}>
@@ -89,7 +89,7 @@ export const FriendsTab = () => {
                 color={`${tab ? "primary" : "default"}`}
                 style={tab ? { fontWeight: "bold" } : { fontWeight: "normal" }}
               >
-                Friend requests
+                Fellow requests
               </Button>
             </Grid>
             <Grid item xs={6}>
@@ -99,7 +99,7 @@ export const FriendsTab = () => {
                 color={`${!tab ? "primary" : "default"}`}
                 style={!tab ? { fontWeight: "bold" } : { fontWeight: "normal" }}
               >
-                My Friends
+                My Fellows
               </Button>
             </Grid>
           </Grid>

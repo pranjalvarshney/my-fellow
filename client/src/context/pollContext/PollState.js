@@ -70,11 +70,7 @@ export const PollState = ({ children }) => {
 
   const markPollYes = async (userId, pollId) => {
     try {
-      dispatch({
-        type: POLL_LOADING,
-        payload: true,
-      })
-      const response = await axios.get(
+      const response = await axios.put(
         `${API}/poll/agree/${userId}`,
         { pollId },
         {
@@ -87,20 +83,13 @@ export const PollState = ({ children }) => {
       )
       return response.data
     } catch (error) {
-      dispatch({
-        type: POLL_ERROR,
-        payload: error.response.data.errorMsg,
-      })
+      throw error
     }
   }
 
   const markPollNo = async (userId, pollId) => {
     try {
-      dispatch({
-        type: POLL_LOADING,
-        payload: true,
-      })
-      const response = await axios.get(
+      const response = await axios.put(
         `${API}/poll/disagree/${userId}`,
         { pollId },
         {
@@ -113,20 +102,13 @@ export const PollState = ({ children }) => {
       )
       return response.data
     } catch (error) {
-      dispatch({
-        type: POLL_ERROR,
-        payload: error.response.data.errorMsg,
-      })
+      throw error
     }
   }
 
   const skipPoll = async (userId, pollId) => {
     try {
-      dispatch({
-        type: POLL_LOADING,
-        payload: true,
-      })
-      const response = await axios.get(
+      const response = await axios.put(
         `${API}/poll/skip/${userId}`,
         { pollId },
         {
@@ -139,10 +121,7 @@ export const PollState = ({ children }) => {
       )
       return response.data
     } catch (error) {
-      dispatch({
-        type: POLL_ERROR,
-        payload: error.response.data.errorMsg,
-      })
+      throw error
     }
   }
 

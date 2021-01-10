@@ -1,7 +1,7 @@
 import axios from "axios"
 import React, { useReducer } from "react"
 import { API } from "../../utils/proxy"
-import { NOTICE_GET, NOTICE_LOADING } from "../types"
+import { NOTICE_ERROR, NOTICE_GET, NOTICE_LOADING } from "../types"
 import { NoticeContext } from "./NoticeContext"
 import NoticeReducer from "./NoticeReducer"
 
@@ -33,7 +33,7 @@ export const NoticeState = ({ children }) => {
       }
     } catch (error) {
       dispatch({
-        type: NOTICE_GET,
+        type: NOTICE_ERROR,
         payload: error.response.data.errorMsg,
       })
     }

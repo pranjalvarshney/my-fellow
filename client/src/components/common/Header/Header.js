@@ -58,7 +58,7 @@ const Header = ({ history }) => {
       {showFeedback ? (
         <FeedbackModal show={showFeedback} onhide={handleFeedback} />
       ) : null}
-      <AppBar style={styleTheme} elevation={9}>
+      <AppBar style={styleTheme} elevation={3}>
         <Toolbar className="header">
           <div className="header-part-1">
             <Button
@@ -67,8 +67,10 @@ const Header = ({ history }) => {
                 usehistory.push("/")
               }}
             >
-              <img src="/logo192.png" alt="logo" height="40px" />
-              <Typography variant="h6">My Fellow</Typography>
+              {/* <img src="/logo1.png" alt="logo" height="40px" /> */}
+              <Typography variant="h6" id="header-name">
+                My Fellow
+              </Typography>
             </Button>
           </div>
           <div className="header-part-2">
@@ -135,7 +137,14 @@ const Header = ({ history }) => {
               onClose={handleClose}
               TransitionComponent={Fade}
             >
-              <MenuItem onClick={handleClose}>View Profile</MenuItem>
+              <MenuItem
+                // onClick={handleClose}
+                onClick={() => {
+                  history.push(`/profile/${authContext.user._id}`)
+                }}
+              >
+                View Profile
+              </MenuItem>
               <MenuItem
                 onClick={() => {
                   usehistory.push("/about-university")

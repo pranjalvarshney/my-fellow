@@ -3,7 +3,10 @@
   align-items: center;
   justify-content: space-between;
 }
-
+#header-name {
+  font-family: "Dancing Script", cursive;
+  font-size: 32px;
+}
 .header-part-1 {
   flex: 3;
 }

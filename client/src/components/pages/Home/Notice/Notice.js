@@ -1,7 +1,14 @@
-import { Button, Grid, Paper, Typography } from "@material-ui/core"
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Grid,
+  Typography,
+} from "@material-ui/core"
 import React, { useContext, useEffect } from "react"
-import { Carousel } from "react-bootstrap"
 import { NoticeContext } from "../../../../context/noticeContext/NoticeContext"
+import { Home } from "../../../common/Base/Home"
 
 export const Notice = () => {
   const noticeContext = useContext(NoticeContext)
@@ -9,48 +16,53 @@ export const Notice = () => {
     noticeContext.getNotices()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   return (
-    <div className="mt-3">
-      <h6>
-        <b>Updates</b>
-      </h6>
-      <Paper variant="elevation" elevation={3}>
-        <Carousel style={{ height: "150px", margin: "auto" }}>
-          {noticeContext.loading ? (
-            <div>loading</div>
-          ) : (
-            noticeContext.notice.map((not, index) => {
-              return (
-                <Carousel.Item key={index}>
+    <Home>
+      <div>
+        {noticeContext.loading ? (
+          <div>loading</div>
+        ) : (
+          noticeContext.notice.map((not, index) => {
+            return (
+              <Card elevation={1} className="mb-3">
+                <CardContent>
                   <Grid
                     container
-                    className="mt-3"
                     justify="space-between"
-                    alignItems="center"
-                    direction="column"
+                    alignItems="flex-start"
                   >
-                    <Grid item xs={10}>
-                      <Typography align="center" variant="caption">
-                        {not.title}
+                    <Grid item>
+                      <Typography color="textSecondary" variant="caption">
+                        Notice no.{index + 100}
                       </Typography>
                     </Grid>
-                    <Grid item xs={10}>
-                      <Typography align="center" variant="subtitle1">
-                        {not.description}
+                    <Grid item>
+                      <Typography variant="caption">
+                        {new Date(not.createdAt).toDateString()}
                       </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Grid container justify="flex-end">
-                        <Button size="small">Link</Button>
-                      </Grid>
                     </Grid>
                   </Grid>
-                </Carousel.Item>
-              )
-            })
-          )}
-        </Carousel>
-      </Paper>
-    </div>
+                  <Typography color="primary">{not.title}</Typography>
+                  <Typography variant="body1">{not.description}</Typography>
+                </CardContent>
+                <CardActions className="pt-0 px-3">
+                  <Button
+                    size="small"
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => {
+                      window.open(`${not.link}`)
+                    }}
+                  >
+                    Link
+                  </Button>
+                </CardActions>
+              </Card>
+            )
+          })
+        )}
+      </div>
+    </Home>
   )
 }

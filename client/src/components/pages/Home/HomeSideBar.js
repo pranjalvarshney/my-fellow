@@ -15,7 +15,7 @@ import SupervisedUserCircleRoundedIcon from "@material-ui/icons/SupervisedUserCi
 import BookmarksRoundedIcon from "@material-ui/icons/BookmarksRounded"
 import EventNoteRoundedIcon from "@material-ui/icons/EventNoteRounded"
 import { useHistory } from "react-router-dom"
-import { Notice } from "./Notice/Notice"
+import { NoticeCard } from "./Notice/NoticeCard"
 import { API } from "../../../utils/proxy"
 
 export const HomeSideBar = () => {
@@ -53,14 +53,14 @@ export const HomeSideBar = () => {
           <ListItem
             button
             onClick={() => {
-              history.push("friends")
+              history.push("fellows")
             }}
           >
             <ListItemIcon>
               <PeopleAltRoundedIcon />
             </ListItemIcon>
             <ListItemText
-              primary={<Typography variant="button">Friends</Typography>}
+              primary={<Typography variant="button">Fellows</Typography>}
             />
           </ListItem>
           <ListItem button>
@@ -79,7 +79,12 @@ export const HomeSideBar = () => {
               primary={<Typography variant="button">Events</Typography>}
             />
           </ListItem>
-          <ListItem button>
+          <ListItem
+            button
+            onClick={() => {
+              history.push("/notices")
+            }}
+          >
             <ListItemIcon>
               <BookmarksRoundedIcon />
             </ListItemIcon>
@@ -102,7 +107,7 @@ export const HomeSideBar = () => {
           </ListItem>
         </List>
       </Paper>
-      <Notice />
+      <NoticeCard />
     </div>
   )
 }
