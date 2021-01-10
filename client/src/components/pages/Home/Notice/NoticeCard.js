@@ -30,13 +30,17 @@ export const NoticeCard = () => {
                     direction="column"
                   >
                     <Grid item xs={10}>
-                      <Typography align="center" variant="caption">
+                      <Typography
+                        align="center"
+                        color="primary"
+                        variant="caption"
+                      >
                         {not.title}
                       </Typography>
                     </Grid>
                     <Grid item xs={10}>
                       <Typography align="center" variant="subtitle1">
-                        {not.description}
+                        {not.description.slice(0, 50)}
                       </Typography>
                     </Grid>
                     <Grid item xs={12}>

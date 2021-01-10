@@ -190,7 +190,7 @@ export const Routing = () => {
             <PrivateRoute exact path="/ads" component={Ads} />
             <PrivateRoute exact path="/blogs" component={Blog} />
             <PrivateRoute exact path="/profile/:userId" component={Profile} />
-            <PrivateRoute exact path="/friends" component={Friends} />
+            <PrivateRoute exact path="/fellows" component={Friends} />
             <PrivateRoute exact path="/notices" component={Notice} />
             <PrivateRoute
               exact

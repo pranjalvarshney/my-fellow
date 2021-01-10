@@ -53,14 +53,14 @@ export const HomeSideBar = () => {
           <ListItem
             button
             onClick={() => {
-              history.push("friends")
+              history.push("fellows")
             }}
           >
             <ListItemIcon>
               <PeopleAltRoundedIcon />
             </ListItemIcon>
             <ListItemText
-              primary={<Typography variant="button">Friends</Typography>}
+              primary={<Typography variant="button">Fellows</Typography>}
             />
           </ListItem>
           <ListItem button>

@@ -82,7 +82,7 @@ export const Contacts = () => {
           <CardContent>
             <Grid container direction="row" justify="space-between">
               <Grid item>
-                <Typography variant="h6">Friends</Typography>
+                <Typography variant="h6">Fellows</Typography>
               </Grid>
               <Grid>
                 <IconButton size="small">

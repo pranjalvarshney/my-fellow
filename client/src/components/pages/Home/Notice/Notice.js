@@ -25,7 +25,7 @@ export const Notice = () => {
         ) : (
           noticeContext.notice.map((not, index) => {
             return (
-              <Card>
+              <Card elevation={1} className="mb-3">
                 <CardContent>
                   <Grid
                     container

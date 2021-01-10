@@ -173,7 +173,7 @@ export const FeedbackModal = ({ show, onhide }) => {
               type="submit"
               onClick={handleSubmit}
               variant="contained"
-              color="primary"
+              style={{ background: "cyan", color: ":white" }}
             >
               {loading ? (
                 <div className="spinner-border" role="status">

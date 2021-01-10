@@ -71,7 +71,7 @@ export const FriendCard = ({ friend, type }) => {
         {type === "friend" && (
           <>
             <Button onClick={(e) => handleClickBtn(e, userContext.unFriend)}>
-              {loading ? <ButtonLoading /> : "Remove friend"}
+              {loading ? <ButtonLoading /> : "Remove fellow"}
               {/* Unfriend */}
             </Button>
           </>
@@ -82,7 +82,7 @@ export const FriendCard = ({ friend, type }) => {
             <Button
               onClick={(e) => handleClickBtn(e, userContext.sendFriendRequest)}
             >
-              {loading ? <ButtonLoading /> : "Add friend"}
+              {loading ? <ButtonLoading /> : "Add fellow"}
               {/* Add friend */}
             </Button>
           </>
