@@ -193,40 +193,43 @@ export const PollCard = () => {
                         >
                           <div
                             style={{
-                              background: "green",
+                              background: "#6eff00",
+                              borderRadius: "2px",
                               width: `${
-                                (pollResult.yes * 100) / pollResult.total
+                                (pollResult.yes / pollResult.total) * 100
                               }%`,
                             }}
                           >
                             {Math.round(
-                              (pollResult.yes * 100) / pollResult.total
+                              (pollResult.yes / pollResult.total) * 100
                             )}
                             %
                           </div>
                           <div
                             style={{
-                              background: "grey",
+                              background: "#b5b5b5",
+                              borderRadius: "2px",
                               width: `${
-                                (pollResult.skip * 100) / pollResult.total
+                                (pollResult.skip / pollResult.total) * 100
                               }%`,
                             }}
                           >
                             {Math.round(
-                              (pollResult.skip * 100) / pollResult.total
+                              (pollResult.skip / pollResult.total) * 100
                             )}
                             %
                           </div>
                           <div
                             style={{
                               background: "tomato",
+                              borderRadius: "2px",
                               width: `${
-                                (pollResult.no * 100) / pollResult.total
+                                (pollResult.no / pollResult.total) * 100
                               }%`,
                             }}
                           >
                             {Math.round(
-                              (pollResult.no * 100) / pollResult.total
+                              (pollResult.no / pollResult.total) * 100
                             )}
                             %
                           </div>

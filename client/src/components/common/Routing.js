@@ -25,6 +25,7 @@ import { AboutUniversity } from "../pages/AboutUniversity/AboutUniversity"
 import { SettingsPrivacy } from "../pages/Setting-Privacy/SettingsPrivacy"
 import { Bookmarks } from "../pages/Home/Bookmarks/Bookmarks"
 import { CampusSignup } from "../Login/CampusSignup"
+import { Notice } from "../pages/Home/Notice/Notice"
 // import { Feedback } from "../pages/Feedback/Feedback"
 
 export const Routing = () => {
@@ -190,6 +191,7 @@ export const Routing = () => {
             <PrivateRoute exact path="/blogs" component={Blog} />
             <PrivateRoute exact path="/profile/:userId" component={Profile} />
             <PrivateRoute exact path="/friends" component={Friends} />
+            <PrivateRoute exact path="/notices" component={Notice} />
             <PrivateRoute
               exact
               path="/about-university"
