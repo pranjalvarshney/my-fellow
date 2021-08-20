@@ -37,6 +37,10 @@
 ![App Screenshot](https://github.com/pranjalvarshney/my-fellow/blob/main/sample/12.png)
 ![App Screenshot](https://github.com/pranjalvarshney/my-fellow/blob/main/sample/13.png)
 
+## Backend Flow
+
+![App Screenshot](https://github.com/pranjalvarshney/my-fellow/blob/main/sample/Backend%20flow.png)
+
 ## Contributing
 
 Contributions are always welcome!
